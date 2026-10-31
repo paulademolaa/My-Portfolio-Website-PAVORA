@@ -1,12 +1,14 @@
-import Stats from "../components/Stats.jsx";
+import { StatCards, ToolGrid, ProcessCards } from "../components/AboutCards.jsx";
 import Reveal from "../components/Reveal.jsx";
 import { whatIDo, tools, process, experience } from "../data/content.js";
 
-function ListColumn({ title, items, delay }) {
+function ListColumn({ title, items, delay = 0 }) {
   return (
     <Reveal delay={delay} className="flex flex-col">
-      <h2 className="font-display text-2xl leading-[1.3] font-medium tracking-[-0.005em]">{title}</h2>
-      <ul className="pt-6">
+      {title && (
+        <h2 className="font-display text-2xl leading-[1.3] font-medium tracking-[-0.005em]">{title}</h2>
+      )}
+      <ul className={title ? "pt-6" : ""}>
         {items.map((item) => (
           <li
             key={item}
@@ -49,15 +51,47 @@ export default function About() {
         </Reveal>
       </section>
 
-      <div className="container-page">
-        <Stats />
-      </div>
+      {/* Stats — cards slide from a staircase into a row as you scroll */}
+      <section className="container-page">
+        <StatCards />
+      </section>
 
-      {/* What I do / Tools / How I work */}
-      <section className="container-page grid gap-12 pt-20 md:grid-cols-3 md:gap-10">
-        <ListColumn title="What I do" items={whatIDo} delay={0} />
-        <ListColumn title="Tools" items={tools} delay={120} />
-        <ListColumn title="How I work" items={process} delay={240} />
+      {/* What I do */}
+      <section className="container-page pt-24 lg:pt-[120px]">
+        <div className="grid gap-10 md:grid-cols-[360px_1fr] md:gap-16">
+          <Reveal as="h2" className="font-display text-[32px] leading-[1.2] font-medium md:text-[40px]">
+            What I do
+          </Reveal>
+          <ListColumn items={whatIDo} />
+        </div>
+      </section>
+
+      {/* Tools — tiles spin in 3D when you hover them */}
+      <section className="container-page flex flex-col gap-10 pt-24 lg:pt-[120px]">
+        <div className="flex flex-col gap-3 text-center">
+          <Reveal as="h2" className="font-display text-[32px] leading-[1.2] font-medium md:text-[40px]">
+            Tools I work with
+          </Reveal>
+          <Reveal delay={100} as="p" className="mx-auto max-w-[520px] leading-[1.6] text-slate-400">
+            The software behind every project — from the first wireframe to the shipped build.
+          </Reveal>
+        </div>
+        <ToolGrid tools={tools} />
+      </section>
+
+      {/* How I work — cards fly in one by one as you scroll */}
+      <section className="container-page pt-24 lg:pt-[120px]">
+        <ProcessCards
+          steps={process}
+          heading={
+            <div className="flex flex-col gap-3 text-center">
+              <h2 className="font-display text-[32px] leading-[1.2] font-medium md:text-[40px]">How I work</h2>
+              <p className="mx-auto max-w-[520px] leading-[1.6] text-slate-400">
+                Four steps that keep every project clear, on time and built to last.
+              </p>
+            </div>
+          }
+        />
       </section>
 
       {/* Experience */}

@@ -1,0 +1,253 @@
+import { useEffect, useRef, useState } from "react";
+import { stats } from "../data/site.js";
+import { useInView } from "./Reveal.jsx";
+
+// Returns how far an element has moved through the screen while scrolling:
+// 0 when its top touches the bottom of the screen, 1 when its top reaches
+// `endAt` (a fraction of the screen height, e.g. 0.35).
+function useScrollProgress(endAt = 0.35) {
+  const ref = useRef(null);
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    let frame;
+    const update = () => {
+      const el = ref.current;
+      if (!el) return;
+      const top = el.getBoundingClientRect().top;
+      const vh = window.innerHeight;
+      const p = (vh - top) / (vh - vh * endAt);
+      setProgress(Math.min(Math.max(p, 0), 1));
+    };
+    const onScroll = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [endAt]);
+
+  return [ref, progress];
+}
+
+/* ------------------------------------------------------------------
+   1) Stat cards — start as a staircase, slide into a level row
+------------------------------------------------------------------- */
+function Count({ value, decimals = 0, suffix = "", start }) {
+  const [n, setN] = useState(0);
+  useEffect(() => {
+    if (!start) return;
+    const begin = performance.now();
+    let frame;
+    const tick = (now) => {
+      const p = Math.min((now - begin) / 1600, 1);
+      setN(value * (1 - Math.pow(1 - p, 4)));
+      if (p < 1) frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [start, value]);
+  return (
+    <>
+      {n.toFixed(decimals)}
+      {suffix}
+    </>
+  );
+}
+
+export function StatCards() {
+  const [ref, progress] = useScrollProgress(0.4);
+  const [countRef, visible] = useInView({ threshold: 0.3 });
+  const isPhone = typeof window !== "undefined" && window.innerWidth < 768;
+
+  return (
+    <div ref={ref}>
+      <div ref={countRef} className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-5">
+        {stats.map((stat, i) => (
+          <div
+            key={stat.label}
+            // Each card starts lower than the one before and rises into line
+            // (on phones only the right-hand column steps down, by less)
+            style={{ transform: `translateY(${(1 - progress) * (isPhone ? (i % 2) * 32 : i * 56)}px)` }}
+            className="group flex aspect-[5/4] cursor-default flex-col justify-between rounded-2xl border border-ink-800 bg-ink-900 p-5 transition-colors duration-500 hover:border-ink-700 hover:bg-ink-800 md:aspect-[4/3.4] md:p-6"
+          >
+            <div className="flex items-start justify-between gap-3">
+              <span className="text-sm leading-[1.4] text-slate-400">{stat.label}</span>
+              <span className="flex gap-1 pt-1">
+                {stats.map((_, d) => (
+                  <span
+                    key={d}
+                    className={`size-1.5 rounded-[2px] transition-colors duration-500 ${
+                      d <= i ? "bg-blue-500" : "bg-ink-700"
+                    }`}
+                  />
+                ))}
+              </span>
+            </div>
+            <p className="font-display text-[44px] leading-none font-bold tracking-[-0.03em] transition-transform duration-500 ease-(--ease-premium) group-hover:-translate-y-1 md:text-[64px]">
+              <Count {...stat} start={visible} />
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------
+   2) Tool tiles — spin a full turn in 3D on hover
+------------------------------------------------------------------- */
+export function ToolGrid({ tools }) {
+  const [ref, visible] = useInView({ threshold: 0.2 });
+
+  return (
+    <div ref={ref} className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4">
+      {tools.map((tool, i) => (
+        <div
+          key={tool.name}
+          className="tool-tile group"
+          style={{
+            opacity: visible ? 1 : 0,
+            transform: visible ? "none" : "translateY(40px) scale(0.94)",
+            transition: `opacity .9s var(--ease-premium) ${i * 80}ms, transform .9s var(--ease-premium) ${i * 80}ms`,
+          }}
+        >
+          <div className="flex h-36 cursor-pointer flex-col items-center justify-center gap-2.5 rounded-2xl border border-ink-800 bg-[radial-gradient(ellipse_at_center,#16213f_0%,#0d1631_55%,#080f25_100%)] tool-tile-inner px-4 text-center md:h-44">
+            {tool.logo ? (
+              <img src={tool.logo} alt={tool.name} className="h-16 w-auto object-contain md:h-20" />
+            ) : (
+              <span className="font-display text-xl leading-tight font-bold tracking-[-0.02em] md:text-2xl">
+                {tool.name}
+              </span>
+            )}
+            <span className="text-[13px] leading-[1.4] text-slate-400">
+              {tool.logo ? `${tool.name} · ` : ""}
+              {tool.caption}
+            </span>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------
+   3) "How I work" cards — fly up one by one and land tilted
+------------------------------------------------------------------- */
+const cardStyles = [
+  { bg: "from-blue-400 to-blue-800", rotate: -8, x: "0%", y: 40 },
+  { bg: "from-blue-500 to-ink-900", rotate: 6, x: "24%", y: 90 },
+  { bg: "from-blue-600 to-blue-800", rotate: -5, x: "48%", y: 30 },
+  { bg: "from-blue-400 to-blue-600", rotate: 8, x: "72%", y: 110 },
+];
+
+function Card({ step, i }) {
+  return (
+    <div
+      className={`flex aspect-square w-full flex-col justify-between rounded-[28px] bg-gradient-to-br p-6 shadow-[0_30px_80px_-20px_rgba(37,99,235,0.55)] ${cardStyles[i % 4].bg}`}
+    >
+      <div className="flex items-center gap-3">
+        <span className="grid size-10 place-items-center rounded-xl bg-white/90 font-display text-sm font-bold text-ink-950">
+          {String(i + 1).padStart(2, "0")}
+        </span>
+        <span className="font-display text-2xl font-medium">{step.title}</span>
+      </div>
+      <p className="text-lg leading-[1.4] font-medium">{step.text}</p>
+    </div>
+  );
+}
+
+export function ProcessCards({ steps, heading }) {
+  // The section is tall; its inside stays pinned while you scroll through it
+  const wrapRef = useRef(null);
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    let frame;
+    const update = () => {
+      const el = wrapRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const total = el.offsetHeight - window.innerHeight;
+      setProgress(Math.min(Math.max(-rect.top / total, 0), 1));
+    };
+    const onScroll = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
+
+
+  return (
+    <>
+      {/* Desktop: pinned, scroll-driven */}
+      <div ref={wrapRef} className="relative hidden h-[260vh] lg:block">
+        <div className="sticky top-24 flex h-[calc(100vh-6rem)] flex-col">
+          {/* The heading stays pinned while the cards fly in */}
+          <div className="pt-6">{heading}</div>
+          <div className="relative mx-auto w-full max-w-[1280px] flex-1">
+            {steps.map((step, i) => {
+              const s = cardStyles[i % 4];
+              // each card gets its own slice of the scroll
+              const local = Math.min(Math.max((progress - i * 0.2) / 0.3, 0), 1);
+              const eased = 1 - Math.pow(1 - local, 3);
+              return (
+                <div
+                  key={step.title}
+                  className="absolute top-[10%] w-[280px] xl:w-[310px]"
+                  style={{
+                    left: s.x,
+                    transform: `translateY(${(1 - eased) * 110 + s.y / 10}vh) rotate(${s.rotate + (1 - eased) * -24}deg)`,
+                    opacity: local > 0 ? 1 : 0,
+                  }}
+                >
+                  <Card step={step} i={i} />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* Phones & tablets: simple grid, cards tilt in as they appear */}
+      <div className="lg:hidden">{heading}</div>
+      <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:hidden">
+        {steps.map((step, i) => (
+          <TiltIn key={step.title} rotate={cardStyles[i % 4].rotate / 2} delay={i * 80}>
+            <Card step={step} i={i} />
+          </TiltIn>
+        ))}
+      </div>
+    </>
+  );
+}
+
+function TiltIn({ children, rotate, delay }) {
+  const [ref, visible] = useInView({ threshold: 0.25 });
+  return (
+    <div
+      ref={ref}
+      style={{
+        transform: visible ? `rotate(${rotate}deg)` : `translateY(80px) rotate(${rotate * 4}deg)`,
+        opacity: visible ? 1 : 0,
+        transition: `transform 1s var(--ease-premium) ${delay}ms, opacity 1s var(--ease-premium) ${delay}ms`,
+      }}
+    >
+      {children}
+    </div>
+  );
+}

@@ -156,6 +156,18 @@
     }
   }
 
+  /* Tool tiles on the About page: spin a full turn in 3D on hover */
+  .tool-tile {
+    perspective: 600px;
+  }
+  .tool-tile-inner {
+    transform-style: preserve-3d;
+    transition: transform 1.1s var(--ease-premium);
+  }
+  .tool-tile:hover .tool-tile-inner {
+    transform: rotateY(360deg);
+  }
+
   /* Outline symbol that draws itself (footer) */
   .draw-path path {
     stroke-dasharray: 900;

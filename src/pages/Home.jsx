@@ -1,7 +1,7 @@
 import Button from "../components/Button.jsx";
 import Stats from "../components/Stats.jsx";
 import SectionTitle from "../components/SectionTitle.jsx";
-import WorkCard from "../components/WorkCard.jsx";
+import WorkStack from "../components/WorkStack.jsx";
 import ServiceRow from "../components/ServiceRow.jsx";
 import Testimonials from "../components/Testimonials.jsx";
 import Mockup from "../components/Mockups.jsx";
@@ -47,7 +47,7 @@ function Hero() {
 
           {/* PAVORA app icon */}
           <span
-            className="pop-in absolute top-[0.06em] left-[4.38em] hidden sm:block"
+            className="pop-in absolute top-[0.06em] left-[4.38em] hidden w-max sm:block"
             style={{ "--delay": "800ms" }}
           >
             <span
@@ -59,22 +59,22 @@ function Hero() {
           </span>
 
           {/* Tool icons */}
-          <span className="pop-in absolute top-[1.69em] left-[-0.16em]" style={{ "--delay": "950ms" }}>
+          <span className="pop-in absolute top-[1.69em] left-[-0.16em] w-max" style={{ "--delay": "950ms" }}>
             <img
               src="/images/vscode.webp"
               alt=""
-              className="w-[0.45em] animate-float-slow drop-shadow-[0_12px_24px_rgba(37,99,235,0.5)]"
+              className="w-[0.45em] max-w-none animate-float-slow drop-shadow-[0_12px_24px_rgba(37,99,235,0.5)]"
               style={{ "--tilt": "-12deg", animationDelay: "1s" }}
             />
           </span>
           <span
-            className="pop-in absolute top-[2.75em] left-[4.4em] hidden sm:block"
+            className="pop-in absolute top-[2.75em] left-[4.4em] hidden w-max sm:block"
             style={{ "--delay": "1100ms" }}
           >
             <img
               src="/images/figma.webp"
               alt=""
-              className="w-[0.54em] animate-float drop-shadow-[0_12px_24px_rgba(0,0,0,0.5)]"
+              className="w-[0.54em] max-w-none animate-float drop-shadow-[0_12px_24px_rgba(0,0,0,0.5)]"
               style={{ "--tilt": "8deg", animationDelay: "2s" }}
             />
           </span>
@@ -123,11 +123,8 @@ function SelectedWorks() {
         count={String(projects.length).padStart(2, "0")}
         intro="A selection of recent projects across product, brand, presentation and web development."
       />
-      <div className="grid gap-6 md:grid-cols-2 lg:gap-10">
-        {projects.slice(0, 6).map((project, i) => (
-          <WorkCard key={project.slug} project={project} delay={(i % 2) * 120} />
-        ))}
-      </div>
+      {/* Stacking cards — see src/components/WorkStack.jsx */}
+      <WorkStack projects={projects.slice(0, 6)} />
       <Reveal className="flex justify-center">
         <Button to="/work" variant="secondary">
           View all works
