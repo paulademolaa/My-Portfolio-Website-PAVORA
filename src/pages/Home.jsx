@@ -1,7 +1,7 @@
 import Button from "../components/Button.jsx";
 import Stats from "../components/Stats.jsx";
 import SectionTitle from "../components/SectionTitle.jsx";
-import WorkCard from "../components/WorkCard.jsx";
+import WorkStack from "../components/WorkStack.jsx";
 import ServiceRow from "../components/ServiceRow.jsx";
 import Testimonials from "../components/Testimonials.jsx";
 import Mockup from "../components/Mockups.jsx";
@@ -123,11 +123,8 @@ function SelectedWorks() {
         count={String(projects.length).padStart(2, "0")}
         intro="A selection of recent projects across product, brand, presentation and web development."
       />
-      <div className="grid gap-6 md:grid-cols-2 lg:gap-10">
-        {projects.slice(0, 6).map((project, i) => (
-          <WorkCard key={project.slug} project={project} delay={(i % 2) * 120} />
-        ))}
-      </div>
+      {/* Stacking cards — see src/components/WorkStack.jsx */}
+      <WorkStack projects={projects.slice(0, 6)} />
       <Reveal className="flex justify-center">
         <Button to="/work" variant="secondary">
           View all works

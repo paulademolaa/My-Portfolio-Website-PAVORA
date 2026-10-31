@@ -1,6 +1,6 @@
 import { useState } from "react";
 import SectionTitle from "../components/SectionTitle.jsx";
-import WorkCard from "../components/WorkCard.jsx";
+import WorkStack from "../components/WorkStack.jsx";
 import Reveal from "../components/Reveal.jsx";
 import { projects } from "../data/projects.js";
 
@@ -46,10 +46,8 @@ export default function Work() {
       </Reveal>
 
       {/* key={active} replays the card animation when the filter changes */}
-      <div key={active} className="grid gap-6 md:grid-cols-2 lg:gap-10">
-        {shown.map((project, i) => (
-          <WorkCard key={project.slug} project={project} delay={(i % 2) * 120} />
-        ))}
+      <div key={active}>
+        <WorkStack projects={shown} />
       </div>
 
       {shown.length === 0 && (
