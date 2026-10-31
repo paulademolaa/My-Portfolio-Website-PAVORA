@@ -8,6 +8,8 @@ import Project from "./pages/Project.jsx";
 import About from "./pages/About.jsx";
 import Contact from "./pages/Contact.jsx";
 import NotFound from "./pages/NotFound.jsx";
+import Faq from "./pages/Faq.jsx";
+import ChatWidget from "./assistant/ChatWidget.jsx";
 
 // Scrolls to the top (or to a #section) whenever the page changes
 function ScrollManager() {
@@ -43,11 +45,15 @@ export default function App() {
           <Route path="/work/:slug" element={<Project />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/faq" element={<Faq />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
 
       <Footer />
+
+      {/* "Ask PAVORA" chat button, on every page */}
+      <ChatWidget />
     </>
   );
 }

@@ -21,11 +21,11 @@ export const site = {
 };
 
 // Upwork numbers shown on the Home, About and Contact pages.
-// Keep them in sync with your Upwork profile.
+// Keep them in sync with your Upwork profile (last checked 31 Oct 2026).
 export const stats = [
   { value: 4.9, decimals: 1, suffix: "", label: "Upwork rating" },
-  { value: 30, suffix: "+", label: "Total jobs done" },
-  { value: 100, suffix: "%", label: "Job Success Score" },
+  { value: 18, suffix: "", label: "Total jobs done" },
+  { value: 81, suffix: "%", label: "Job Success Score" },
   { value: 7, suffix: "+", label: "Years of experience" },
 ];
 
@@ -34,6 +34,7 @@ export const navLinks = [
   { label: "Work", to: "/work" },
   { label: "Services", to: "/#services" },
   { label: "About", to: "/about" },
+  { label: "FAQ", to: "/faq" },
   { label: "Contact", to: "/contact" },
 ];
 
