@@ -17,9 +17,9 @@ export const projects = [
     category: "Web Development",
     cover: "/images/projects/freshfind.webp",
     summary: "A marketplace that helps shoppers find fresh-produce markets near them.",
-    client: "FreshFind",
+    client: "TechWizz Project",
     services: "UI/UX Design",
-    year: "Year",
+    year: "2026",
     tools: "Figma",
     challenge:
       "Describe the client’s problem in two or three sentences — only verified project details.",
@@ -37,7 +37,7 @@ export const projects = [
     summary: "A lead-generation dashboard for small businesses.",
     client: "BizOpConnect",
     services: "UI/UX Design",
-    year: "Year",
+    year: "2026",
     tools: "Figma",
     challenge:
       "Describe the client’s problem in two or three sentences — only verified project details.",
