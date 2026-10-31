@@ -62,9 +62,25 @@ export const whatIDo = [
   "Web Development (React, Tailwind CSS)",
 ];
 
-export const tools = ["Figma", "Adobe Photoshop", "Adobe Illustrator", "React · Tailwind CSS"];
+// Tool tiles on the About page.
+// "logo" is optional: drop an official logo file in public/images/tools/
+// and put its path here. Without one, the tool's name is shown instead.
+export const tools = [
+  { name: "Figma", caption: "UI/UX & prototyping", logo: "/images/figma.webp" },
+  { name: "Adobe Photoshop", caption: "Photo editing & mockups" },
+  { name: "Adobe Illustrator", caption: "Logos & vector art" },
+  { name: "VS Code", caption: "Writing the code", logo: "/images/vscode.webp" },
+  { name: "React", caption: "Front-end builds" },
+  { name: "Tailwind CSS", caption: "Fast, clean styling" },
+];
 
-export const process = ["Discover", "Define", "Design", "Deliver"];
+// "How I work" cards on the About page
+export const process = [
+  { title: "Discover", text: "Understand your business, users and goals before a single pixel moves." },
+  { title: "Define", text: "Turn research into a clear plan, structure and success measures." },
+  { title: "Design", text: "Shape the brand and interface — tested early, refined with you." },
+  { title: "Deliver", text: "Hand off polished files or ship the live build in React and Tailwind." },
+];
 
 export const experience = [
   { role: "Independent Designer", place: "Upwork · Clients worldwide", years: "20XX — Now" },
