@@ -7,6 +7,7 @@
 // just replace the file (keep the same name) or change the path here.
 //
 // category must match one of the filter names in src/pages/Work.jsx.
+// tags are the small chips shown on the Home page cards.
 // ---------------------------------------------------------------
 
 export const projects = [
@@ -14,6 +15,7 @@ export const projects = [
     slug: "freshfind-farmers-market",
     title: "FreshFind Farmers Market",
     type: "E-commerce Website",
+    tags: ["E-commerce", "UI/UX Design", "Web Design", "Figma"],
     category: "Web Development",
     cover: "/images/projects/freshfind.webp",
     summary: "A marketplace that helps shoppers find fresh-produce markets near them.",
@@ -32,6 +34,7 @@ export const projects = [
     slug: "bizopconnect",
     title: "UI UX Designer for BizOpConnect",
     type: "Dashboard Design",
+    tags: ["Dashboard", "UI/UX Design", "SaaS", "Figma"],
     category: "Product Design",
     cover: "/images/projects/bizopconnect.webp",
     summary: "A lead-generation dashboard for small businesses.",
@@ -50,6 +53,7 @@ export const projects = [
     slug: "mobile-app",
     title: "[Project name]",
     type: "Mobile App Design",
+    tags: ["Mobile App", "UI/UX Design", "Prototyping"],
     category: "Product Design",
     cover: "/images/projects/mobile-app.jpg",
     summary: "One line on what was designed and for whom.",
@@ -68,6 +72,7 @@ export const projects = [
     slug: "saas-landing-page",
     title: "SaaS Landing Page",
     type: "Landing Page Design",
+    tags: ["Landing Page", "Web Design", "React", "Tailwind CSS"],
     category: "Web Development",
     cover: "/images/projects/saas-landing.jpg",
     summary: "One line on what was designed and for whom.",
@@ -86,6 +91,7 @@ export const projects = [
     slug: "brand-identity",
     title: "[Project name]",
     type: "Brand Identity",
+    tags: ["Branding", "Logo Design", "Brand Strategy", "Visual Identity"],
     category: "Brand Identity",
     cover: "/images/projects/brand-identity.jpg",
     summary: "One line on what was designed and for whom.",
@@ -104,6 +110,7 @@ export const projects = [
     slug: "pitch-deck",
     title: "[Project name]",
     type: "Pitch Deck Design",
+    tags: ["Pitch Deck", "Presentation Design", "Storytelling"],
     category: "Presentations",
     cover: "/images/projects/pitch-deck.jpg",
     summary: "One line on what was designed and for whom.",
