@@ -36,8 +36,17 @@
   --animate-float-slow: float 8s ease-in-out infinite;
   --animate-glow: glow 7s ease-in-out infinite;
   --animate-marquee: marquee 30s linear infinite;
+  --animate-marquee-slow: marquee 70s linear infinite;
   --animate-fade-in: fade-in 0.6s var(--ease-premium) both;
 
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
   @keyframes float {
     0%,
     100% {

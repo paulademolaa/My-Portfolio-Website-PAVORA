@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { stats } from "../data/site.js";
+import { clientInsights, site, stats } from "../data/site.js";
 import { useInView } from "./Reveal.jsx";
 
 // Returns how far an element has moved through the screen while scrolling:
@@ -118,17 +118,20 @@ export function ToolGrid({ tools }) {
             transition: `opacity .9s var(--ease-premium) ${i * 80}ms, transform .9s var(--ease-premium) ${i * 80}ms`,
           }}
         >
-          <div className="flex h-36 cursor-pointer flex-col items-center justify-center gap-2.5 rounded-2xl border border-ink-800 bg-[radial-gradient(ellipse_at_center,#16213f_0%,#0d1631_55%,#080f25_100%)] tool-tile-inner px-4 text-center md:h-44">
-            {tool.logo ? (
-              <img src={tool.logo} alt={tool.name} className="h-16 w-auto object-contain md:h-20" />
-            ) : (
-              <span className="font-display text-xl leading-tight font-bold tracking-[-0.02em] md:text-2xl">
-                {tool.name}
-              </span>
-            )}
-            <span className="text-[13px] leading-[1.4] text-slate-400">
-              {tool.logo ? `${tool.name} · ` : ""}
-              {tool.caption}
+          <div className="tool-tile-inner flex h-44 cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border border-ink-800 bg-[radial-gradient(ellipse_at_center,#16213f_0%,#0d1631_55%,#080f25_100%)] px-4 text-center transition-colors duration-500 group-hover:border-blue-500/40 md:h-52">
+            {/* Logo (falls back to the name's first letters if no logo is set) */}
+            <span className="grid h-11 w-14 place-items-center md:h-[60px] md:w-[68px]">
+              {tool.logo ? (
+                <img src={tool.logo} alt="" className="max-h-full max-w-full object-contain drop-shadow-[0_8px_20px_rgba(0,0,0,0.45)]" />
+              ) : (
+                <span className="font-display text-2xl font-bold text-blue-300">
+                  {tool.name.split(" ").map((w) => w[0]).join("").slice(0, 2)}
+                </span>
+              )}
+            </span>
+            <span className="flex flex-col gap-0.5">
+              <span className="font-display text-[17px] leading-tight font-medium text-white md:text-lg">{tool.name}</span>
+              <span className="text-[13px] leading-[1.4] text-slate-400">{tool.caption}</span>
             </span>
           </div>
         </div>
@@ -248,6 +251,58 @@ function TiltIn({ children, rotate, delay }) {
       }}
     >
       {children}
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------
+   4) Client insights — bars fill one after another when scrolled into view
+   (numbers come from clientInsights in src/data/site.js)
+------------------------------------------------------------------- */
+export function ClientInsights() {
+  const [ref, visible] = useInView({ threshold: 0.25 });
+  const max = Math.max(...clientInsights.map((i) => i.count));
+
+  return (
+    <div ref={ref} className="grid gap-10 rounded-3xl border border-ink-800 bg-ink-900 p-6 md:p-10 lg:grid-cols-[320px_1fr] lg:gap-16">
+      <div className="flex flex-col items-start gap-4">
+        <span className="rounded-full bg-upwork/15 px-3 py-1.5 text-[13px] font-medium text-[#4ade80]">Insights from completed jobs</span>
+        <h2 className="font-display text-[32px] leading-[1.2] font-medium md:text-[40px]">What clients say I’m like</h2>
+        <p className="leading-[1.6] text-slate-400">
+          The qualities clients endorsed most after working with me on Upwork.
+        </p>
+        <a
+          href={site.links.upwork}
+          target="_blank"
+          rel="noreferrer"
+          className="mt-2 text-[15px] font-medium text-white underline-offset-4 transition-colors hover:text-blue-400 hover:underline"
+        >
+          See my Upwork profile ↗
+        </a>
+      </div>
+
+      <ul className="flex flex-col gap-4">
+        {clientInsights.map((item, i) => (
+          <li key={item.label} className="group flex flex-col gap-2">
+            <span className="flex items-baseline justify-between gap-4">
+              <span className="font-medium transition-colors group-hover:text-blue-400">{item.label}</span>
+              <span className="text-sm text-slate-400">
+                <span className="font-display text-lg font-bold text-white">{item.count}</span> clients
+              </span>
+            </span>
+            <span className="h-2 overflow-hidden rounded-full bg-ink-800">
+              <span
+                className="block h-full origin-left rounded-full bg-gradient-to-r from-blue-600 to-blue-400 transition-transform duration-[1200ms] ease-(--ease-premium)"
+                style={{
+                  width: `${(item.count / max) * 100}%`,
+                  transform: `scaleX(${visible ? 1 : 0})`,
+                  transitionDelay: `${i * 90}ms`,
+                }}
+              />
+            </span>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

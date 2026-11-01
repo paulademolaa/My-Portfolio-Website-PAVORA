@@ -35,24 +35,7 @@ export const services = [
   },
 ];
 
-// Paste each client's exact Upwork review — original wording only.
-export const testimonials = [
-  {
-    quote: "“Paste the client’s exact Upwork review here — original wording only.”",
-    name: "Client name",
-    role: "Role, Company · via Upwork",
-  },
-  {
-    quote: "“Paste the client’s exact Upwork review here — original wording only.”",
-    name: "Client name",
-    role: "Role, Company · via Upwork",
-  },
-  {
-    quote: "“Paste the client’s exact Upwork review here — original wording only.”",
-    name: "Client name",
-    role: "Role, Company · via Upwork",
-  },
-];
+// Client reviews and testimonials live in src/data/assistant.js
 
 export const whatIDo = [
   "Product Design (UI/UX)",
@@ -67,11 +50,11 @@ export const whatIDo = [
 // and put its path here. Without one, the tool's name is shown instead.
 export const tools = [
   { name: "Figma", caption: "UI/UX & prototyping", logo: "/images/figma.webp" },
-  { name: "Adobe Photoshop", caption: "Photo editing & mockups" },
-  { name: "Adobe Illustrator", caption: "Logos & vector art" },
+  { name: "Adobe Photoshop", caption: "Photo editing & mockups", logo: "/images/photoshop.webp" },
+  { name: "Adobe Illustrator", caption: "Logos & vector art", logo: "/images/illustrator.webp" },
   { name: "VS Code", caption: "Writing the code", logo: "/images/vscode.webp" },
-  { name: "React", caption: "Front-end builds" },
-  { name: "Tailwind CSS", caption: "Fast, clean styling" },
+  { name: "React", caption: "Front-end builds", logo: "/images/react.webp" },
+  { name: "Tailwind CSS", caption: "Fast, clean styling", logo: "/images/tailwind.webp" },
 ];
 
 // "How I work" cards on the About page

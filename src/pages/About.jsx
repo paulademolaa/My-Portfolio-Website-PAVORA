@@ -1,4 +1,4 @@
-import { StatCards, ToolGrid, ProcessCards } from "../components/AboutCards.jsx";
+import { StatCards, ToolGrid, ProcessCards, ClientInsights } from "../components/AboutCards.jsx";
 import Reveal from "../components/Reveal.jsx";
 import { whatIDo, tools, process, experience } from "../data/content.js";
 
@@ -54,6 +54,11 @@ export default function About() {
       {/* Stats — cards slide from a staircase into a row as you scroll */}
       <section className="container-page">
         <StatCards />
+      </section>
+
+      {/* Client insights from Upwork — bars fill in as you scroll */}
+      <section className="container-page pt-24 lg:pt-[120px]">
+        <ClientInsights />
       </section>
 
       {/* What I do */}
