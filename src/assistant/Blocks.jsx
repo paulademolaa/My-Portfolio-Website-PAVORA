@@ -3,7 +3,7 @@ import Icon from "../components/Icons.jsx";
 import { ACTIONS, upworkRating, upworkReviews } from "../data/assistant.js";
 import { services, tools, process } from "../data/content.js";
 import { projects } from "../data/projects.js";
-import { site } from "../data/site.js";
+import { clientInsights, site } from "../data/site.js";
 
 // Turns **bold** and [text](link) into real formatting
 export function RichText({ text, onNavigate }) {
@@ -154,6 +154,18 @@ function Card({ type, filter, limit, onAsk, onNavigate }) {
               <span className="font-medium text-slate-200">{r.client || "Upwork client"}</span> · {r.project}
             </figcaption>
           </figure>
+        ))}
+      </div>
+    );
+  }
+
+  if (type === "insights") {
+    return (
+      <div className="flex flex-wrap gap-1.5">
+        {clientInsights.map((i) => (
+          <span key={i.label} className="rounded-full border border-ink-700 bg-ink-950/60 px-2.5 py-1 text-[12px] text-slate-200">
+            {i.label} <span className="font-semibold text-white">{i.count}</span>
+          </span>
         ))}
       </div>
     );

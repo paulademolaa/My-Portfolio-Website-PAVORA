@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { stats } from "../data/site.js";
+import { clientInsights, site, stats } from "../data/site.js";
 import { useInView } from "./Reveal.jsx";
 
 // Returns how far an element has moved through the screen while scrolling:
@@ -248,6 +248,58 @@ function TiltIn({ children, rotate, delay }) {
       }}
     >
       {children}
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------
+   4) Client insights — bars fill one after another when scrolled into view
+   (numbers come from clientInsights in src/data/site.js)
+------------------------------------------------------------------- */
+export function ClientInsights() {
+  const [ref, visible] = useInView({ threshold: 0.25 });
+  const max = Math.max(...clientInsights.map((i) => i.count));
+
+  return (
+    <div ref={ref} className="grid gap-10 rounded-3xl border border-ink-800 bg-ink-900 p-6 md:p-10 lg:grid-cols-[320px_1fr] lg:gap-16">
+      <div className="flex flex-col items-start gap-4">
+        <span className="rounded-full bg-upwork/15 px-3 py-1.5 text-[13px] font-medium text-[#4ade80]">Insights from completed jobs</span>
+        <h2 className="font-display text-[32px] leading-[1.2] font-medium md:text-[40px]">What clients say I’m like</h2>
+        <p className="leading-[1.6] text-slate-400">
+          The qualities clients endorsed most after working with me on Upwork.
+        </p>
+        <a
+          href={site.links.upwork}
+          target="_blank"
+          rel="noreferrer"
+          className="mt-2 text-[15px] font-medium text-white underline-offset-4 transition-colors hover:text-blue-400 hover:underline"
+        >
+          See my Upwork profile ↗
+        </a>
+      </div>
+
+      <ul className="flex flex-col gap-4">
+        {clientInsights.map((item, i) => (
+          <li key={item.label} className="group flex flex-col gap-2">
+            <span className="flex items-baseline justify-between gap-4">
+              <span className="font-medium transition-colors group-hover:text-blue-400">{item.label}</span>
+              <span className="text-sm text-slate-400">
+                <span className="font-display text-lg font-bold text-white">{item.count}</span> clients
+              </span>
+            </span>
+            <span className="h-2 overflow-hidden rounded-full bg-ink-800">
+              <span
+                className="block h-full origin-left rounded-full bg-gradient-to-r from-blue-600 to-blue-400 transition-transform duration-[1200ms] ease-(--ease-premium)"
+                style={{
+                  width: `${(item.count / max) * 100}%`,
+                  transform: `scaleX(${visible ? 1 : 0})`,
+                  transitionDelay: `${i * 90}ms`,
+                }}
+              />
+            </span>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

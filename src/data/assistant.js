@@ -383,6 +383,8 @@ export const topics = [
     answer: [
       { text: "Here's what clients say about working with Paul, in their own words:" },
       { card: "reviews" },
+      { text: "Qualities clients endorsed most on Upwork (number of clients):" },
+      { card: "insights" },
       { card: "rating" },
       { actions: ["faq"] },
     ],
