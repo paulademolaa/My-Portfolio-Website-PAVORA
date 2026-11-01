@@ -2,6 +2,7 @@ import { useState } from "react";
 import Button from "../components/Button.jsx";
 import Icon from "../components/Icons.jsx";
 import Reveal from "../components/Reveal.jsx";
+import Select from "../components/Select.jsx";
 import { serviceOptions } from "../data/content.js";
 import { site, stats } from "../data/site.js";
 
@@ -136,25 +137,14 @@ export default function Contact() {
             </Field>
           </div>
 
-          <Field label="Service" id="service">
-            <span className="relative">
-              <select
-                id="service"
-                name="service"
-                value={form.service}
-                onChange={update}
-                className={`${inputClass} cursor-pointer appearance-none pr-12 ${form.service ? "" : "text-slate-500"}`}
-              >
-                <option value="">Select a service</option>
-                {serviceOptions.map((s) => (
-                  <option key={s} value={s} className="text-ink-950">
-                    {s}
-                  </option>
-                ))}
-              </select>
-              <Icon name="chevron-down" className="pointer-events-none absolute top-1/2 right-4 size-5 -translate-y-1/2 text-slate-400" />
-            </span>
-          </Field>
+          <Select
+            label="Service"
+            name="service"
+            placeholder="Select a service"
+            options={serviceOptions}
+            value={form.service}
+            onChange={(service) => setForm({ ...form, service })}
+          />
 
           <Field label="Project details" id="details">
             <textarea
