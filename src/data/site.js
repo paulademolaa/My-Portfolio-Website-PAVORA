@@ -8,9 +8,9 @@ export const site = {
   tagline: "Designed with Vision. Built for Impact.",
   location: "Independent Designer · Nigeria · Worldwide",
 
-  // Leave email empty until you're ready — the contact form will then
-  // send people to Upwork instead.
-  email: "",
+  // Shown on the Contact page, in the footer and by the chatbot.
+  // The contact form opens the visitor's email app addressed to this.
+  email: "paulademolaa@gmail.com",
 
   links: {
     upwork: "https://www.upwork.com/freelancers/~01c9c0334f82ec5468",

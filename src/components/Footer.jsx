@@ -90,6 +90,17 @@ export default function Footer() {
               Have something great in mind? Let’s make it happen.
             </h2>
             <p className="leading-[1.6] text-slate-400">I’m always up for a new project and a good chat about design.</p>
+            {site.email && (
+              <a
+                href={`mailto:${site.email}`}
+                className="group flex w-fit items-center gap-2 text-lg font-medium text-white transition-colors hover:text-blue-400"
+              >
+                <Icon name="mail" className="size-5 text-blue-400" />
+                <span className="underline decoration-ink-700 underline-offset-4 transition-colors group-hover:decoration-blue-400">
+                  {site.email}
+                </span>
+              </a>
+            )}
             <div className="flex flex-wrap gap-2.5">
               <Button to="/contact">Start a Project</Button>
               <Button href={site.links.upwork} variant="secondary" icon="arrow-up-right">

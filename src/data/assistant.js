@@ -568,7 +568,7 @@ export const topics = [
     phrases: ["get in touch", "contact you", "reach you", "talk to paul", "speak to paul"],
     answer: [
       {
-        text: "The fastest way is to **start a project right here** — I'll collect a few details and send them straight to Paul. You can also message him on Upwork or use the contact page.",
+        text: "The fastest way is to **start a project right here** — I'll collect a few details and send them straight to Paul. You can also email him at [paulademolaa@gmail.com](mailto:paulademolaa@gmail.com), message him on Upwork or use the contact page.",
       },
       { actions: ["startProject", "upwork", "contact"] },
     ],
