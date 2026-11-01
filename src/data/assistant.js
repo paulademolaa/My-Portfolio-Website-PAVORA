@@ -608,11 +608,13 @@ export const topics = [
 // Real Upwork reviews (client's own words). Some jobs were done on a second
 // Upwork account under another name — that name is replaced with [Paul].
 //   service: which service the job was for (used to show matching reviews)
+//   client:  client's first name (leave out if unknown — shows "Upwork client")
 //   tags:    what the client endorsed on Upwork
 export const upworkRating = { score: 4.9, count: 12 };
 export const upworkReviews = [
   {
     project: "Travel Agency Website Development",
+    client: "Scott",
     service: "Web Development",
     rating: 5.0,
     date: "Oct 2025",
@@ -631,6 +633,7 @@ export const upworkReviews = [
   },
   {
     project: "Hypsy Brand Kit",
+    client: "Alan",
     service: "Brand Identity",
     rating: 5.0,
     date: "Aug 2025",
@@ -649,6 +652,7 @@ export const upworkReviews = [
   },
   {
     project: "Creative UI/UX & Graphics Design",
+    client: "Michael",
     service: "Product Design",
     rating: 5.0,
     date: "Dec 2024",
@@ -668,6 +672,7 @@ export const upworkReviews = [
   },
   {
     project: "UI/UX & Figma Designer – Modern Designs",
+    client: "Zaniab",
     service: "Product Design",
     rating: 5.0,
     date: "Feb 2026",
@@ -677,6 +682,7 @@ export const upworkReviews = [
   },
   {
     project: "Frontend Designer Needed",
+    client: "Johnson",
     service: "Web Development",
     rating: 5.0,
     date: "Feb 2025",
@@ -687,6 +693,7 @@ export const upworkReviews = [
   },
   {
     project: "UI/UX Page Redesign",
+    client: "Johnson",
     service: "Product Design",
     rating: 5.0,
     date: "Dec 2024",
@@ -696,6 +703,7 @@ export const upworkReviews = [
   },
   {
     project: "Landing Page Development for AI Agency",
+    client: "Milan",
     service: "Web Development",
     rating: 4.9,
     date: "Feb 2025",
@@ -708,7 +716,8 @@ export const upworkReviews = [
   { project: "Figma Design Lander (mobile & desktop)", service: "Product Design", rating: 5.0, date: "Jul 2025" },
 ];
 
-// Testimonials clients wrote on Paul's Upwork profile (marked Verified)
+// Testimonials from clients Paul worked with OUTSIDE Upwork (direct clients).
+// They were collected through Upwork's testimonial feature, but the work wasn't an Upwork job.
 export const upworkTestimonials = [
   {
     quote:

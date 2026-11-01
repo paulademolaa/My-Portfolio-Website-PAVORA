@@ -151,8 +151,7 @@ function Card({ type, filter, limit, onAsk, onNavigate }) {
             </div>
             <blockquote className="mt-2 text-[13px] leading-relaxed text-slate-200">“{r.quote}”</blockquote>
             <figcaption className="mt-1.5 text-xs text-slate-400">
-              {r.project}
-              {r.location ? ` · ${r.location}` : ""}
+              <span className="font-medium text-slate-200">{r.client || "Upwork client"}</span> · {r.project}
             </figcaption>
           </figure>
         ))}
