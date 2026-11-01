@@ -71,10 +71,10 @@ function Avatar({ name, source, size = "size-12" }) {
 
 function ReviewCard({ item }) {
   return (
-    <figure className="flex w-[300px] shrink-0 flex-col gap-4 md:w-[340px]">
+    <figure className="flex h-[248px] w-[300px] shrink-0 flex-col gap-4 md:w-[340px]">
       <Stars value={item.rating} />
-      <blockquote className="line-clamp-5 text-[15px] leading-[1.6] text-slate-300">{item.quote}</blockquote>
-      <figcaption className="mt-auto flex items-center gap-3">
+      <blockquote className="line-clamp-5 flex-1 text-[15px] leading-[1.6] text-slate-300">{item.quote}</blockquote>
+      <figcaption className="flex items-center gap-3">
         <Avatar name={item.name} source={item.source} />
         <span className="min-w-0">
           <span className="flex items-center gap-2">
