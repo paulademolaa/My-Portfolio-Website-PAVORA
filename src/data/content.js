@@ -50,11 +50,11 @@ export const whatIDo = [
 // and put its path here. Without one, the tool's name is shown instead.
 export const tools = [
   { name: "Figma", caption: "UI/UX & prototyping", logo: "/images/figma.webp" },
-  { name: "Adobe Photoshop", caption: "Photo editing & mockups" },
-  { name: "Adobe Illustrator", caption: "Logos & vector art" },
+  { name: "Adobe Photoshop", caption: "Photo editing & mockups", logo: "/images/photoshop.webp" },
+  { name: "Adobe Illustrator", caption: "Logos & vector art", logo: "/images/illustrator.webp" },
   { name: "VS Code", caption: "Writing the code", logo: "/images/vscode.webp" },
-  { name: "React", caption: "Front-end builds" },
-  { name: "Tailwind CSS", caption: "Fast, clean styling" },
+  { name: "React", caption: "Front-end builds", logo: "/images/react.webp" },
+  { name: "Tailwind CSS", caption: "Fast, clean styling", logo: "/images/tailwind.webp" },
 ];
 
 // "How I work" cards on the About page

@@ -118,17 +118,20 @@ export function ToolGrid({ tools }) {
             transition: `opacity .9s var(--ease-premium) ${i * 80}ms, transform .9s var(--ease-premium) ${i * 80}ms`,
           }}
         >
-          <div className="flex h-36 cursor-pointer flex-col items-center justify-center gap-2.5 rounded-2xl border border-ink-800 bg-[radial-gradient(ellipse_at_center,#16213f_0%,#0d1631_55%,#080f25_100%)] tool-tile-inner px-4 text-center md:h-44">
-            {tool.logo ? (
-              <img src={tool.logo} alt={tool.name} className="h-16 w-auto object-contain md:h-20" />
-            ) : (
-              <span className="font-display text-xl leading-tight font-bold tracking-[-0.02em] md:text-2xl">
-                {tool.name}
-              </span>
-            )}
-            <span className="text-[13px] leading-[1.4] text-slate-400">
-              {tool.logo ? `${tool.name} · ` : ""}
-              {tool.caption}
+          <div className="tool-tile-inner flex h-44 cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border border-ink-800 bg-[radial-gradient(ellipse_at_center,#16213f_0%,#0d1631_55%,#080f25_100%)] px-4 text-center transition-colors duration-500 group-hover:border-blue-500/40 md:h-52">
+            {/* Logo (falls back to the name's first letters if no logo is set) */}
+            <span className="grid h-14 w-16 place-items-center md:h-[72px] md:w-20">
+              {tool.logo ? (
+                <img src={tool.logo} alt="" className="max-h-full max-w-full object-contain drop-shadow-[0_8px_20px_rgba(0,0,0,0.45)]" />
+              ) : (
+                <span className="font-display text-2xl font-bold text-blue-300">
+                  {tool.name.split(" ").map((w) => w[0]).join("").slice(0, 2)}
+                </span>
+              )}
+            </span>
+            <span className="flex flex-col gap-0.5">
+              <span className="font-display text-[17px] leading-tight font-medium text-white md:text-lg">{tool.name}</span>
+              <span className="text-[13px] leading-[1.4] text-slate-400">{tool.caption}</span>
             </span>
           </div>
         </div>
