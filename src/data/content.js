@@ -49,12 +49,12 @@ export const whatIDo = [
 // "logo" is optional: drop an official logo file in public/images/tools/
 // and put its path here. Without one, the tool's name is shown instead.
 // tilt: true turns a flat logo slightly to match the 3D Figma / VS Code icons
-// scale: logo size inside the tile (default 0.74 when tilted)
+// scale: logo size inside its square (1 = full size)
 export const tools = [
   { name: "Figma", caption: "UI/UX & prototyping", logo: "/images/figma.webp" },
-  { name: "Adobe Photoshop", caption: "Photo editing & mockups", logo: "/images/photoshop.webp", tilt: true },
-  { name: "Adobe Illustrator", caption: "Logos & vector art", logo: "/images/illustrator.webp", tilt: true },
-  { name: "VS Code", caption: "Writing the code", logo: "/images/vscode.webp" },
+  { name: "Adobe Photoshop", caption: "Photo editing & mockups", logo: "/images/photoshop.webp", tilt: true, scale: 0.74 },
+  { name: "Adobe Illustrator", caption: "Logos & vector art", logo: "/images/illustrator.webp", tilt: true, scale: 0.74 },
+  { name: "VS Code", caption: "Writing the code", logo: "/images/vscode.webp", scale: 1.08 },
   { name: "React", caption: "Front-end builds", logo: "/images/react.webp", tilt: true, scale: 0.92 },
   { name: "Tailwind CSS", caption: "Fast, clean styling", logo: "/images/tailwind.webp", tilt: true, scale: 0.95 },
 ];
