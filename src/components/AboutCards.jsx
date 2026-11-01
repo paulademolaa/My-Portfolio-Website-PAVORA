@@ -118,7 +118,7 @@ export function ToolGrid({ tools }) {
             transition: `opacity .9s var(--ease-premium) ${i * 80}ms, transform .9s var(--ease-premium) ${i * 80}ms`,
           }}
         >
-          <div className="tool-tile-inner flex h-40 cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border border-ink-800 bg-[radial-gradient(ellipse_at_center,#16213f_0%,#0d1631_55%,#080f25_100%)] px-4 text-center transition-colors duration-500 group-hover:border-blue-500/40 md:h-48">
+          <div className="tool-tile-inner flex h-44 cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border border-ink-800 bg-[radial-gradient(ellipse_at_center,#16213f_0%,#0d1631_55%,#080f25_100%)] px-4 text-center transition-colors duration-500 group-hover:border-blue-500/40 md:h-52">
             {/* Logo (falls back to the name's first letters if no logo is set) */}
             <span className="grid h-11 w-14 place-items-center md:h-[60px] md:w-[68px]">
               {tool.logo ? (
