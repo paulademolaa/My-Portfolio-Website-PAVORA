@@ -48,7 +48,7 @@ const serviceAsk = {
 };
 
 // Cards the assistant can show inside a message
-function Card({ type, filter, onAsk, onNavigate }) {
+function Card({ type, filter, limit, onAsk, onNavigate }) {
   if (type === "services") {
     return (
       <div className="grid gap-2">
@@ -137,17 +137,23 @@ function Card({ type, filter, onAsk, onNavigate }) {
   }
 
   if (type === "reviews") {
-    const quotes = upworkReviews.filter((r) => r.quote);
+    // filter = a service name, e.g. "Brand Identity" (shows matching reviews only)
+    const quoted = upworkReviews.filter((r) => r.quote && (!filter || r.service === filter));
+    if (!quoted.length) return null;
     return (
       <div className="grid gap-2">
-        {(quotes.length ? quotes : upworkReviews).slice(0, 4).map((r) => (
+        {filter && <p className="text-xs font-medium tracking-wide text-slate-400 uppercase">What a client said</p>}
+        {quoted.slice(0, limit || 3).map((r) => (
           <figure key={r.project} className="rounded-xl border border-ink-700 bg-ink-950/60 p-3">
             <div className="flex items-center justify-between gap-2">
               <Stars value={r.rating} />
               <span className="text-[11px] text-slate-500">{r.date}</span>
             </div>
-            {r.quote && <blockquote className="mt-2 text-[13px] leading-relaxed text-slate-200">“{r.quote}”</blockquote>}
-            <figcaption className="mt-1.5 text-xs text-slate-400">{r.client ? `${r.client} · ` : ""}{r.project}</figcaption>
+            <blockquote className="mt-2 text-[13px] leading-relaxed text-slate-200">“{r.quote}”</blockquote>
+            <figcaption className="mt-1.5 text-xs text-slate-400">
+              {r.project}
+              {r.location ? ` · ${r.location}` : ""}
+            </figcaption>
           </figure>
         ))}
       </div>
@@ -238,7 +244,7 @@ export default function Blocks({ blocks, onAsk, onAction, onNavigate }) {
               ))}
             </ul>
           );
-        if (b.card) return <Card key={i} type={b.card} filter={b.filter} onAsk={onAsk} onNavigate={onNavigate} />;
+        if (b.card) return <Card key={i} type={b.card} filter={b.filter} limit={b.limit} onAsk={onAsk} onNavigate={onNavigate} />;
         if (b.actions) return <Actions key={i} items={b.actions} onAction={onAction} onNavigate={onNavigate} />;
         return null;
       })}

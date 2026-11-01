@@ -35,22 +35,44 @@ export const services = [
   },
 ];
 
-// Paste each client's exact Upwork review — original wording only.
+// "What Clients Say" on the Home page — real words from Upwork.
+// (More reviews live in src/data/assistant.js and show on the FAQ page.)
 export const testimonials = [
   {
-    quote: "“Paste the client’s exact Upwork review here — original wording only.”",
-    name: "Client name",
-    role: "Role, Company · via Upwork",
+    quote:
+      "Working with Ademola was very easy and quick. He had the Figma prototype for the website ready on time, and all the details were tastefully implemented. The website development was also quick, and the website turned out exactly as expected! Highly recommend.",
+    name: "Upwork client",
+    role: "Travel Agency Website · ★ 5.0",
   },
   {
-    quote: "“Paste the client’s exact Upwork review here — original wording only.”",
-    name: "Client name",
-    role: "Role, Company · via Upwork",
+    quote:
+      "Paul was key in designing a user-friendly and beautiful interface, creating an intuitive design that met the needs of our target users. … His attention to detail and ability to turn complex requirements into clear UI designs were impressive.",
+    name: "Moses A.",
+    role: "Web Developer · SaaS Web Dashboard",
   },
   {
-    quote: "“Paste the client’s exact Upwork review here — original wording only.”",
-    name: "Client name",
-    role: "Role, Company · via Upwork",
+    quote:
+      "[Paul] delivered exactly what we needed. He crafted a cohesive brand identity that captured our vision perfectly, from logo to typography and color palette. … Great communicator, will hire again!",
+    name: "Upwork client",
+    role: "Hypsy Brand Kit · ★ 5.0",
+  },
+  {
+    quote:
+      "Paul was efficient, friendly, and highly skilled. He designed our UI in Figma with a clean, user-friendly flow and added thoughtful touches like interaction notes and responsive layouts. … Would definitely hire again.",
+    name: "Upwork client",
+    role: "Social Media Promotion Landing Page · ★ 5.0",
+  },
+  {
+    quote:
+      "Working with Paul was an exceptional experience. His expertise, excellent communication skills, and dedication make him a valuable asset to any Figma UX/UI project.",
+    name: "Adebowale A.",
+    role: "Frontend Software Developer · Portfolio Website",
+  },
+  {
+    quote:
+      "I hired Paul to help with my E-commerce website. He responded quickly and makes sure he communicates with what I want. I recommend his services and skills to anyone who is looking to have a professional e-commerce store design and development.",
+    name: "Adejoke A.",
+    role: "E-Commerce Website",
   },
 ];
 

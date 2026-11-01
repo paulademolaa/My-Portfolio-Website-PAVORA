@@ -161,6 +161,7 @@ export const topics = [
         ],
       },
       { card: "projects", filter: "Product Design" },
+      { card: "reviews", filter: "Product Design", limit: 1 },
       { actions: ["startProject"] },
     ],
     chips: ["Can you build it too?", "Which tools do you use?", "How much does it cost?"],
@@ -191,6 +192,7 @@ export const topics = [
         ],
       },
       { card: "projects", filter: "Brand Identity" },
+      { card: "reviews", filter: "Brand Identity", limit: 1 },
       { actions: ["startProject"] },
     ],
     chips: ["Graphic design", "How do you work?", "How long does it take?"],
@@ -225,6 +227,7 @@ export const topics = [
         text: "**Presentation Design** — pitch and business decks that turn complex ideas into clear visual stories. Great for investor pitches, sales decks and company profiles.",
       },
       { card: "projects", filter: "Presentations" },
+      { card: "reviews", filter: "Presentation Design", limit: 1 },
       { actions: ["startProject"] },
     ],
     chips: ["Brand identity", "How do you work?", "Start a project"],
@@ -255,6 +258,7 @@ export const topics = [
         ],
       },
       { card: "projects", filter: "Web Development" },
+      { card: "reviews", filter: "Web Development", limit: 1 },
       { actions: ["startProject"] },
     ],
     chips: ["Which tools do you use?", "Do you offer maintenance?", "Can you redesign my site?"],
@@ -374,9 +378,14 @@ export const topics = [
   {
     id: "reviews",
     ask: "What do clients say?",
-    keywords: { review: 4, say: 1, happy: 1, good: 1 },
+    keywords: { review: 4, testimonial: 4, feedback: 2, recommend: 2, say: 1, happy: 1, good: 1, trust: 2 },
     phrases: ["what do clients say", "client reviews", "past clients", "can i trust", "is he good"],
-    answer: [{ text: "Here's what clients say about working with Paul:" }, { card: "reviews" }, { card: "rating" }],
+    answer: [
+      { text: "Here's what clients say about working with Paul, in their own words:" },
+      { card: "reviews" },
+      { card: "rating" },
+      { actions: ["faq"] },
+    ],
     chips: ["Show me your work", "Start a project"],
   },
   {
@@ -596,17 +605,135 @@ export const topics = [
   },
 ];
 
-// Real ratings from Paul's public Upwork profile (job title + star rating).
-// Add written quotes later with  quote: "…", client: "…"
+// Real Upwork reviews (client's own words). Some jobs were done on a second
+// Upwork account under another name — that name is replaced with [Paul].
+//   service: which service the job was for (used to show matching reviews)
+//   tags:    what the client endorsed on Upwork
 export const upworkRating = { score: 4.9, count: 12 };
 export const upworkReviews = [
-  { project: "Figma Website Designer for a Nonprofit Animal Shelter", rating: 5.0, date: "Apr 2026" },
-  { project: "UI/UX & Figma Designer – Modern Designs", rating: 5.0, date: "Feb 2026" },
-  { project: "Figma Design for a New Application", rating: 5.0, date: "Feb 2026" },
-  { project: "Magento UI Refresh", rating: 5.0, date: "Nov 2025" },
-  { project: "Travel Agency Website Development", rating: 5.0, date: "Oct 2025" },
-  { project: "Figma UI Designer – Social Media Promotion Landing Page", rating: 5.0, date: "Aug 2025" },
-  { project: "Figma Design Lander (mobile & desktop)", rating: 5.0, date: "Jul 2025" },
+  {
+    project: "Travel Agency Website Development",
+    service: "Web Development",
+    rating: 5.0,
+    date: "Oct 2025",
+    quote:
+      "Working with Ademola was very easy and quick. He had the Figma prototype for the website ready on time, and all the details were tastefully implemented. The website development was also quick, and the website turned out exactly as expected! Highly recommend.",
+    tags: ["Collaborative", "Reliable", "Committed to Quality", "Detail Oriented"],
+  },
+  {
+    project: "Figma UI Designer for Social Media Promotion Landing Page",
+    service: "Product Design",
+    rating: 5.0,
+    date: "Aug 2025",
+    quote:
+      "Paul was efficient, friendly, and highly skilled. He designed our UI in Figma with a clean, user-friendly flow and added thoughtful touches like interaction notes and responsive layouts. He even accounted for edge cases and usability details. Would definitely hire again.",
+    tags: ["Detail Oriented", "Committed to Quality"],
+  },
+  {
+    project: "Hypsy Brand Kit",
+    service: "Brand Identity",
+    rating: 5.0,
+    date: "Aug 2025",
+    quote:
+      "[Paul] delivered exactly what we needed. He crafted a cohesive brand identity that captured our vision perfectly, from logo to typography and color palette. Everything was well-documented, and he provided clear guidelines for consistent usage. Great communicator, will hire again!",
+    tags: ["Clear Communicator", "Detail Oriented", "Committed to Quality"],
+  },
+  {
+    project: "Figma Website Designer for a Nonprofit Animal Shelter",
+    service: "Product Design",
+    rating: 5.0,
+    date: "Apr 2026",
+    location: "USA",
+    quote: "Working with Paul was great. He was fast, responsive, and helpful in providing design guidance.",
+    tags: ["Clear Communicator", "Accountable for Outcomes"],
+  },
+  {
+    project: "Creative UI/UX & Graphics Design",
+    service: "Product Design",
+    rating: 5.0,
+    date: "Dec 2024",
+    location: "Nigeria",
+    quote:
+      "Paul is a skilled designer who delivers high-quality work with great attention to detail. He's creative, responsive, and easy to communicate with, ensuring client feedback is incorporated. His ability to execute my projects quickly without compromising quality is impressive. Highly recommend Paul for any UI/UX design needs!",
+    tags: ["Committed to Quality", "Detail Oriented", "Clear Communicator", "Collaborative", "Reliable"],
+  },
+  {
+    project: "Design Enhancement for Pitch Deck",
+    service: "Presentation Design",
+    rating: 5.0,
+    date: "Mar 2026",
+    location: "UK",
+    quote: "Very good experience with [Paul]. Awesome outcome.",
+    tags: ["Committed to Quality", "Clear Communicator", "Accountable for Outcomes"],
+  },
+  {
+    project: "UI/UX & Figma Designer – Modern Designs",
+    service: "Product Design",
+    rating: 5.0,
+    date: "Feb 2026",
+    location: "USA",
+    quote: "Amazing experience! Fast, professional, and delivered exactly what was needed. Highly recommended!",
+    tags: ["Reliable", "Committed to Quality", "Clear Communicator", "Detail Oriented", "Accountable for Outcomes"],
+  },
+  {
+    project: "Frontend Designer Needed",
+    service: "Web Development",
+    rating: 5.0,
+    date: "Feb 2025",
+    location: "Nigeria",
+    quote:
+      "Paul did an excellent job and very quick and exactly as expected. He has helped me a lot with various projects. He was always very professional, responsive, and polite. I would highly recommend him without any hesitations.",
+    tags: ["Committed to Quality", "Reliable", "Clear Communicator", "Professional"],
+  },
+  {
+    project: "UI/UX Page Redesign",
+    service: "Product Design",
+    rating: 5.0,
+    date: "Dec 2024",
+    quote:
+      "Paul is an amazing Figma designer, he really helped me get the kind of design I wanted. He was available when I needed him and totally understood my requirements. Would definitely like to work with him again for my future projects.",
+    tags: ["Committed to Quality", "Clear Communicator", "Reliable", "Collaborative"],
+  },
+  {
+    project: "Landing Page Development for AI Agency",
+    service: "Web Development",
+    rating: 4.9,
+    date: "Feb 2025",
+    location: "USA",
+    quote: "Successful project! Thanks Paul and best of luck with future project. Cheers - Milan",
+  },
+  // Rated 5.0 on Upwork, no written review
+  { project: "Figma Design for a New Application", service: "Product Design", rating: 5.0, date: "Feb 2026" },
+  { project: "Magento UI Refresh", service: "Product Design", rating: 5.0, date: "Nov 2025" },
+  { project: "Figma Design Lander (mobile & desktop)", service: "Product Design", rating: 5.0, date: "Jul 2025" },
+];
+
+// Testimonials clients wrote on Paul's Upwork profile (marked Verified)
+export const upworkTestimonials = [
+  {
+    quote:
+      "I had the pleasure of working with Paul as a UI Designer on the SaaS Web Dashboard - Figma UI/UX Project. Paul was key in designing a user-friendly and beautiful interface, creating an intuitive design that met the needs of our target users. Throughout the project, Paul demonstrated professionalism and expertise in Figma. He collaborated smoothly with the team, providing valuable insights and high-quality design assets. His attention to detail and ability to turn complex requirements into clear UI designs were impressive. I highly recommend Paul for any Figma UI/UX design project.",
+    name: "Moses A.",
+    role: "Web Developer",
+    project: "SaaS Web Dashboard – Figma UI/UX",
+    date: "Apr 2025",
+  },
+  {
+    quote:
+      "Working with Paul was an exceptional experience. His expertise, excellent communication skills, and dedication make him a valuable asset to any Figma UX/UI project. I highly recommend his services and wouldn't hesitate to collaborate with him again in the future.",
+    name: "Adebowale A.",
+    role: "Frontend Software Developer",
+    project: "Portfolio Website Design",
+    date: "Apr 2025",
+  },
+  {
+    quote:
+      "I hired Paul to help with my E-commerce website. He responded quickly and makes sure he communicates with what I want. I recommend his services and skills to anyone who is looking to have a professional e-commerce store design and development. Thanks Paul.",
+    name: "Adejoke A.",
+    role: "E-commerce store owner",
+    project: "E-Commerce Website",
+    date: "Feb 2025",
+  },
 ];
 
 // Shown when the assistant isn't sure what was asked

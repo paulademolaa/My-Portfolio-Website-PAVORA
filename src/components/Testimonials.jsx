@@ -14,12 +14,18 @@ function QuoteCard({ item, active }) {
     >
       <div className="flex flex-col gap-4">
         <Icon name="quote" className="size-7 text-slate-500" strokeWidth={2} />
-        <blockquote className="text-lg leading-[1.6]">{item.quote}</blockquote>
+        <blockquote className="text-lg leading-[1.6]">“{item.quote}”</blockquote>
       </div>
       <figcaption className="flex items-center gap-3">
-        <span className="grid size-11 place-items-center rounded-full bg-ink-700 text-[15px] font-medium">
-          {item.name.charAt(0)}
-        </span>
+        {item.name === "Upwork client" ? (
+          <span className="grid size-11 place-items-center rounded-full bg-upwork text-white">
+            <Icon name="upwork" className="size-5" />
+          </span>
+        ) : (
+          <span className="grid size-11 place-items-center rounded-full bg-ink-700 text-[15px] font-medium">
+            {item.name.charAt(0)}
+          </span>
+        )}
         <span className="flex flex-col gap-0.5">
           <span className="font-medium leading-[1.6]">{item.name}</span>
           <span className="text-sm leading-[1.6] text-slate-400">{item.role}</span>

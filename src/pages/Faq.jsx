@@ -3,7 +3,7 @@ import Button from "../components/Button.jsx";
 import Icon from "../components/Icons.jsx";
 import Reveal from "../components/Reveal.jsx";
 import ChatPanel from "../assistant/ChatPanel.jsx";
-import { topics, upworkRating, upworkReviews } from "../data/assistant.js";
+import { topics, upworkRating, upworkReviews, upworkTestimonials } from "../data/assistant.js";
 import { site } from "../data/site.js";
 
 // FAQ questions come from src/data/assistant.js (any topic with a `faq`),
@@ -152,27 +152,68 @@ export default function Faq() {
       <section className="mx-auto max-w-[1280px] px-5 pb-24 md:px-10 md:pb-32">
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <Reveal as="h2" className="font-display text-[32px] leading-[1.2] font-medium tracking-[-0.01em] md:text-[40px]">
-            Recent client reviews
+            What clients say
           </Reveal>
           <Reveal as="p" delay={100} className="max-w-[420px] text-slate-300 md:text-right">
-            Verified 5-star jobs from Upwork.
+            Real reviews from Upwork, in clients’ own words.
           </Reveal>
         </div>
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {upworkReviews.map((r, i) => (
+
+        {/* Verified testimonials */}
+        <div className="mt-10 grid gap-4 lg:grid-cols-3">
+          {upworkTestimonials.map((t, i) => (
+            <Reveal
+              key={t.name}
+              delay={i * 80}
+              className="flex flex-col gap-6 rounded-3xl bg-gradient-to-br from-blue-600/25 via-ink-900 to-ink-900 p-7 ring-1 ring-blue-500/25"
+            >
+              <Icon name="quote" className="size-7 text-blue-400" />
+              <p className="line-clamp-[9] leading-[1.7] text-slate-100">“{t.quote}”</p>
+              <span className="mt-auto flex items-center gap-3">
+                <span className="grid size-11 place-items-center rounded-full bg-ink-700 font-medium">{t.name.charAt(0)}</span>
+                <span>
+                  <span className="flex items-center gap-1.5 font-medium">
+                    {t.name}
+                    <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 px-2 py-0.5 text-[11px] text-emerald-300">
+                      <Icon name="check" className="size-3" /> Verified
+                    </span>
+                  </span>
+                  <span className="text-sm text-slate-400">{t.role} · {t.project}</span>
+                </span>
+              </span>
+            </Reveal>
+          ))}
+        </div>
+
+        {/* Job reviews */}
+        <div className="mt-4 columns-1 gap-4 sm:columns-2 lg:columns-3">
+          {upworkReviews.filter((r) => r.quote).map((r, i) => (
             <Reveal
               key={r.project}
-              delay={i * 70}
-              className="flex flex-col gap-4 rounded-3xl border border-ink-800 bg-ink-900 p-6 transition-all duration-500 ease-(--ease-premium) hover:-translate-y-1 hover:border-blue-500/50"
+              delay={(i % 3) * 70}
+              className="mb-4 flex break-inside-avoid flex-col gap-4 rounded-3xl border border-ink-800 bg-ink-900 p-6 transition-all duration-500 ease-(--ease-premium) hover:-translate-y-1 hover:border-blue-500/50"
             >
               <span className="flex items-center justify-between">
-                <Stars value={r.rating} />
+                <span className="flex items-center gap-2">
+                  <Stars value={r.rating} />
+                  <span className="text-sm font-medium">{r.rating.toFixed(1)}</span>
+                </span>
                 <span className="text-sm text-slate-500">{r.date}</span>
               </span>
-              {r.quote && <p className="leading-[1.6] text-slate-200">“{r.quote}”</p>}
-              <span className="mt-auto">
+              <p className="leading-[1.65] text-slate-200">“{r.quote}”</p>
+              {r.tags && (
+                <span className="flex flex-wrap gap-1.5">
+                  {r.tags.slice(0, 3).map((tag) => (
+                    <span key={tag} className="rounded-full bg-ink-800 px-2.5 py-1 text-[12px] text-slate-300">{tag}</span>
+                  ))}
+                </span>
+              )}
+              <span className="border-t border-ink-800 pt-4">
                 <span className="block font-medium">{r.project}</span>
-                {r.client && <span className="text-sm text-slate-400">{r.client}</span>}
+                <span className="text-sm text-slate-400">
+                  {r.service}
+                  {r.location ? ` · ${r.location}` : ""}
+                </span>
               </span>
             </Reveal>
           ))}
