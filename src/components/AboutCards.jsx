@@ -119,14 +119,14 @@ export function ToolGrid({ tools }) {
           }}
         >
           <div className="tool-tile-inner flex h-44 cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border border-ink-800 bg-[radial-gradient(ellipse_at_center,#16213f_0%,#0d1631_55%,#080f25_100%)] px-4 text-center transition-colors duration-500 group-hover:border-blue-500/40 md:h-52">
-            {/* Logo (falls back to the name's first letters if no logo is set) */}
-            <span className="grid h-11 w-14 place-items-center md:h-[60px] md:w-[68px]">
+            {/* Logo — every logo sits in the same square so they line up */}
+            <span className="grid size-14 shrink-0 place-items-center md:size-16">
               {tool.logo ? (
                 <img
                   src={tool.logo}
                   alt=""
-                  style={tool.tilt ? { transform: `rotate(14deg) scale(${tool.scale || 0.74})` } : undefined}
-                  className="max-h-full max-w-full object-contain drop-shadow-[0_8px_20px_rgba(0,0,0,0.45)]"
+                  style={{ transform: `rotate(${tool.tilt ? 14 : 0}deg) scale(${tool.scale || 1})` }}
+                  className="size-full object-contain drop-shadow-[0_8px_20px_rgba(0,0,0,0.45)]"
                 />
               ) : (
                 <span className="font-display text-2xl font-bold text-blue-300">
@@ -134,9 +134,9 @@ export function ToolGrid({ tools }) {
                 </span>
               )}
             </span>
-            <span className="flex flex-col gap-0.5">
-              <span className="font-display text-[17px] leading-tight font-medium text-white md:text-lg">{tool.name}</span>
-              <span className="text-[13px] leading-[1.4] text-slate-400">{tool.caption}</span>
+            <span className="flex flex-col gap-1">
+              <span className="font-display text-[15px] leading-tight font-medium whitespace-nowrap text-white sm:text-lg">{tool.name}</span>
+              <span className="text-xs leading-[1.4] whitespace-nowrap text-slate-400 sm:text-[13px]">{tool.caption}</span>
             </span>
           </div>
         </div>
