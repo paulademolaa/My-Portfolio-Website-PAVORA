@@ -122,7 +122,12 @@ export function ToolGrid({ tools }) {
             {/* Logo (falls back to the name's first letters if no logo is set) */}
             <span className="grid h-11 w-14 place-items-center md:h-[60px] md:w-[68px]">
               {tool.logo ? (
-                <img src={tool.logo} alt="" className="max-h-full max-w-full object-contain drop-shadow-[0_8px_20px_rgba(0,0,0,0.45)]" />
+                <img
+                  src={tool.logo}
+                  alt=""
+                  style={tool.tilt ? { transform: `rotate(14deg) scale(${tool.scale || 0.74})` } : undefined}
+                  className="max-h-full max-w-full object-contain drop-shadow-[0_8px_20px_rgba(0,0,0,0.45)]"
+                />
               ) : (
                 <span className="font-display text-2xl font-bold text-blue-300">
                   {tool.name.split(" ").map((w) => w[0]).join("").slice(0, 2)}
