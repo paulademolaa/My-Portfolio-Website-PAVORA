@@ -3,15 +3,31 @@ import { initialState, reply, startChatBrief, startLead, welcomeMessage } from "
 import { onCalendlyBooked } from "./calendly.js";
 
 // Keeps the conversation going: messages, "typing…" state, sending the
-// project brief. The conversation is remembered while the tab is open.
-function load(key) {
+// project brief. The conversation and the visitor's details (name, email,
+// answers so far) are remembered on this device for 30 days, so a returning
+// visitor carries on from their last chat instead of starting again.
+const KEEP_FOR = 30 * 24 * 60 * 60 * 1000;
+const MEMORY_KEY = "pavora-assistant-memory"; // shared by the widget and the FAQ chat
+
+function read(key) {
   try {
-    const saved = JSON.parse(sessionStorage.getItem(key));
-    if (saved?.messages?.length) return saved;
+    const saved = JSON.parse(localStorage.getItem(key));
+    if (saved && Date.now() - (saved.savedAt || 0) < KEEP_FOR) return saved;
+  } catch {
+    /* storage may be unavailable — that's fine */
+  }
+  return null;
+}
+function write(key, value) {
+  try {
+    localStorage.setItem(key, JSON.stringify({ ...value, savedAt: Date.now() }));
   } catch {
     /* ignore */
   }
-  return null;
+}
+function load(key) {
+  const saved = read(key);
+  return saved?.messages?.length ? saved : null;
 }
 
 let nextId = 1;
@@ -23,16 +39,17 @@ export default function useAssistant(storageKey = "pavora-assistant") {
   const [messages, setMessages] = useState(
     saved?.messages || [{ id: id(), from: "bot", ...welcomeMessage() }],
   );
-  const [state, setState] = useState(saved?.state || initialState());
+  const [state, setState] = useState(() => {
+    const s = saved?.state || initialState();
+    // details given in the other chat (widget ↔ FAQ page) are shared
+    return { ...s, memory: { ...(read(MEMORY_KEY)?.memory || {}), ...(s.memory || {}) } };
+  });
   const [typing, setTyping] = useState(false);
   const timer = useRef();
 
   useEffect(() => {
-    try {
-      sessionStorage.setItem(storageKey, JSON.stringify({ messages: messages.slice(-60), state }));
-    } catch {
-      /* storage may be unavailable — that's fine */
-    }
+    write(storageKey, { messages: messages.slice(-60), state });
+    write(MEMORY_KEY, { memory: state.memory || {} });
   }, [messages, state, storageKey]);
 
   useEffect(() => () => clearTimeout(timer.current), []);
@@ -66,7 +83,9 @@ export default function useAssistant(storageKey = "pavora-assistant") {
         ok = false;
       }
       setTyping(false);
-      setState({ ...current, lead: null });
+      // Brief sent: keep who they are, clear the project answers for next time
+      const m = current.memory || {};
+      setState({ ...current, lead: null, memory: ok ? { name: m.name, email: m.email } : { ...m, ...brief } });
       deliver([
         ok
           ? {
@@ -97,6 +116,14 @@ export default function useAssistant(storageKey = "pavora-assistant") {
       if (!clean || typing) return;
       setMessages((m) => [...m, { id: id(), from: "user", text: clean }]);
 
+      // Back from booking a call: carry on with the brief where it stopped
+      if (/^(continue|carry on)( my| the)? (brief|chat|here)|^continue here$/i.test(clean) && !state.lead) {
+        const r = startChatBrief(state);
+        setState(r.state);
+        deliver(r.messages);
+        return;
+      }
+
       if (/^start over$/i.test(clean) && !state.lead) {
         const r = startLead(state);
         setState(r.state);
@@ -126,26 +153,35 @@ export default function useAssistant(storageKey = "pavora-assistant") {
   );
 
   // Confirm in the chat when a call is booked in the Calendly pop-up
+  const memoryRef = useRef(state.memory);
+  memoryRef.current = state.memory;
   useEffect(
     () =>
-      onCalendlyBooked(() =>
+      onCalendlyBooked(() => {
+        const m = memoryRef.current || {};
+        const started = m.name || m.email || m.service;
         deliver([
           {
             answer: [
               { text: "🎉 **Your call is booked!** Calendly has emailed you the details and the Google Meet link." },
-              { text: "If you have links or files to share before the call, you can add them here or email Paul." },
+              {
+                text: started
+                  ? "Want to keep going here too? I've saved what you told me, so we'll pick up right where you stopped."
+                  : "If you have links or files to share before the call, you can add them here or email Paul.",
+              },
             ],
-            chips: ["Show me your work", "How do you work?"],
+            chips: started ? ["Continue my brief here", "Show me your work"] : ["Show me your work", "How do you work?"],
           },
-        ]),
-      ),
+        ]);
+      }),
     [deliver],
   );
 
   const reset = useCallback(() => {
     clearTimeout(timer.current);
     setTyping(false);
-    setState(initialState());
+    // New chat, but keep the visitor's name and email
+    setState((s) => initialState({ name: s.memory?.name, email: s.memory?.email }));
     setMessages([{ id: id(), from: "bot", ...welcomeMessage() }]);
   }, []);
 

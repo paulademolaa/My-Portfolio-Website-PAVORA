@@ -146,6 +146,43 @@ const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const CALL_CHIP = "I'd rather explain on a call";
 const WANTS_CALL = /(book|schedule|call|consult|meeting|talk (to|with) paul|google meet|calendly)/;
 
+// "I've said it already", "check our chat", "as I said earlier"…
+const RECALL = /(already|earlier|before|above|i (have |ve |had )?(said|told|given|gave|dropped|sent|typed|shared|mentioned)|i told you|as i said|check (our|the|my|this) chat|scroll up)/;
+// "what are you saying", "I don't understand"…
+const CONFUSED = /^(what|huh|eh|sorry|pardon)\??$|what (are|r) (you|u) (saying|talking|asking)|what do you mean|(don ?t|dont|do not) (understand|get it)|i m confused|confusing/;
+const FIND_EMAIL = /[^\s@<>()"',;:]+@[^\s@<>()"',;:]+\.[a-z]{2,}/i;
+
+// Pulls a clean name out of replies like "David, I have said it earlier"
+export function cleanName(text) {
+  let t = text
+    .replace(FIND_EMAIL, " ")
+    .replace(/^(hi|hello|hey)[,!.\s]+/i, "")
+    .replace(/^(my name is|my name's|name is|name:|i am|i'm|im|it's|its|this is|call me)\s+/i, "");
+  // stop at the first word that isn't part of a name
+  t = t.split(/[,.!?;:(]|\s(?:and|but|i|i've|i'm|im|have|said|already|earlier|from|here|please|again|by|the|as)\b/i)[0];
+  const words = t.trim().split(/\s+/).filter((w) => /^[\p{L}'-]+$/u.test(w)).slice(0, 3);
+  const name = words.join(" ");
+  if (name.length < 2) return "";
+  return name.replace(/\b\p{Ll}/gu, (c) => c.toUpperCase());
+}
+
+const STEP_LABEL = {
+  name: "your name",
+  email: "your email",
+  service: "the service you need",
+  timeline: "when you'd like to start",
+  budget: "your budget range",
+  about: "what the project is",
+  goals: "your goals",
+  audience: "who it's for",
+  inspiration: "any inspiration",
+};
+
+// The first question we don't have an answer to yet
+function nextMissing(data) {
+  return ORDER.find((k) => data[k] == null || (data[k] === "" && k !== "inspiration"));
+}
+
 const LEAD_STEPS = {
   choose: {
     ask: "Great, let's get your project to Paul. 🙌 **How would you like to tell him about it?**",
@@ -244,21 +281,20 @@ function handleLead(message, state) {
   }
 
   // Switch to a call: from the first choice, while describing the project, or at the summary
-  const canSwitch = lead.step === "choose" || lead.step === "confirm" || PROJECT_STEPS.includes(lead.step);
+  // (any question; "call me David" on the name question is a name, not a booking)
+  const canSwitch = !(lead.step === "name" && /^(call me|they call me)\b/.test(low)) && !FIND_EMAIL.test(text);
   if (canSwitch && WANTS_CALL.test(low) && !/explain it here/.test(low)) {
-    return { messages: [bookingMessage(lead.data)], state: { ...state, lead: null, lastTopic: "call" } };
+    return { messages: [bookingMessage(lead.data)], state: { ...state, memory: { ...lead.data }, lead: null, lastTopic: "call" } };
   }
 
   if (lead.step === "choose") {
-    if (/here|chat|type|write|explain/.test(low)) {
-      return { messages: [leadPrompt("name", {})], state: { ...state, lead: { step: "name", data: {} } } };
-    }
+    if (/here|chat|type|write|explain|continue|carry on/.test(low)) return resumeBrief(state);
     return { messages: [leadPrompt("choose", {})], state };
   }
 
   if (lead.step === "confirm") {
     if (/start over|restart|edit|change/.test(low)) {
-      return { messages: [leadPrompt("name", {})], state: { ...state, lead: { step: "name", data: {} } } };
+      return { messages: [leadPrompt("name", {})], state: { ...state, memory: {}, lead: { step: "name", data: {} } } };
     }
     if (/send|yes|yep|correct|looks good|confirm|submit|ok/.test(low)) {
       const brief = { ...lead.data, details: projectDetails(lead.data) };
@@ -270,19 +306,64 @@ function handleLead(message, state) {
     };
   }
 
-  const data = { ...lead.data };
+  const data = { ...(state.memory || {}), ...lead.data };
+  const ask = (t, chips = []) => ({ messages: [{ answer: [{ text: t }], chips }], state: { ...state, lead: { ...lead, data } } });
+
+  // An email anywhere in the reply is remembered, whichever question we're on
+  const emailInText = text.match(FIND_EMAIL)?.[0].replace(/[.,]$/, "");
+  if (emailInText && EMAIL.test(emailInText) && lead.step !== "email") data.email = data.email || emailInText;
+
+  // "What are you saying?" — explain the question again instead of treating it as an answer
+  if (CONFUSED.test(low) && !emailInText) {
+    const plain = {
+      name: "Sorry, that wasn't clear! I just need **your name** so Paul knows who he's talking to.",
+      email: "Sorry for the confusion! I just need **the email address Paul should reply to**, e.g. name@company.com.",
+    }[lead.step];
+    const p = leadPrompt(lead.step, data);
+    return { messages: [plain ? { answer: [{ text: plain }], chips: [] } : { ...p, answer: [{ text: "Sorry, let me ask that more simply." }, ...p.answer] }], state };
+  }
+
+  // "I've said it already" on a later question: they mean details we already have
+  if (!["name", "email"].includes(lead.step) && RECALL.test(low) && text.length < 90 && !emailInText) {
+    const have = [data.name && `your name (**${data.name}**)`, data.email && `your email (**${data.email}**)`].filter(Boolean);
+    const p = leadPrompt(lead.step, data);
+    return {
+      messages: [
+        {
+          ...p,
+          answer: [
+            { text: have.length ? `You're right, I already have ${have.join(" and ")}, so no need to type them again. Just this one:` : "Thanks! Just this one:" },
+            ...p.answer,
+          ],
+        },
+      ],
+      state: { ...state, lead: { ...lead, data } },
+    };
+  }
+
   if (lead.step === "name") {
-    if (text.length < 2) return { messages: [leadPrompt("name", data)], state };
-    data.name = text.replace(/^(my name is|i am|i'm|im|it's|its)\s+/i, "").slice(0, 80);
-  } else if (lead.step === "email") {
-    const found = text.match(/[^\s@]+@[^\s@]+\.[^\s@]{2,}/);
-    if (!found || !EMAIL.test(found[0])) {
-      return {
-        messages: [{ answer: [{ text: "Hmm, that doesn't look like an email address. Could you check it? (e.g. **name@company.com**)" }], chips: [] }],
-        state,
-      };
+    const name = cleanName(text);
+    if (!name) {
+      if (RECALL.test(low) && data.name) {
+        // fall through with the remembered name
+      } else if (RECALL.test(low)) {
+        return ask("Sorry, I couldn't find your name in our chat. Could you type it once more?");
+      } else {
+        return { messages: [leadPrompt("name", data)], state };
+      }
+    } else {
+      data.name = name.slice(0, 80);
     }
-    data.email = found[0].replace(/[.,]$/, "");
+  } else if (lead.step === "email") {
+    if (emailInText && EMAIL.test(emailInText)) {
+      data.email = emailInText;
+    } else if (RECALL.test(low) && data.email) {
+      // they already gave it: use the one we have
+    } else if (RECALL.test(low)) {
+      return ask("Sorry, I can't find an email in our chat. Could you type it once more? (e.g. **name@company.com**)");
+    } else {
+      return ask("Hmm, that doesn't look like an email address. Could you check it? (e.g. **name@company.com**)");
+    }
   } else if (lead.step === "inspiration") {
     data.inspiration = /^(skip|none|no|nope|nothing|n\/a|na)$/.test(low) ? "" : text.slice(0, 1000);
   } else if (PROJECT_STEPS.includes(lead.step)) {
@@ -302,27 +383,71 @@ function handleLead(message, state) {
     data[lead.step] = text.slice(0, 120);
   }
 
-  const next = ORDER[ORDER.indexOf(lead.step) + 1];
+  // Next question we don't already have an answer to
+  const memory = { ...data };
+  const next = nextMissing(data);
   if (!next) {
-    return { messages: [leadSummary(data)], state: { ...state, lead: { step: "confirm", data } } };
+    return { messages: [leadSummary(data)], state: { ...state, memory, lead: { step: "confirm", data } } };
   }
-  return { messages: [leadPrompt(next, data)], state: { ...state, lead: { step: next, data } } };
+  const prompt = leadPrompt(next, data);
+  if (lead.step === "name" && data.email && next !== "email") {
+    prompt.answer = [{ text: `Nice to meet you, ${data.name}! I've already got your email as **${data.email}**.` }, ...prompt.answer];
+  }
+  return { messages: [prompt], state: { ...state, memory, lead: { step: next, data } } };
+}
+
+// Carry on from whatever the visitor has already told us (name, email, answers…)
+function resumeBrief(state) {
+  const data = { ...(state.memory || {}) };
+  const step = nextMissing(data);
+  const known = ORDER.filter((k) => k !== "inspiration" && data[k]);
+  if (!step) {
+    return { messages: [leadSummary(data)], state: { ...state, lead: { step: "confirm", data }, lastTopic: "lead" } };
+  }
+  const messages = [];
+  if (known.length) {
+    const who = data.name ? `, ${data.name.split(" ")[0]}` : "";
+    const have = [data.email && `your email (**${data.email}**)`, known.length > 2 && "your answers so far"].filter(Boolean);
+    messages.push({
+      answer: [
+        {
+          text: `Welcome back${who}! I've kept ${have.length ? have.join(" and ") : "what you told me"}, so we'll carry on from where you left off: ${STEP_LABEL[step]}.`,
+        },
+      ],
+    });
+  }
+  const prompt = leadPrompt(step, data);
+  messages.push(prompt);
+  return { messages, state: { ...state, lead: { step, data }, lastTopic: "lead" } };
 }
 
 // "Start a project": first ask how they'd like to share it
 export function startLead(state) {
-  return { messages: [leadPrompt("choose", {})], state: { ...state, lead: { step: "choose", data: {} }, lastTopic: "lead" } };
+  return { messages: [leadPrompt("choose", {})], state: { ...state, lead: { step: "choose", data: { ...(state.memory || {}) } }, lastTopic: "lead" } };
 }
 
-// "Explain it here": skip the choice and go straight to the questions
+// "Explain it here": skip the choice and go straight to the questions (or resume them)
 export function startChatBrief(state) {
-  return { messages: [leadPrompt("name", {})], state: { ...state, lead: { step: "name", data: {} }, lastTopic: "lead" } };
+  return resumeBrief(state);
 }
 
 /* ---------------- Main entry ---------------- */
 
-export function initialState() {
-  return { lead: null, lastTopic: null };
+export function initialState(memory = {}) {
+  return { lead: null, lastTopic: null, memory };
+}
+
+// Outside the brief, still remember an email or "my name is…" if the visitor shares it
+function remember(message, state) {
+  const memory = { ...(state.memory || {}) };
+  const email = message.match(FIND_EMAIL)?.[0].replace(/[.,]$/, "");
+  if (email && EMAIL.test(email)) memory.email = email;
+  const named = message.match(/\b(?:my name is|my name's|i am|i'm|call me)\s+(.+)/i);
+  if (named && !/\b(looking|interested|a |an |the |not |just |here|from|in |working)/i.test(named[1])) {
+    const n = cleanName(named[1]);
+    if (n) memory.name = n;
+  }
+  return { ...state, memory };
 }
 
 export function welcomeMessage() {
@@ -332,6 +457,7 @@ export function welcomeMessage() {
 // Returns { messages: [{answer, chips}], state, submit? }
 export function reply(message, state) {
   if (state.lead && state.lead.step !== "sending") return handleLead(message, state);
+  state = remember(message, state);
 
   const text = normalize(message);
   const toks = tokens(message);
@@ -372,8 +498,14 @@ export function reply(message, state) {
     for (const q of relatedQuestions(message, [best.t.id], 2)) if (!chips.includes(q)) chips.push(q);
   }
 
+  // "Book a call" buttons get the visitor's name/email filled in when we know them
+  const m = state.memory || {};
+  const answer = best.t.answer.map((b) =>
+    b.actions?.includes("bookCall") ? { ...b, prefill: { name: m.name, email: m.email } } : b,
+  );
+
   return {
-    messages: [{ answer: best.t.answer, chips: chips.slice(0, 4) }],
+    messages: [{ answer, chips: chips.slice(0, 4) }],
     state: { ...state, lastTopic: best.t.id },
   };
 }
