@@ -118,6 +118,20 @@ export default function Project() {
           {project.summary}
         </Reveal>
 
+        {project.link && (
+          <Reveal delay={260} className="mt-8">
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noreferrer"
+              className="group inline-flex items-center gap-2 rounded-full bg-blue-600 py-3 pr-5 pl-6 text-[15px] font-medium text-white shadow-[0_8px_30px_-8px_rgba(37,99,235,0.6)] transition-all duration-300 hover:bg-blue-700 active:scale-[0.97]"
+            >
+              View live website
+              <Icon name="arrow-up-right" className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </a>
+          </Reveal>
+        )}
+
         <Reveal delay={300} className="mt-12 grid grid-cols-2 gap-x-6 gap-y-6 md:mt-16 md:grid-cols-4">
           {meta.map(([name, value]) => (
             <div key={name} className="flex flex-col gap-2 border-t border-ink-800 pt-3">
