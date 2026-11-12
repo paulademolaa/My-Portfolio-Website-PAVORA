@@ -26,11 +26,15 @@ function Hero() {
             <span className="absolute inline-flex size-full animate-ping rounded-full bg-blue-500 opacity-60" />
             <span className="relative inline-flex size-2 rounded-full bg-blue-500" />
           </span>
-          <span className="text-xs leading-[1.6] text-slate-400 sm:text-sm">{site.location}</span>
+          {/* very small phones (under 380px) get the shorter line so it stays on one line */}
+          <span className="text-xs leading-[1.6] whitespace-nowrap text-slate-400 sm:text-sm">
+            <span className="min-[380px]:hidden">{site.locationShort}</span>
+            <span className="hidden min-[380px]:inline">{site.location}</span>
+          </span>
         </div>
 
         {/* Big headline. Everything inside uses "em" so it scales with the font size. */}
-        <h1 className="relative mt-8 font-display text-[64px] leading-[0.95] font-bold tracking-[-0.04em] uppercase sm:text-[104px] lg:text-[160px]">
+        <h1 className="relative mt-8 font-display text-[54px] leading-[0.95] min-[360px]:text-[64px] font-bold tracking-[-0.04em] uppercase sm:text-[104px] lg:text-[160px]">
           <span className="line-mask" style={{ "--delay": "150ms" }}>
             <span>Product</span>
           </span>
