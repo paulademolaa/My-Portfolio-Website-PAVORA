@@ -7,6 +7,7 @@ export const site = {
   brand: "PAVORA",
   tagline: "Designed with Vision. Built for Impact.",
   location: "Independent Designer · Nigeria · Worldwide",
+  locationShort: "Nigeria · Working Worldwide", // used on very small phones
 
   // Shown on the Contact page, in the footer and by the chatbot.
   // The contact form opens the visitor's email app addressed to this.

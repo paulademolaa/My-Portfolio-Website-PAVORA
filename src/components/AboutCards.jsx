@@ -76,11 +76,11 @@ export function StatCards() {
             // Each card starts lower than the one before and rises into line
             // (on phones and tablets only the right-hand column steps down, by less)
             style={{ transform: `translateY(${(1 - progress) * (isPhone ? (i % 2) * 32 : i * 56)}px)` }}
-            className="group flex aspect-[5/4] cursor-default flex-col justify-between rounded-2xl border border-ink-800 bg-ink-900 p-5 transition-colors duration-500 hover:border-ink-700 hover:bg-ink-800 md:aspect-[16/8] md:p-7 xl:aspect-[4/3.4] xl:p-6"
+            className="group flex aspect-[5/4] cursor-default flex-col justify-between rounded-2xl border border-ink-800 bg-ink-900 gap-3 p-4 transition-colors duration-500 hover:border-ink-700 hover:bg-ink-800 max-[359px]:aspect-auto max-[359px]:min-h-[124px] min-[360px]:p-5 md:aspect-[16/8] md:p-7 xl:aspect-[4/3.4] xl:p-6"
           >
             <div className="flex items-start justify-between gap-3">
-              <span className="text-sm leading-[1.4] text-slate-400 md:text-[15px] xl:text-sm">{stat.label}</span>
-              <span className="flex gap-1 pt-1">
+              <span className="text-[13px] leading-[1.35] text-slate-400 min-[360px]:text-sm md:text-[15px] xl:text-sm">{stat.label}</span>
+              <span className="flex shrink-0 gap-1 pt-1">
                 {stats.map((_, d) => (
                   <span
                     key={d}
@@ -91,7 +91,7 @@ export function StatCards() {
                 ))}
               </span>
             </div>
-            <p className="font-display text-[44px] leading-none font-bold tracking-[-0.03em] transition-transform duration-500 ease-(--ease-premium) group-hover:-translate-y-1 md:text-[72px] xl:text-[64px]">
+            <p className="font-display text-[34px] leading-none font-bold min-[360px]:text-[44px] tracking-[-0.03em] transition-transform duration-500 ease-(--ease-premium) group-hover:-translate-y-1 md:text-[72px] xl:text-[64px]">
               <Count {...stat} start={visible} />
             </p>
           </div>
@@ -119,7 +119,7 @@ export function ToolGrid({ tools }) {
             transition: `opacity .9s var(--ease-premium) ${i * 80}ms, transform .9s var(--ease-premium) ${i * 80}ms`,
           }}
         >
-          <div className="tool-tile-inner flex h-44 cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border border-ink-800 bg-[radial-gradient(ellipse_at_center,#16213f_0%,#0d1631_55%,#080f25_100%)] px-4 text-center transition-colors duration-500 group-hover:border-blue-500/40 md:h-52">
+          <div className="tool-tile-inner flex min-h-44 cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border border-ink-800 bg-[radial-gradient(ellipse_at_center,#16213f_0%,#0d1631_55%,#080f25_100%)] px-2.5 py-5 text-center min-[360px]:h-44 min-[360px]:px-4 min-[360px]:py-0 transition-colors duration-500 group-hover:border-blue-500/40 md:h-52">
             {/* Logo — every logo sits in the same square so they line up */}
             <span className="grid size-14 shrink-0 place-items-center md:size-16">
               {tool.logo ? (
@@ -136,8 +136,8 @@ export function ToolGrid({ tools }) {
               )}
             </span>
             <span className="flex flex-col gap-1">
-              <span className="font-display text-[15px] leading-tight font-medium whitespace-nowrap text-white sm:text-lg">{tool.name}</span>
-              <span className="text-xs leading-[1.4] whitespace-nowrap text-slate-400 sm:text-[13px]">{tool.caption}</span>
+              <span className="font-display text-[14px] leading-tight font-medium text-white min-[360px]:text-[15px] min-[360px]:whitespace-nowrap sm:text-lg">{tool.name}</span>
+              <span className="text-[11px] leading-[1.4] text-slate-400 min-[360px]:text-xs min-[360px]:whitespace-nowrap sm:text-[13px]">{tool.caption}</span>
             </span>
           </div>
         </div>
