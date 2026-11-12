@@ -50,6 +50,9 @@ function FaqItem({ q, a, open, onToggle }) {
   );
 }
 
+// CTA banner buttons: never wrap, slightly smaller on phones so two fit side by side
+const ctaBtn = "whitespace-nowrap gap-1.5! pl-4! pr-3.5! text-[14px]! sm:gap-2! sm:pl-5! sm:pr-[18px]! sm:text-[15px]!";
+
 export default function Faq() {
   const groups = useMemo(() => {
     const map = {};
@@ -155,16 +158,18 @@ export default function Faq() {
 
       {/* CTA */}
       <section className="mx-auto max-w-[1280px] px-5 pb-24 md:px-10 md:pb-32">
-        <Reveal className="relative flex flex-col items-start gap-6 overflow-hidden rounded-3xl bg-gradient-to-br from-blue-600 to-blue-800 p-8 md:flex-row md:items-center md:justify-between md:p-12">
+        <Reveal className="relative flex flex-col items-start gap-6 overflow-hidden rounded-3xl bg-gradient-to-br from-blue-600 to-blue-800 p-8 md:items-center md:gap-8 md:p-12 md:text-center lg:flex-row lg:justify-between lg:gap-6 lg:text-left">
           <div className="pointer-events-none absolute -right-6 -bottom-[22%] h-[75%] md:-right-10 md:-bottom-[30%] md:h-[125%]">
             <SymbolHairline className="h-full w-auto animate-float-slow" />
           </div>
+          {/* Tablet: heading and buttons centred; desktop: side by side */}
           <h2 className="relative max-w-[560px] font-display text-[28px] leading-[1.2] font-medium md:text-[36px]">
             Still have a question? Book a free call or send Paul a message.
           </h2>
-          <div className="relative flex flex-wrap gap-3">
-            <Button variant="light" href={site.links.calendly} icon="arrow-up-right">Book a call</Button>
-            <Button variant="secondary" to="/contact">Get in touch</Button>
+          {/* Buttons always side by side (a little more compact on phones) */}
+          <div className="relative flex shrink-0 flex-nowrap gap-2.5 sm:gap-3 md:justify-center">
+            <Button variant="light" href={site.links.calendly} icon="arrow-up-right" className={ctaBtn}>Book a call</Button>
+            <Button variant="secondary" to="/contact" className={ctaBtn}>Get in touch</Button>
           </div>
         </Reveal>
       </section>
