@@ -1,7 +1,7 @@
 import Button from "../components/Button.jsx";
 import Icon from "../components/Icons.jsx";
 import Mockup from "../components/Mockups.jsx";
-import Reveal from "../components/Reveal.jsx";
+import Reveal, { useInView } from "../components/Reveal.jsx";
 import SectionTitle from "../components/SectionTitle.jsx";
 import { Symbol } from "../components/Logo.jsx";
 import { phases, services, servicesGuide } from "../data/content.js";
@@ -24,11 +24,50 @@ function DownloadButton({ variant = "primary", className = "" }) {
   );
 }
 
+// The four phases: a line draws across them, then each card pops in
+function Phases() {
+  const [ref, visible] = useInView();
+  return (
+    <div ref={ref} className="relative mt-10">
+      <div
+        className={`absolute top-1/2 right-0 left-0 hidden h-px origin-left bg-gradient-to-r from-blue-500 via-blue-500/50 to-transparent transition-transform duration-[1400ms] ease-(--ease-premium) md:block ${
+          visible ? "scale-x-100" : "scale-x-0"
+        }`}
+      />
+      <ol className="relative grid auto-rows-fr gap-4 md:grid-cols-4">
+        {phases.map((p, i) => (
+          <li
+            key={p.title}
+            style={{ transitionDelay: `${200 + i * 140}ms` }}
+            className={`h-full transition-all duration-700 ease-(--ease-premium) ${
+              visible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+            }`}
+          >
+            <div
+              className={`group flex h-full flex-col gap-2 rounded-2xl border p-6 transition-all duration-500 ease-(--ease-premium) hover:-translate-y-1 ${
+                i === 0 ? "border-blue-500 bg-[#0f1d4d]" : "border-ink-800 bg-ink-900 hover:border-blue-500/50"
+              }`}
+            >
+              <span className="flex items-center gap-2 text-xs font-medium tracking-[0.1em] text-slate-400 uppercase">
+                <span className={`size-1.5 rounded-full ${i === 0 ? "animate-pulse bg-blue-400" : "bg-slate-600 transition-colors group-hover:bg-blue-400"}`} />
+                {p.tag}
+              </span>
+              <span className="font-display text-lg font-medium">{p.title}</span>
+              <span className="text-[15px] leading-[1.5] text-slate-400">{p.text}</span>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
 export default function Services() {
   return (
     <>
       {/* Header */}
-      <section className="container-page pt-[150px] md:pt-[190px]">
+      <section className="container-page relative pt-[150px] md:pt-[190px]">
+        <div className="pointer-events-none absolute top-24 -left-40 -z-10 h-[360px] w-[520px] animate-glow rounded-full bg-blue-600/40 blur-[140px]" />
         <Reveal as="p" className="text-[13px] font-medium tracking-[0.1em] text-blue-400 uppercase">
           Services
         </Reveal>
@@ -53,22 +92,24 @@ export default function Services() {
 
       {/* Service cards */}
       <section className="container-page pt-20 md:pt-28">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid auto-rows-fr gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((s, i) => (
-            <Reveal
-              key={s.title}
-              delay={(i % 3) * 80}
-              className="group flex flex-col gap-5 overflow-hidden rounded-3xl border border-ink-800 bg-ink-900 p-6 transition-colors duration-500 hover:border-blue-500/50 md:p-7"
-            >
-              <Mockup
-                kind={s.art}
-                className="aspect-[420/240] w-full transition-transform duration-700 ease-(--ease-premium) group-hover:-rotate-1 group-hover:scale-[1.02]"
-              />
-              <span className="text-[13px] font-medium tracking-[0.1em] text-slate-500 transition-colors group-hover:text-blue-400">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <h2 className="-mt-2 font-display text-xl leading-[1.3] font-medium">{s.title}</h2>
-              <p className="leading-[1.6] text-slate-400">{s.description}</p>
+            <Reveal key={s.title} delay={(i % 3) * 100} className="h-full">
+              <article className="group flex h-full flex-col gap-5 overflow-hidden rounded-3xl border border-ink-800 bg-ink-900 p-6 transition-all duration-500 ease-(--ease-premium) hover:-translate-y-1.5 hover:border-blue-500/60 hover:shadow-[0_24px_60px_-24px_rgba(37,99,235,0.55)] md:p-7">
+                <div className="overflow-hidden rounded-2xl">
+                  <Mockup
+                    kind={s.art}
+                    className="aspect-[420/240] w-full transition-transform duration-700 ease-(--ease-premium) group-hover:scale-[1.04] group-hover:-rotate-1"
+                  />
+                </div>
+                <span className="text-[13px] font-medium tracking-[0.1em] text-slate-500 transition-colors duration-300 group-hover:text-blue-400">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h2 className="-mt-2 font-display text-xl leading-[1.3] font-medium transition-transform duration-500 ease-(--ease-premium) group-hover:translate-x-1.5">
+                  {s.title}
+                </h2>
+                <p className="leading-[1.6] text-slate-400">{s.description}</p>
+              </article>
             </Reveal>
           ))}
         </div>
@@ -77,22 +118,7 @@ export default function Services() {
       {/* How it works */}
       <section className="container-page pt-24 md:pt-32">
         <SectionTitle title="How it works" intro="Every project starts with the logo. You can stop after any phase." />
-        <ol className="mt-10 grid gap-4 md:grid-cols-4">
-          {phases.map((p, i) => (
-            <Reveal
-              as="li"
-              key={p.title}
-              delay={i * 80}
-              className={`relative flex flex-col gap-2 rounded-2xl border p-6 ${
-                i === 0 ? "border-blue-500 bg-blue-600/10" : "border-ink-800 bg-ink-900"
-              }`}
-            >
-              <span className="text-xs font-medium tracking-[0.1em] text-slate-400 uppercase">{p.tag}</span>
-              <span className="font-display text-lg font-medium">{p.title}</span>
-              <span className="text-[15px] leading-[1.5] text-slate-400">{p.text}</span>
-            </Reveal>
-          ))}
-        </ol>
+        <Phases />
       </section>
 
       {/* Download CTA */}
@@ -100,7 +126,7 @@ export default function Services() {
         <Reveal className="relative flex flex-col items-start gap-6 overflow-hidden rounded-3xl bg-gradient-to-br from-blue-600 to-blue-800 p-8 md:flex-row md:items-center md:justify-between md:p-12">
           <Symbol
             color="#FFFFFF"
-            className="pointer-events-none absolute -right-10 -bottom-16 h-[280px] w-auto opacity-10 md:h-[340px]"
+            className="pointer-events-none absolute -right-10 -bottom-16 h-[280px] w-auto animate-float-slow opacity-10 md:h-[340px]"
           />
           <div className="relative max-w-[560px]">
             <h2 className="font-display text-[28px] leading-[1.2] font-medium md:text-[36px]">Want the full picture?</h2>
