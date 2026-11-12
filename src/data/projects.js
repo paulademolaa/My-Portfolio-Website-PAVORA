@@ -49,22 +49,35 @@ export const projects = [
   {
     slug: "bizopconnect",
     title: "UI UX Designer for BizOpConnect",
-    type: "Dashboard Design",
-    tags: ["Dashboard", "UI/UX Design", "SaaS", "Figma"],
+    type: "SaaS Web App · UI/UX",
+    tags: ["SaaS", "Dashboard", "UI/UX Design", "Figma"],
     category: "Product Design",
     cover: "/images/projects/bizopconnect.webp",
-    summary: "A lead-generation dashboard for small businesses.",
+    coverRatio: 1.179,
+    summary: "Run your business. Not your operations. An operations hub where local service businesses manage customers, leads, marketing and their public profile from one dashboard.",
     client: "BizOpConnect",
+    role: "Product Designer (UI/UX)",
     services: "UI/UX Design",
     year: "2026",
     tools: "Figma",
     challenge:
-      "Describe the client’s problem in two or three sentences — only verified project details.",
+      "Small service businesses run on notebooks, spreadsheets and missed calls. Clients sit in one app, leads in an inbox, marketing somewhere else, and the online listing rarely gets updated. Jobs slip, leads go cold, and customers can't find, or trust, the business online.",
     solution:
-      "Explain the approach and the final design in plain words. Add results only if they are verified.",
-    outcome: "What happened after launch, in one or two sentences. Only verified results.",
-    gallery: ["/images/projects/gallery-1.jpg", "/images/projects/gallery-2.jpg"],
-    finalImage: "/images/projects/final-wide.jpg",
+      "I designed BizOpConnect as one operations hub for local service businesses like pool care, cleaning and landscaping. One dashboard shows jobs, revenue, invoices and new leads at a glance, with a Launch Center that walks new owners through setup. Customers and leads live in one list, with stat cards for the funnel, status tabs and colour-coded tags that show what each job needs next. A business profile and marketplace listing, with live preview, trust badges and a \"Request a Quote\" button, help owners get found online. The visual language is a trustworthy blue on a calm navy frame, set in Poppins.",
+    outcome:
+      "The result is a complete desktop web app design: onboarding, dashboard, CRM, lead generation, marketing and profiles. A new owner can set up in minutes, not meetings: create an account, describe the business, add services and go live, with storefront, CRM and job scheduling connected and ready.",
+    // After 01 Challenge / 02 Approach / 03 Outcome (shown uncropped)
+    gallery: [
+      [
+        { src: "/images/projects/bizopconnect-overview.webp", ratio: 1.218 },
+        { src: "/images/projects/bizopconnect-problem.webp", ratio: 1.179 },
+      ],
+      [
+        { src: "/images/projects/bizopconnect-onboarding.webp", ratio: 1.103 },
+        { src: "/images/projects/bizopconnect-visual-language.webp", ratio: 1.155 },
+      ],
+    ],
+    finalImage: { src: "/images/projects/bizopconnect-customers.webp", ratio: 1.063 },
   },
   {
     slug: "mobile-app",
