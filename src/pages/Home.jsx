@@ -47,7 +47,7 @@ function Hero() {
 
           {/* PAVORA app icon */}
           <span
-            className="pop-in absolute top-[0.06em] left-[4.38em] hidden w-max sm:block"
+            className="pop-in absolute top-[0.06em] left-[4.38em] w-max"
             style={{ "--delay": "800ms" }}
           >
             <span
@@ -68,7 +68,7 @@ function Hero() {
             />
           </span>
           <span
-            className="pop-in absolute top-[2.75em] left-[4.4em] hidden w-max sm:block"
+            className="pop-in absolute top-[1.75em] left-[4.1em] w-max sm:top-[2.75em] sm:left-[4.4em]"
             style={{ "--delay": "1100ms" }}
           >
             <img
