@@ -1,29 +1,73 @@
 import { Link, useParams } from "react-router-dom";
 import Icon from "../components/Icons.jsx";
 import Reveal from "../components/Reveal.jsx";
-import WorkCard from "../components/WorkCard.jsx";
 import NotFound from "./NotFound.jsx";
 import { projects } from "../data/projects.js";
 
-// A picture that zooms in slightly as it appears
-function Picture({ src, alt, className = "" }) {
+// Individual project page — editorial case-study layout:
+// back link → category → big title → one-line summary → details row →
+// cover → numbered story sections, each followed by a full-width picture →
+// next projects.
+
+const label = "text-[12px] leading-[1.4] font-medium tracking-[0.12em] uppercase";
+
+// A picture that fades up and settles from a slight zoom as it appears
+// ratio (e.g. 1.346) shows the whole picture uncropped at its own shape
+function Picture({ src, alt, ratio, className = "" }) {
   return (
-    <Reveal className={`overflow-hidden rounded-2xl bg-ink-900 ${className}`}>
-      <img src={src} alt={alt} loading="lazy" className="size-full object-cover" />
+    <Reveal
+      className={`group overflow-hidden rounded-2xl border border-ink-800 bg-ink-900 ${ratio ? "" : "aspect-[16/10]"} ${className}`}
+      style={ratio ? { aspectRatio: ratio } : undefined}
+    >
+      <img
+        src={src}
+        alt={alt}
+        loading="lazy"
+        className="size-full object-cover transition-transform duration-[1.2s] ease-(--ease-premium) group-hover:scale-[1.02]"
+      />
     </Reveal>
   );
 }
 
-function TextBlock({ title, children }) {
+// 01 — Challenge — text
+function StorySection({ number, title, text }) {
   return (
-    <section className="container-page grid gap-4 pt-16 pb-12 md:grid-cols-[480px_1fr] md:pt-24 md:pb-16">
-      <Reveal as="h2" className="font-display text-2xl leading-[1.3] font-medium tracking-[-0.005em]">
+    <section className="grid gap-3 border-t border-ink-800 pt-8 pb-14 md:grid-cols-[72px_1fr_1.35fr] md:gap-8 md:pt-10 md:pb-20">
+      <Reveal as="span" className={`${label} pt-2 text-slate-500`}>
+        {number}
+      </Reveal>
+      <Reveal as="h2" delay={80} className="font-display text-[26px] leading-[1.2] font-medium tracking-[-0.01em] md:text-[30px]">
         {title}
       </Reveal>
-      <Reveal delay={120} as="p" className="text-lg leading-[1.6] text-slate-400">
-        {children}
+      <Reveal as="p" delay={160} className="max-w-[520px] text-[17px] leading-[1.65] text-slate-400 md:text-lg">
+        {text}
       </Reveal>
     </section>
+  );
+}
+
+// Card used in "Next project"
+function NextCard({ project }) {
+  return (
+    <Link to={`/work/${project.slug}`} className="group flex flex-col gap-4">
+      <div className="aspect-[4/3] overflow-hidden rounded-2xl border border-ink-800 bg-ink-900">
+        <img
+          src={project.cover}
+          alt={project.title}
+          loading="lazy"
+          className="size-full object-cover transition-transform duration-700 ease-(--ease-premium) group-hover:scale-[1.04]"
+        />
+      </div>
+      <div className="flex items-start justify-between gap-4">
+        <div className="min-w-0">
+          <h3 className="font-display text-xl leading-[1.3] font-medium transition-colors duration-300 group-hover:text-blue-400 md:text-2xl">
+            {project.title}
+          </h3>
+          <p className="mt-1 text-[15px] text-slate-500">{project.type}</p>
+        </div>
+        <span className={`${label} shrink-0 pt-1.5 text-slate-500`}>{project.year}</span>
+      </div>
+    </Link>
   );
 }
 
@@ -33,72 +77,132 @@ export default function Project() {
   if (index === -1) return <NotFound />;
 
   const project = projects[index];
-  const next = projects[(index + 1) % projects.length];
+  const nextProjects = [1, 2].map((n) => projects[(index + n) % projects.length]).filter((p) => p.slug !== project.slug);
 
   const meta = [
     ["Client", project.client],
-    ["Services", project.services],
+    ["Role", project.role || project.services],
     ["Year", project.year],
     ["Tools", project.tools],
-  ];
+  ].filter(([, v]) => v);
+
+  // The story: each section is followed by one picture
+  // Each gallery entry is shown after one story section. An entry can be
+  // "path", { src, ratio } (ratio = width ÷ height, shows it uncropped),
+  // or a list of those to show several pictures after that section.
+  const toPic = (p) => (typeof p === "string" ? { src: p } : p);
+  const pictures = [...(project.gallery || []), project.finalImage]
+    .filter(Boolean)
+    .map((p) => (Array.isArray(p) ? p.map(toPic) : [toPic(p)]));
+  const sections = [
+    ["Challenge", project.challenge],
+    ["Approach", project.approach || project.solution],
+    ["Outcome", project.outcome],
+  ].filter(([, text]) => text);
 
   return (
-    <>
+    <article className="mx-auto w-full max-w-[1000px] px-5 md:px-8">
       {/* Header */}
-      <header className="container-page flex flex-col gap-6 pt-[150px] pb-12 md:pt-[177px]">
-        <Link
-          to="/work"
-          className="group flex w-fit items-center gap-1.5 text-sm leading-[1.6] text-slate-400 transition-colors hover:text-white"
-        >
-          <Icon name="arrow-left" className="size-4 transition-transform duration-300 group-hover:-translate-x-1" />
-          All works
-        </Link>
-        <h1 className="font-display text-[40px] leading-[1.1] font-bold tracking-[-0.02em] md:text-[64px]">
-          <span className="line-mask" style={{ "--delay": "100ms" }}>
+      <header className="flex flex-col pt-[140px] md:pt-[170px]">
+        <Reveal>
+          <Link
+            to="/work"
+            className="group inline-flex items-center gap-1.5 border-b border-slate-500 pb-0.5 text-[15px] font-medium text-white transition-colors hover:border-blue-400 hover:text-blue-400"
+          >
+            <Icon name="arrow-left" className="size-4 transition-transform duration-300 group-hover:-translate-x-1" />
+            All work
+          </Link>
+        </Reveal>
+
+        <Reveal as="p" delay={60} className={`${label} mt-8 text-blue-400`}>
+          {project.type}
+        </Reveal>
+
+        <h1 className="mt-5 font-display text-[44px] leading-[1] font-medium tracking-[-0.035em] sm:text-[64px] md:text-[96px]">
+          <span className="line-mask" style={{ "--delay": "120ms" }}>
             <span>{project.title}</span>
           </span>
         </h1>
-        <Reveal delay={200} as="p" className="max-w-[640px] text-lg leading-[1.6] text-slate-400">
+
+        <Reveal as="p" delay={220} className="mt-6 max-w-[680px] text-xl leading-[1.45] text-slate-200 md:text-2xl">
           {project.summary}
         </Reveal>
-        <Reveal delay={300} className="grid grid-cols-2 gap-6 border-t border-ink-800 pt-6 md:grid-cols-4">
-          {meta.map(([label, value]) => (
-            <div key={label} className="flex flex-col gap-1.5">
-              <span className="text-sm leading-[1.6] text-slate-500">{label}</span>
-              <span className="font-medium leading-[1.6]">{value}</span>
+
+        {project.link && (
+          <Reveal delay={260} className="mt-8">
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noreferrer"
+              className="group inline-flex items-center gap-2 rounded-full bg-blue-600 py-3 pr-5 pl-6 text-[15px] font-medium text-white shadow-[0_8px_30px_-8px_rgba(37,99,235,0.6)] transition-all duration-300 hover:bg-blue-700 active:scale-[0.97]"
+            >
+              View live website
+              <Icon name="arrow-up-right" className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </a>
+          </Reveal>
+        )}
+
+        <Reveal delay={300} className="mt-12 grid grid-cols-2 gap-x-6 gap-y-6 md:mt-16 md:grid-cols-4">
+          {meta.map(([name, value]) => (
+            <div key={name} className="flex flex-col gap-2 border-t border-ink-800 pt-3">
+              <span className={`${label} text-slate-500`}>{name}</span>
+              <span className="text-[15px] leading-[1.5] text-white">{value}</span>
             </div>
           ))}
         </Reveal>
       </header>
 
-      {/* Main picture */}
-      <div className="container-page">
-        <Picture src={project.cover} alt={project.title} className="aspect-[16/9]" />
-      </div>
+      {/* Cover */}
+      <Picture src={project.cover} ratio={project.coverRatio} alt={project.title} className="mt-14 md:mt-20" />
 
-      <TextBlock title="The challenge">{project.challenge}</TextBlock>
-
-      <div className="container-page grid gap-6 md:grid-cols-2">
-        {project.gallery.map((src, i) => (
-          <Picture key={i} src={src} alt={`${project.title} detail ${i + 1}`} className="aspect-[628/520]" />
+      {/* Story */}
+      <div className="mt-20 md:mt-28">
+        {sections.map(([title, text], i) => (
+          <div key={title}>
+            <StorySection number={String(i + 1).padStart(2, "0")} title={title} text={text} />
+            {(pictures[i] || []).map((p, k) => (
+              <Picture
+                key={p.src}
+                src={p.src}
+                ratio={p.ratio}
+                alt={`${project.title}: ${title.toLowerCase()}${k ? ` ${k + 1}` : ""}`}
+                className={`mb-14 md:mb-20 ${p.aspect || ""}`}
+              />
+            ))}
+          </div>
+        ))}
+        {/* any pictures left over */}
+        {pictures.slice(sections.length).flat().map((p, i) => (
+          <Picture key={p.src + i} src={p.src} ratio={p.ratio} alt={`${project.title} detail`} className={`mb-14 md:mb-20 ${p.aspect || ""}`} />
         ))}
       </div>
 
-      <TextBlock title="The solution">{project.solution}</TextBlock>
-
-      <div className="container-page">
-        <Picture src={project.finalImage} alt={`${project.title} final design`} className="aspect-[2/1]" />
-      </div>
-
       {/* Next project */}
-      <section className="container-page flex flex-col gap-6 pt-24 pb-28 lg:pt-[120px] lg:pb-40">
-        <Reveal as="h2" className="font-display text-2xl leading-[1.3] font-medium">
-          Next project
-        </Reveal>
-        <div className="md:max-w-[620px]">
-          <WorkCard project={next} />
-        </div>
-      </section>
-    </>
+      {nextProjects.length > 0 && (
+        <section className="pt-12 pb-28 md:pt-20 md:pb-40">
+          <div className="mb-8 flex items-end justify-between gap-6 md:mb-10">
+            <Reveal as="h2" className="font-display text-[40px] leading-[1] font-medium tracking-[-0.03em] md:text-[64px]">
+              Next project
+            </Reveal>
+            <Reveal delay={100}>
+              <Link
+                to="/work"
+                className="group mb-1 inline-flex items-center gap-1 border-b border-slate-500 pb-0.5 text-[15px] font-medium whitespace-nowrap transition-colors hover:border-blue-400 hover:text-blue-400"
+              >
+                All projects
+                <Icon name="arrow-up-right" className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </Link>
+            </Reveal>
+          </div>
+          <div className="grid gap-10 md:grid-cols-2 md:gap-6">
+            {nextProjects.map((p, i) => (
+              <Reveal key={p.slug} delay={i * 120}>
+                <NextCard project={p} />
+              </Reveal>
+            ))}
+          </div>
+        </section>
+      )}
+    </article>
   );
 }
