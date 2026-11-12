@@ -116,6 +116,14 @@ export default function useAssistant(storageKey = "pavora-assistant") {
       if (!clean || typing) return;
       setMessages((m) => [...m, { id: id(), from: "user", text: clean }]);
 
+      // Back from booking a call: carry on with the brief where it stopped
+      if (/^(continue|carry on)( my| the)? (brief|chat|here)|^continue here$/i.test(clean) && !state.lead) {
+        const r = startChatBrief(state);
+        setState(r.state);
+        deliver(r.messages);
+        return;
+      }
+
       if (/^start over$/i.test(clean) && !state.lead) {
         const r = startLead(state);
         setState(r.state);
@@ -145,19 +153,27 @@ export default function useAssistant(storageKey = "pavora-assistant") {
   );
 
   // Confirm in the chat when a call is booked in the Calendly pop-up
+  const memoryRef = useRef(state.memory);
+  memoryRef.current = state.memory;
   useEffect(
     () =>
-      onCalendlyBooked(() =>
+      onCalendlyBooked(() => {
+        const m = memoryRef.current || {};
+        const started = m.name || m.email || m.service;
         deliver([
           {
             answer: [
               { text: "🎉 **Your call is booked!** Calendly has emailed you the details and the Google Meet link." },
-              { text: "If you have links or files to share before the call, you can add them here or email Paul." },
+              {
+                text: started
+                  ? "Want to keep going here too? I've saved what you told me, so we'll pick up right where you stopped."
+                  : "If you have links or files to share before the call, you can add them here or email Paul.",
+              },
             ],
-            chips: ["Show me your work", "How do you work?"],
+            chips: started ? ["Continue my brief here", "Show me your work"] : ["Show me your work", "How do you work?"],
           },
-        ]),
-      ),
+        ]);
+      }),
     [deliver],
   );
 
