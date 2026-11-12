@@ -64,21 +64,22 @@ function Count({ value, decimals = 0, suffix = "", start }) {
 export function StatCards() {
   const [ref, progress] = useScrollProgress(0.4);
   const [countRef, visible] = useInView({ threshold: 0.3 });
-  const isPhone = typeof window !== "undefined" && window.innerWidth < 768;
+  // phones, tablets and small laptops show 2 × 2; wide screens show one row of 4
+  const isPhone = typeof window !== "undefined" && window.innerWidth < 1280;
 
   return (
     <div ref={ref}>
-      <div ref={countRef} className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-5">
+      <div ref={countRef} className="grid grid-cols-2 gap-4 md:gap-5 xl:grid-cols-4">
         {stats.map((stat, i) => (
           <div
             key={stat.label}
             // Each card starts lower than the one before and rises into line
-            // (on phones only the right-hand column steps down, by less)
+            // (on phones and tablets only the right-hand column steps down, by less)
             style={{ transform: `translateY(${(1 - progress) * (isPhone ? (i % 2) * 32 : i * 56)}px)` }}
-            className="group flex aspect-[5/4] cursor-default flex-col justify-between rounded-2xl border border-ink-800 bg-ink-900 p-5 transition-colors duration-500 hover:border-ink-700 hover:bg-ink-800 md:aspect-[4/3.4] md:p-6"
+            className="group flex aspect-[5/4] cursor-default flex-col justify-between rounded-2xl border border-ink-800 bg-ink-900 p-5 transition-colors duration-500 hover:border-ink-700 hover:bg-ink-800 md:aspect-[16/8] md:p-7 xl:aspect-[4/3.4] xl:p-6"
           >
             <div className="flex items-start justify-between gap-3">
-              <span className="text-sm leading-[1.4] text-slate-400">{stat.label}</span>
+              <span className="text-sm leading-[1.4] text-slate-400 md:text-[15px] xl:text-sm">{stat.label}</span>
               <span className="flex gap-1 pt-1">
                 {stats.map((_, d) => (
                   <span
@@ -90,7 +91,7 @@ export function StatCards() {
                 ))}
               </span>
             </div>
-            <p className="font-display text-[44px] leading-none font-bold tracking-[-0.03em] transition-transform duration-500 ease-(--ease-premium) group-hover:-translate-y-1 md:text-[64px]">
+            <p className="font-display text-[44px] leading-none font-bold tracking-[-0.03em] transition-transform duration-500 ease-(--ease-premium) group-hover:-translate-y-1 md:text-[72px] xl:text-[64px]">
               <Count {...stat} start={visible} />
             </p>
           </div>
@@ -233,7 +234,8 @@ export function ProcessCards({ steps, heading }) {
 
       {/* Phones & tablets: simple grid, cards tilt in as they appear */}
       <div className="lg:hidden">{heading}</div>
-      <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:hidden">
+      {/* overflow-x-clip: the tilted cards must not make the page scroll sideways on phones */}
+      <div className="-mx-5 mt-10 grid gap-5 overflow-x-clip px-5 py-4 sm:grid-cols-2 md:-mx-10 md:px-10 lg:hidden">
         {steps.map((step, i) => (
           <TiltIn key={step.title} rotate={cardStyles[i % 4].rotate / 2} delay={i * 80}>
             <Card step={step} i={i} />
