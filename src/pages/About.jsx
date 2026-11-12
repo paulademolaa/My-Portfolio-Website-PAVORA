@@ -45,9 +45,9 @@ export default function About() {
           </span>
         </h1>
         <Reveal delay={400} as="p" className="max-w-[720px] text-lg leading-[1.6] text-slate-400">
-          I'm Paul Ademola, a designer and web developer in Nigeria working with clients worldwide. I
-          combine product thinking, brand strategy and visual design — then build it with React and
-          Tailwind CSS, so what you approve is what ships.
+          I'm Paul Ademola, the designer and developer behind PAVORA, based in Nigeria and working with
+          clients worldwide. I create your logo and brand, design your website or app in Figma, then
+          build it with React and Tailwind CSS, so what you approve is what ships.
         </Reveal>
       </section>
 

@@ -1,3 +1,4 @@
+import { useInView } from "./Reveal.jsx";
 import { Link } from "react-router-dom";
 
 // The PAVORA symbol and wordmark, drawn as SVG so they stay sharp.
@@ -46,5 +47,24 @@ export default function Logo({ className = "" }) {
       <Symbol className="h-7 w-auto transition-transform duration-500 ease-(--ease-premium) group-hover:-rotate-6 group-hover:scale-110" />
       <Wordmark className="h-3 w-auto" />
     </Link>
+  );
+}
+
+// Thin outline of the P, drawn in when it scrolls into view.
+// Used in the corner of the blue CTA banners.
+export function SymbolHairline({ className = "" }) {
+  const [ref, visible] = useInView();
+  return (
+    <svg
+      ref={ref}
+      viewBox="-1 -1 134 162"
+      fill="none"
+      aria-hidden="true"
+      className={`draw-path pointer-events-none ${visible ? "is-visible" : ""} ${className}`}
+    >
+      {SYMBOL_PATHS.map((d) => (
+        <path key={d} d={d} pathLength="900" stroke="#FFFFFF" strokeOpacity="0.4" strokeWidth="1.25" vectorEffect="non-scaling-stroke" />
+      ))}
+    </svg>
   );
 }

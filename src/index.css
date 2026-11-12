@@ -205,3 +205,99 @@
     filter: none;
   }
 }
+
+/* ------------------------------------------------------------------
+   PAVORA cursor (src/components/Cursor.jsx) — mouse/trackpad only
+------------------------------------------------------------------- */
+.cursor-layer {
+  display: none;
+}
+.has-cursor .cursor-layer {
+  display: block;
+}
+.has-cursor,
+.has-cursor * {
+  cursor: none !important;
+}
+.has-cursor :is(input, textarea, [contenteditable="true"]) {
+  cursor: text !important;
+}
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  pointer-events: none;
+  border-radius: 9999px;
+  will-change: translate, scale;
+}
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  margin: -4px 0 0 -4px;
+  background: #60a5fa;
+  box-shadow: 0 0 10px 2px rgba(96, 165, 250, 0.8);
+  transition: opacity 0.2s, scale 0.25s var(--ease-premium);
+}
+.cursor-ring {
+  width: 36px;
+  height: 36px;
+  margin: -18px 0 0 -18px;
+  border: 1.5px solid rgba(147, 197, 253, 0.45);
+  transition:
+    scale 0.35s var(--ease-premium),
+    background-color 0.3s,
+    border-color 0.3s,
+    box-shadow 0.35s,
+    opacity 0.2s;
+}
+/* over a button, link or card: ring grows and glows */
+[data-cursor="link"] .cursor-ring {
+  scale: 1.6;
+  border-color: rgba(255, 255, 255, 0.85);
+  background-color: rgba(96, 165, 250, 0.16);
+  box-shadow:
+    0 0 24px 6px rgba(37, 99, 235, 0.45),
+    inset 0 0 12px rgba(96, 165, 250, 0.35);
+}
+[data-cursor="link"] .cursor-dot {
+  scale: 0.75;
+  background: #ffffff;
+}
+/* pressing: ring tightens, glow brightens */
+[data-cursor-down="true"] .cursor-ring {
+  scale: 1.15;
+  background-color: rgba(37, 99, 235, 0.35);
+  box-shadow: 0 0 36px 12px rgba(37, 99, 235, 0.6);
+}
+/* typing: hide the custom cursor so the text caret shows */
+[data-cursor="text"] .cursor-dot,
+[data-cursor="text"] .cursor-ring,
+[data-cursor-hidden="true"] .cursor-dot,
+[data-cursor-hidden="true"] .cursor-ring {
+  opacity: 0;
+}
+/* the glow pulse that spreads out from each click */
+.cursor-pulse {
+  position: fixed;
+  z-index: 9998;
+  width: 40px;
+  height: 40px;
+  margin: -20px 0 0 -20px;
+  border-radius: 9999px;
+  pointer-events: none;
+  border: 2px solid rgba(96, 165, 250, 0.9);
+  box-shadow: 0 0 30px 8px rgba(37, 99, 235, 0.55);
+  animation: cursor-pulse 0.6s var(--ease-premium) forwards;
+}
+@keyframes cursor-pulse {
+  from {
+    scale: 0.6;
+    opacity: 1;
+  }
+  to {
+    scale: 2.6;
+    opacity: 0;
+  }
+}

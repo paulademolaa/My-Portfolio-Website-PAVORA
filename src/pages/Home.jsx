@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import Button from "../components/Button.jsx";
 import Stats from "../components/Stats.jsx";
 import SectionTitle from "../components/SectionTitle.jsx";
@@ -47,7 +48,7 @@ function Hero() {
 
           {/* PAVORA app icon */}
           <span
-            className="pop-in absolute top-[0.06em] left-[4.38em] hidden w-max sm:block"
+            className="pop-in absolute top-[0.06em] left-[4.38em] w-max"
             style={{ "--delay": "800ms" }}
           >
             <span
@@ -68,7 +69,7 @@ function Hero() {
             />
           </span>
           <span
-            className="pop-in absolute top-[2.75em] left-[4.4em] hidden w-max sm:block"
+            className="pop-in absolute top-[1.75em] left-[4.1em] w-max sm:top-[2.75em] sm:left-[4.4em]"
             style={{ "--delay": "1100ms" }}
           >
             <img
@@ -87,8 +88,8 @@ function Hero() {
         </Reveal>
         <Reveal delay={550}>
           <p className="mx-auto mt-8 max-w-[480px] leading-[1.6] text-slate-400">
-            Designing and building digital experiences that look exceptional and work with purpose,
-            for ambitious businesses worldwide.
+            I create your logo and brand, design your website or app in Figma, and build it into a fast
+            website, for startup founders and growing businesses worldwide.
           </p>
         </Reveal>
         <Reveal delay={650} className="mt-8 flex flex-wrap justify-center gap-2.5">
@@ -121,7 +122,7 @@ function SelectedWorks() {
       <SectionTitle
         title="Selected Works"
         count={String(projects.length).padStart(2, "0")}
-        intro="A selection of recent projects across product, brand, presentation and web development."
+        intro="Recent brand identities, website and app designs, developed websites and pitch decks."
       />
       {/* Stacking cards — see src/components/WorkStack.jsx */}
       <WorkStack projects={projects.slice(0, 6)} />
@@ -136,17 +137,61 @@ function SelectedWorks() {
 
 /* ---------------- Services ---------------- */
 function Services() {
+  const listRef = useRef(null);
+  const [fill, setFill] = useState(0);
+
+  useEffect(() => {
+    const el = listRef.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setFill(el.offsetHeight);
+      return;
+    }
+    let frame;
+    const update = () => {
+      frame = null;
+      const r = el.getBoundingClientRect();
+      const drawn = window.innerHeight * 0.6 - r.top; // the line follows a point 60% down the screen
+      setFill(Math.max(0, Math.min(r.height, drawn)));
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      cancelAnimationFrame(frame);
+    };
+  }, []);
+
   return (
     <section id="services" className="container-page flex scroll-mt-24 flex-col gap-14 pt-28 lg:pt-40">
       <SectionTitle
         title="Services"
-        intro="From first idea to launch — five ways I help founders and teams bring their ideas to life."
+        intro="Logo and brand identity, flyers and ads, Figma design, website development and pitch decks. Everything your brand needs to launch."
       />
-      <div className="border-t border-ink-800">
+      {/* The services as one connected process — the line draws itself as you scroll */}
+      <div ref={listRef} className="relative border-t border-ink-800 pl-12 md:pl-20">
+        <span className="pointer-events-none absolute top-0 bottom-0 left-[15.5px] w-px bg-ink-800 md:left-[23.5px]" aria-hidden="true" />
+        <span
+          className="pointer-events-none absolute top-0 left-[15px] w-[2px] bg-gradient-to-b from-blue-400/0 via-blue-500 to-blue-400 md:left-[23px]"
+          style={{ height: fill }}
+          aria-hidden="true"
+        >
+          <span className="absolute -bottom-1.5 left-1/2 size-3 -translate-x-1/2 rounded-full bg-blue-400 shadow-[0_0_16px_4px_rgba(96,165,250,0.7)]" />
+        </span>
         {services.map((service, i) => (
-          <ServiceRow key={service.title} service={service} index={i} />
+          <ServiceRow key={service.title} service={service} index={i} fill={fill} />
         ))}
       </div>
+      <Reveal className="flex justify-center">
+        <Button to="/services" variant="secondary">
+          Explore all services
+        </Button>
+      </Reveal>
     </section>
   );
 }
@@ -168,8 +213,8 @@ function AboutTeaser() {
           Beyond the pixels
         </h2>
         <p className="relative max-w-[500px] leading-[1.6] text-slate-400">
-          I'm Paul — a multidisciplinary designer who believes great design should solve problems,
-          communicate value and create meaningful experiences.
+          I'm Paul, the founder of PAVORA. I've designed logos and brands for 7+ years and websites since
+          2024, so your brand, website and pitch deck all come from one person.
         </p>
         <Button to="/about" variant="light" className="relative">
           More About Me

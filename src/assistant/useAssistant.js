@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { initialState, reply, startLead, welcomeMessage } from "./engine.js";
+import { initialState, reply, startChatBrief, startLead, welcomeMessage } from "./engine.js";
+import { onCalendlyBooked } from "./calendly.js";
 
 // Keeps the conversation going: messages, "typing…" state, sending the
 // project brief. The conversation is remembered while the tab is open.
@@ -71,6 +72,8 @@ export default function useAssistant(storageKey = "pavora-assistant") {
           ? {
               answer: [
                 { text: `✅ **Sent!** Paul has your brief and will reply to **${brief.email}** personally.` },
+                { text: "Want to talk it through as well? You can book a call with him:" },
+                { actions: ["bookCall"], prefill: { name: brief.name, email: brief.email } },
                 { text: "While you wait, have a look at some recent work:" },
                 { card: "projects" },
               ],
@@ -78,8 +81,8 @@ export default function useAssistant(storageKey = "pavora-assistant") {
             }
           : {
               answer: [
-                { text: "Sorry — I couldn't send that automatically right now. You can reach Paul directly here instead:" },
-                { actions: ["upwork", "contact"] },
+                { text: "Sorry, I couldn't send that automatically right now. You can book a call with Paul or reach him here instead:" },
+                { actions: ["bookCall", "upwork", "contact"], prefill: { name: brief.name, email: brief.email } },
               ],
               chips: ["Start over"],
             },
@@ -109,17 +112,34 @@ export default function useAssistant(storageKey = "pavora-assistant") {
     [state, typing, deliver, submitBrief],
   );
 
-  // Buttons like "Start a project"
+  // Buttons like "Start a project" / "Explain it here instead"
   const action = useCallback(
     (name) => {
-      if (name === "lead") {
-        setMessages((m) => [...m, { id: id(), from: "user", text: "Start a project" }]);
-        const r = startLead(state);
+      if (name === "lead" || name === "chatBrief") {
+        setMessages((m) => [...m, { id: id(), from: "user", text: name === "lead" ? "Start a project" : "Explain it here instead" }]);
+        const r = name === "lead" ? startLead(state) : startChatBrief(state);
         setState(r.state);
         deliver(r.messages);
       }
     },
     [state, deliver],
+  );
+
+  // Confirm in the chat when a call is booked in the Calendly pop-up
+  useEffect(
+    () =>
+      onCalendlyBooked(() =>
+        deliver([
+          {
+            answer: [
+              { text: "🎉 **Your call is booked!** Calendly has emailed you the details and the Google Meet link." },
+              { text: "If you have links or files to share before the call, you can add them here or email Paul." },
+            ],
+            chips: ["Show me your work", "How do you work?"],
+          },
+        ]),
+      ),
+    [deliver],
   );
 
   const reset = useCallback(() => {

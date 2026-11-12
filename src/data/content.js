@@ -6,43 +6,57 @@
 // "web", "brand", "mobile" or "deck" (see src/components/Mockups.jsx)
 export const services = [
   {
-    title: "Product Design",
-    description:
-      "Intuitive websites, apps and dashboards shaped around real users and business goals.",
-    art: "web",
-  },
-  {
-    title: "Brand Strategy & Identity",
-    description:
-      "Distinctive identities that give your brand a clear voice and a look people remember.",
+    title: "Brand Strategy",
+    description: "We dig into your idea, audience and goals so your brand says exactly what you stand for.",
     art: "brand",
   },
   {
-    title: "Graphic Design",
-    description: "Clear, striking visuals for campaigns, social and every digital touchpoint.",
+    title: "Logo & Brand Identity",
+    description: "Logo, colours, typography and brand guidelines. Every PAVORA project starts here.",
+    art: "brand",
+  },
+  {
+    title: "Flyers & Ads",
+    description: "Flyers, social ads and campaign visuals that introduce your brand, even before you have a website.",
     art: "mobile",
   },
   {
-    title: "Presentation Design",
-    description: "Pitch and business decks that turn complex ideas into clear visual stories.",
-    art: "deck",
-  },
-  {
-    title: "Web Development",
-    description:
-      "Responsive, production-ready websites built with React and Tailwind CSS — designed and developed by one person.",
+    title: "UI/UX Design in Figma",
+    description: "Websites and apps designed in Figma, with a clickable prototype before anything is built.",
     art: "web",
   },
+  {
+    title: "Website Development",
+    description: "Your Figma design built into a fast, responsive website with React and Tailwind CSS.",
+    art: "web",
+  },
+  {
+    title: "Presentation Design",
+    description: "Pitch decks in your brand style, ready for investors, partners or customers.",
+    art: "deck",
+  },
 ];
+
+// The PAVORA process, shown on the Services page
+export const phases = [
+  { title: "Logo & branding", text: "Logo, colours, fonts and guidelines. Always first, and flyers or ads can follow right away.", tag: "Phase 1" },
+  { title: "Design in Figma", text: "Your website or app designed and clickable, so you see it before it's built.", tag: "Phase 2" },
+  { title: "Development", text: "Your design built, tested and launched as a fast website on every screen.", tag: "Phase 3" },
+  { title: "Presentation", text: "A pitch deck in your brand style, ready for investors, partners or customers.", tag: "Phase 4" },
+];
+
+// The downloadable guide on the Services page (file lives in public/files/)
+export const servicesGuide = { href: "/files/PAVORA-What-We-Do.pdf", label: "PAVORA — What We Do (PDF)" };
 
 // Client reviews and testimonials live in src/data/assistant.js
 
 export const whatIDo = [
-  "Product Design (UI/UX)",
-  "Brand Strategy & Identity",
-  "Graphic Design",
+  "Brand Strategy",
+  "Logo & Brand Identity",
+  "Flyers & Ads",
+  "UI/UX Design in Figma",
+  "Website Development (React, Tailwind CSS)",
   "Presentation Design",
-  "Web Development (React, Tailwind CSS)",
 ];
 
 // Tool tiles on the About page.
@@ -74,11 +88,11 @@ export const experience = [
 
 // Options in the contact form's "Service" dropdown
 export const serviceOptions = [
-  "Product Design (UI/UX)",
-  "Website & Mobile App Design",
-  "Brand Strategy & Identity",
-  "Graphic Design",
+  "Brand Strategy",
+  "Logo & Brand Identity",
+  "Flyers & Ads",
+  "UI/UX Design in Figma",
+  "Website Development",
   "Presentation Design",
-  "Web Development",
   "Something else",
 ];

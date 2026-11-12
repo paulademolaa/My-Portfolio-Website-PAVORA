@@ -4,6 +4,7 @@ import Icon from "../components/Icons.jsx";
 import Reveal from "../components/Reveal.jsx";
 import Select from "../components/Select.jsx";
 import { serviceOptions } from "../data/content.js";
+import { openBooking } from "../assistant/calendly.js";
 import { site, stats } from "../data/site.js";
 
 const inputClass =
@@ -101,10 +102,18 @@ export default function Contact() {
           </span>
         </h1>
         <Reveal delay={300} as="p" className="text-lg leading-[1.6] text-slate-400">
-          Share a few details about your project and I'll get back to you.
+          Tell me about your logo, website or pitch deck project and I'll get back to you. Prefer to talk? Book a free 30-min call.
         </Reveal>
         <Reveal delay={400} className="flex flex-col gap-5 pt-4">
           <UpworkCard />
+          <button
+            type="button"
+            onClick={() => openBooking()}
+            className="flex w-fit cursor-pointer items-center gap-2.5 font-medium transition-colors hover:text-blue-500"
+          >
+            <Icon name="calendar" />
+            Book a free 30-min call
+          </button>
           {site.email ? (
             <a
               href={`mailto:${site.email}`}

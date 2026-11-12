@@ -24,7 +24,7 @@ export default function Work() {
         as="h1"
         title="All Works"
         count={String(projects.length).padStart(2, "0")}
-        intro="Digital products, brand identities and presentations shaped by strategy and thoughtful execution."
+        intro="Brand identities, website and app designs in Figma, developed websites and pitch decks for clients worldwide."
       />
 
       {/* Filter chips */}

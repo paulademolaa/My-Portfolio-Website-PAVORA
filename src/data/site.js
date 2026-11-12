@@ -17,13 +17,15 @@ export const site = {
     linkedin: "https://www.linkedin.com/in/paul-ademola-68697226b",
     instagram: "https://www.instagram.com/designerpaul1",
     x: "https://x.com/", // add your X (Twitter) username at the end
+    // Your Calendly booking page (used by the chatbot's "Book a call" button)
+    calendly: "https://calendly.com/pauladebaria/30min",
   },
 };
 
 // Upwork numbers shown on the Home, About and Contact pages.
 // Keep them in sync with your Upwork profile (last checked 31 Oct 2026).
 export const stats = [
-  { value: 4.9, decimals: 1, suffix: "", label: "Upwork rating" },
+  { value: 4.9, decimals: 1, suffix: "/5", label: "Upwork rating" },
   { value: 18, suffix: "", label: "Total jobs done" },
   { value: 81, suffix: "%", label: "Job Success Score" },
   { value: 7, suffix: "+", label: "Years of experience" },
@@ -45,7 +47,7 @@ export const clientInsights = [
 // Main navigation (used in the navbar, mobile menu and footer)
 export const navLinks = [
   { label: "Work", to: "/work" },
-  { label: "Services", to: "/#services" },
+  { label: "Services", to: "/services" },
   { label: "About", to: "/about" },
   { label: "FAQ", to: "/faq" },
   { label: "Contact", to: "/contact" },

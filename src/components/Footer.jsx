@@ -7,7 +7,7 @@ import { services } from "../data/content.js";
 import { navLinks, site, socialLinks } from "../data/site.js";
 
 // Words that slide across the top of the footer — edit freely
-const MARQUEE = ["Designed with vision", "Built for impact", "Product design", "Brand identity", "Web development"];
+const MARQUEE = ["Designed with vision", "Built for impact", "Brand identity", "UI/UX design", "Website development"];
 
 // Round social icon button
 export function SocialButton({ href, icon, label }) {
@@ -89,7 +89,7 @@ export default function Footer() {
             <h2 className="font-display text-[30px] leading-[1.15] font-medium tracking-[-0.02em] md:text-[36px]">
               Have something great in mind? Let’s make it happen.
             </h2>
-            <p className="leading-[1.6] text-slate-400">I’m always up for a new project and a good chat about design.</p>
+            <p className="leading-[1.6] text-slate-400">Logo, brand, Figma design, website or pitch deck. Tell me what you need and let’s build it.</p>
             {site.email && (
               <a
                 href={`mailto:${site.email}`}
@@ -122,7 +122,7 @@ export default function Footer() {
           <Reveal delay={180}>
             <Column title="Services">
               {services.map((s) => (
-                <Link key={s.title} to="/#services" className={linkClass}>
+                <Link key={s.title} to="/services" className={linkClass}>
                   {s.title}
                 </Link>
               ))}
