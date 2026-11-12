@@ -36,18 +36,18 @@ export default function Stats({ className = "" }) {
   return (
     <div
       ref={ref}
-      className={`reveal ${visible ? "is-visible" : ""} md:rounded-2xl md:border md:border-ink-800 md:bg-ink-900 md:px-10 md:py-2 ${className}`}
+      className={`reveal ${visible ? "is-visible" : ""} md:rounded-2xl md:border md:border-ink-800 md:bg-ink-900 md:px-6 md:py-2 lg:px-10 ${className}`}
     >
-      {/* Phones: each stat in its own box. Tablet and up: one box with dividers. */}
-      <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-0">
+      {/* Phones: each stat in its own box · Tablet: one box, 2 × 2 with dividers · Desktop: one row of 4 */}
+      <div className="grid grid-cols-2 gap-3 md:gap-0 lg:grid-cols-4">
         {stats.map((stat, i) => (
           <div
             key={stat.label}
-            className={`flex flex-col items-center justify-center gap-1.5 rounded-2xl border border-ink-800 bg-ink-900 px-3 py-6 text-center md:rounded-none md:border-0 md:bg-transparent md:px-8 md:py-7 ${
-              i > 0 ? "md:border-l md:border-ink-800" : ""
-            }`}
+            className={`flex flex-col items-center justify-center gap-1.5 rounded-2xl border border-ink-800 bg-ink-900 px-3 py-6 text-center md:rounded-none md:border-0 md:border-ink-800 md:bg-transparent md:px-6 md:py-8 lg:px-4 lg:py-7 xl:px-8 ${
+              i % 2 === 1 ? "md:border-l" : ""
+            } ${i >= 2 ? "md:border-t lg:border-t-0" : ""} ${i === 2 ? "lg:border-l" : ""}`}
           >
-            <p className="font-display text-[40px] leading-[1.1] font-bold tracking-[-0.02em] md:text-[64px]">
+            <p className="font-display text-[40px] leading-[1.1] font-bold tracking-[-0.02em] md:text-[56px] lg:text-[52px] xl:text-[64px]">
               <CountUp {...stat} start={visible} />
             </p>
             <p className="text-sm leading-[1.6] text-slate-400 md:text-base">{stat.label}</p>
