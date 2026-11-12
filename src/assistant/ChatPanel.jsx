@@ -34,7 +34,8 @@ function Typing() {
 //   onNavigate: called when a link inside the chat is clicked
 //   storageKey: keeps separate conversations for different places
 export default function ChatPanel({ onClose, onNavigate, storageKey, className = "" }) {
-  const { messages, typing, send, action, reset, inLead } = useAssistant(storageKey);
+  const { messages, typing, send, action, reset, attach, inLead, canAttach } = useAssistant(storageKey);
+  const fileRef = useRef(null);
   const [input, setInput] = useState("");
   const listRef = useRef(null);
   const inputRef = useRef(null);
@@ -129,11 +130,37 @@ export default function ChatPanel({ onClose, onNavigate, storageKey, className =
 
       {/* Input */}
       <form onSubmit={submit} className="flex items-center gap-2 p-3">
+        {canAttach && (
+          <>
+            <input
+              ref={fileRef}
+              type="file"
+              multiple
+              className="hidden"
+              onChange={(e) => {
+                attach(e.target.files);
+                e.target.value = "";
+              }}
+            />
+            <button
+              type="button"
+              onClick={() => fileRef.current?.click()}
+              disabled={typing}
+              title="Attach files (PDF, PNG, JPEG or any file, up to 3 MB)"
+              aria-label="Attach files"
+              className="grid size-11 shrink-0 cursor-pointer place-items-center rounded-full border border-ink-700 text-slate-300 transition-all duration-300 hover:border-blue-500 hover:bg-blue-600/15 hover:text-white active:scale-90 disabled:opacity-40"
+            >
+              <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="m21.4 11.1-8.5 8.5a5.5 5.5 0 0 1-7.8-7.8l8.5-8.5a3.7 3.7 0 0 1 5.2 5.2l-8.5 8.5a1.8 1.8 0 0 1-2.6-2.6l7.9-7.9" />
+              </svg>
+            </button>
+          </>
+        )}
         <input
           ref={inputRef}
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder={inLead ? "Type your answer…" : "Ask about services, process, tools…"}
+          placeholder={canAttach ? "Type your answer or paste a link…" : inLead ? "Type your answer…" : "Ask about services, process, tools…"}
           aria-label="Message the assistant"
           maxLength={2000}
           className="min-w-0 flex-1 rounded-full border border-ink-700 bg-ink-950 px-4 py-3 text-[14px] text-white placeholder:text-slate-500 transition-colors focus:border-blue-500 focus:outline-none"

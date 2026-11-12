@@ -180,7 +180,9 @@ const STEP_LABEL = {
 
 // The first question we don't have an answer to yet
 function nextMissing(data) {
-  return ORDER.find((k) => data[k] == null || (data[k] === "" && k !== "inspiration"));
+  return ORDER.find((k) =>
+    k === "inspiration" ? !data.inspirationDone : data[k] == null || data[k] === "",
+  );
 }
 
 const LEAD_STEPS = {
@@ -197,7 +199,7 @@ const LEAD_STEPS = {
     chips: leadOptions.budgets,
   },
   about: {
-    ask: "Now the fun part. **What's the project?** Tell me about your business or idea in a few sentences.",
+    ask: "Now the fun part. **Tell me about your project in full detail:** your business or idea, what you need designed or built (pages, features, materials), what you already have (logo, colours, content, current website) and anything else Paul should know. The more detail, the better.",
     chips: [CALL_CHIP],
   },
   goals: {
@@ -209,8 +211,8 @@ const LEAD_STEPS = {
     chips: [CALL_CHIP],
   },
   inspiration: {
-    ask: "Last one: **any inspiration?** Share links to websites, brands or designs you like, or your current website. You can skip this.",
-    chips: ["Skip", CALL_CHIP],
+    ask: "Last one: **any inspiration?** Paste links to websites, brands or designs you like, and/or **attach files** (PDF, PNG, JPEG or any file) with the 📎 button below. Add as many as you like, then tap **Done**. You can also skip this.",
+    chips: ["Done", "Skip", CALL_CHIP],
   },
 };
 const ORDER = ["name", "email", "service", "timeline", "budget", "about", "goals", "audience", "inspiration"];
@@ -224,12 +226,15 @@ function leadPrompt(step, data) {
 // What Paul receives as "Project details"
 export function projectDetails(d) {
   return [
-    `What it is: ${d.about}`,
+    `Project details: ${d.about}`,
     `Goals: ${d.goals}`,
     `Who it's for: ${d.audience}`,
-    `Inspiration: ${d.inspiration || "—"}`,
-  ].join("\n");
+    `Inspiration links/notes: ${d.inspiration || "—"}`,
+    `Attached files: ${fileList(d) || "—"}`,
+  ].join("\n\n");
 }
+
+const fileList = (d) => (d.files || []).map((f) => f.name).join(", ");
 
 function leadSummary(d) {
   return {
@@ -246,6 +251,7 @@ function leadSummary(d) {
           `**Goals:** ${d.goals}`,
           `**Who it's for:** ${d.audience}`,
           `**Inspiration:** ${d.inspiration || "—"}`,
+          `**Files:** ${fileList(d) || "—"}`,
         ],
       },
     ],
@@ -365,8 +371,32 @@ function handleLead(message, state) {
       return ask("Hmm, that doesn't look like an email address. Could you check it? (e.g. **name@company.com**)");
     }
   } else if (lead.step === "inspiration") {
-    data.inspiration = /^(skip|none|no|nope|nothing|n\/a|na)$/.test(low) ? "" : text.slice(0, 1000);
+    const finished = /^(done|that s all|thats all|that s it|finished|no more|continue|next)$/.test(low);
+    const skip = /^(skip|none|no|nope|nothing|n\/a|na)$/.test(low);
+    if (skip) {
+      data.inspiration = data.inspiration || "";
+    } else if (finished) {
+      data.inspiration = data.inspiration || "";
+    } else {
+      // keep collecting links/notes until they tap Done
+      data.inspiration = [data.inspiration, text.slice(0, 1000)].filter(Boolean).join("\n");
+      return {
+        messages: [{ answer: [{ text: "Got it, added. ✅ Add more links or attach files with 📎, or tap **Done** when you're ready." }], chips: ["Done", CALL_CHIP] }],
+        state: { ...state, memory: { ...data }, lead: { step: "inspiration", data, collecting: true } },
+      };
+    }
   } else if (PROJECT_STEPS.includes(lead.step)) {
+    if (lead.step === "about" && text.length < 25) {
+      return {
+        messages: [
+          {
+            answer: [{ text: "Could you share **a bit more detail**? For example: what your business does, what you need (logo, website, app, flyers, deck), the pages or features, and what you already have. Or book a call if it's easier to explain out loud." }],
+            chips: [CALL_CHIP],
+          },
+        ],
+        state,
+      };
+    }
     if (text.length < 4) {
       return {
         messages: [
@@ -382,6 +412,8 @@ function handleLead(message, state) {
   } else {
     data[lead.step] = text.slice(0, 120);
   }
+
+  if (lead.step === "inspiration") data.inspirationDone = true;
 
   // Next question we don't already have an answer to
   const memory = { ...data };
@@ -419,6 +451,36 @@ function resumeBrief(state) {
   const prompt = leadPrompt(step, data);
   messages.push(prompt);
   return { messages, state: { ...state, lead: { step, data }, lastTopic: "lead" } };
+}
+
+// Files attached with the 📎 button. `files` = [{ name, size }] (the file data
+// itself stays in the browser until the brief is sent). `rejected` = names
+// that were too big or over the limit.
+export function attachFiles(state, files, rejected = []) {
+  const lead = state.lead;
+  if (!lead) return { messages: [], state };
+  const data = { ...(state.memory || {}), ...lead.data };
+  data.files = [...(data.files || []), ...files];
+  const texts = [];
+  if (files.length) {
+    texts.push(`📎 Got it: **${files.map((f) => f.name).join(", ")}** will be sent to Paul with your brief.`);
+  }
+  if (rejected.length) {
+    texts.push(
+      `Sorry, I couldn't attach **${rejected.join(", ")}**. Files can be up to 3 MB in total (5 files max). For bigger files, share a **Google Drive or Dropbox link** here instead.`,
+    );
+  }
+  const onInspiration = lead.step === "inspiration";
+  texts.push(onInspiration ? "Add more files or links, or tap **Done** when you're ready." : "Now, back to the question above. 👆");
+  return {
+    messages: [{ answer: texts.map((text) => ({ text })), chips: onInspiration ? ["Done", CALL_CHIP] : LEAD_STEPS[lead.step]?.chips || [] }],
+    state: { ...state, memory: { ...data }, lead: { ...lead, data } },
+  };
+}
+
+export function removeFiles(data = {}) {
+  const { files, ...rest } = data;
+  return rest;
 }
 
 // "Start a project": first ask how they'd like to share it
