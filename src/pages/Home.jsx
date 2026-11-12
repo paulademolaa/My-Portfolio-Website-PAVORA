@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import Button from "../components/Button.jsx";
 import Stats from "../components/Stats.jsx";
 import SectionTitle from "../components/SectionTitle.jsx";
@@ -136,15 +137,54 @@ function SelectedWorks() {
 
 /* ---------------- Services ---------------- */
 function Services() {
+  const listRef = useRef(null);
+  const [fill, setFill] = useState(0);
+
+  useEffect(() => {
+    const el = listRef.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setFill(el.offsetHeight);
+      return;
+    }
+    let frame;
+    const update = () => {
+      frame = null;
+      const r = el.getBoundingClientRect();
+      const drawn = window.innerHeight * 0.6 - r.top; // the line follows a point 60% down the screen
+      setFill(Math.max(0, Math.min(r.height, drawn)));
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      cancelAnimationFrame(frame);
+    };
+  }, []);
+
   return (
     <section id="services" className="container-page flex scroll-mt-24 flex-col gap-14 pt-28 lg:pt-40">
       <SectionTitle
         title="Services"
         intro="Logo and brand identity, flyers and ads, Figma design, website development and pitch decks. Everything your brand needs to launch."
       />
-      <div className="border-t border-ink-800">
+      {/* The services as one connected process — the line draws itself as you scroll */}
+      <div ref={listRef} className="relative border-t border-ink-800 pl-12 md:pl-20">
+        <span className="pointer-events-none absolute top-0 bottom-0 left-[15.5px] w-px bg-ink-800 md:left-[23.5px]" aria-hidden="true" />
+        <span
+          className="pointer-events-none absolute top-0 left-[15px] w-[2px] bg-gradient-to-b from-blue-400/0 via-blue-500 to-blue-400 md:left-[23px]"
+          style={{ height: fill }}
+          aria-hidden="true"
+        >
+          <span className="absolute -bottom-1.5 left-1/2 size-3 -translate-x-1/2 rounded-full bg-blue-400 shadow-[0_0_16px_4px_rgba(96,165,250,0.7)]" />
+        </span>
         {services.map((service, i) => (
-          <ServiceRow key={service.title} service={service} index={i} />
+          <ServiceRow key={service.title} service={service} index={i} fill={fill} />
         ))}
       </div>
       <Reveal className="flex justify-center">
