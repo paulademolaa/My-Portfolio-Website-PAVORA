@@ -1,8 +1,8 @@
 import Button from "../components/Button.jsx";
 import Icon from "../components/Icons.jsx";
 import Mockup from "../components/Mockups.jsx";
-import Reveal, { useInView } from "../components/Reveal.jsx";
-import SectionTitle from "../components/SectionTitle.jsx";
+import Reveal from "../components/Reveal.jsx";
+import { ProcessCards } from "../components/AboutCards.jsx";
 import { Symbol } from "../components/Logo.jsx";
 import { phases, services, servicesGuide } from "../data/content.js";
 
@@ -21,44 +21,6 @@ function DownloadButton({ variant = "primary", className = "" }) {
       <Icon name="download" className="size-5 transition-transform duration-300 group-hover/btn:translate-y-0.5" />
       Download our guide (PDF)
     </a>
-  );
-}
-
-// The four phases: a line draws across them, then each card pops in
-function Phases() {
-  const [ref, visible] = useInView();
-  return (
-    <div ref={ref} className="relative mt-10">
-      <div
-        className={`absolute top-1/2 right-0 left-0 hidden h-px origin-left bg-gradient-to-r from-blue-500 via-blue-500/50 to-transparent transition-transform duration-[1400ms] ease-(--ease-premium) md:block ${
-          visible ? "scale-x-100" : "scale-x-0"
-        }`}
-      />
-      <ol className="relative grid auto-rows-fr gap-4 md:grid-cols-4">
-        {phases.map((p, i) => (
-          <li
-            key={p.title}
-            style={{ transitionDelay: `${200 + i * 140}ms` }}
-            className={`h-full transition-all duration-700 ease-(--ease-premium) ${
-              visible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
-            }`}
-          >
-            <div
-              className={`group flex h-full flex-col gap-2 rounded-2xl border p-6 transition-all duration-500 ease-(--ease-premium) hover:-translate-y-1 ${
-                i === 0 ? "border-blue-500 bg-[#0f1d4d]" : "border-ink-800 bg-ink-900 hover:border-blue-500/50"
-              }`}
-            >
-              <span className="flex items-center gap-2 text-xs font-medium tracking-[0.1em] text-slate-400 uppercase">
-                <span className={`size-1.5 rounded-full ${i === 0 ? "animate-pulse bg-blue-400" : "bg-slate-600 transition-colors group-hover:bg-blue-400"}`} />
-                {p.tag}
-              </span>
-              <span className="font-display text-lg font-medium">{p.title}</span>
-              <span className="text-[15px] leading-[1.5] text-slate-400">{p.text}</span>
-            </div>
-          </li>
-        ))}
-      </ol>
-    </div>
   );
 }
 
@@ -115,10 +77,19 @@ export default function Services() {
         </div>
       </section>
 
-      {/* How it works */}
-      <section className="container-page pt-24 md:pt-32">
-        <SectionTitle title="How it works" intro="Every project starts with the logo. You can stop after any phase." />
-        <Phases />
+      {/* How it works — same scroll animation as "How I work" on the About page */}
+      <section className="container-page pt-24 lg:pt-[120px]">
+        <ProcessCards
+          steps={phases}
+          heading={
+            <div className="flex flex-col gap-3 text-center">
+              <h2 className="font-display text-[32px] leading-[1.2] font-medium md:text-[40px]">How it works</h2>
+              <p className="mx-auto max-w-[520px] leading-[1.6] text-slate-400">
+                Every project starts with the logo. You can stop after any phase.
+              </p>
+            </div>
+          }
+        />
       </section>
 
       {/* Download CTA */}
