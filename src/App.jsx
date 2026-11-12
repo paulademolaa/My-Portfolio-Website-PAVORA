@@ -11,6 +11,7 @@ import Contact from "./pages/Contact.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import Faq from "./pages/Faq.jsx";
 import ChatWidget from "./assistant/ChatWidget.jsx";
+import Cursor from "./components/Cursor.jsx";
 
 // Scrolls to the top (or to a #section) whenever the page changes
 function ScrollManager() {
@@ -56,6 +57,9 @@ export default function App() {
 
       {/* "Ask PAVORA" chat button, on every page */}
       <ChatWidget />
+
+      {/* Glowing PAVORA cursor (mouse only) */}
+      <Cursor />
     </>
   );
 }
