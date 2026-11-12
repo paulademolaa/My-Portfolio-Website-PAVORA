@@ -53,7 +53,7 @@ export default function Services() {
 
       {/* Service cards */}
       <section className="container-page pt-14 md:pt-28">
-        <div className="grid grid-cols-1 gap-5 sm:auto-rows-fr sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 sm:auto-rows-fr sm:grid-cols-2 lg:grid-cols-3">
           {services.map((s, i) => (
             <Reveal key={s.title} delay={(i % 3) * 100} className="h-full min-w-0">
               <article className="group flex h-full min-w-0 flex-col gap-5 overflow-hidden rounded-3xl border border-ink-800 bg-ink-900 p-6 transition-all duration-500 ease-(--ease-premium) hover:-translate-y-1.5 hover:border-blue-500/60 hover:shadow-[0_24px_60px_-24px_rgba(37,99,235,0.55)] md:p-7">
