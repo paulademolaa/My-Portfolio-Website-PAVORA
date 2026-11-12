@@ -83,7 +83,10 @@ export default function Project() {
   ].filter(([, v]) => v);
 
   // The story: each section is followed by one picture
-  const pictures = [...(project.gallery || []), project.finalImage].filter(Boolean);
+  // (a picture can be "path" or { src: "path", aspect: "aspect-square" } for tall mockups)
+  const pictures = [...(project.gallery || []), project.finalImage]
+    .filter(Boolean)
+    .map((p) => (typeof p === "string" ? { src: p } : p));
   const sections = [
     ["Challenge", project.challenge],
     ["Approach", project.approach || project.solution],
@@ -152,16 +155,16 @@ export default function Project() {
             <StorySection number={String(i + 1).padStart(2, "0")} title={title} text={text} />
             {pictures[i] && (
               <Picture
-                src={pictures[i]}
+                src={pictures[i].src}
                 alt={`${project.title}: ${title.toLowerCase()}`}
-                className="mb-14 aspect-[16/10] md:mb-20"
+                className={`mb-14 md:mb-20 ${pictures[i].aspect || "aspect-[16/10]"}`}
               />
             )}
           </div>
         ))}
         {/* any pictures left over */}
-        {pictures.slice(sections.length).map((src, i) => (
-          <Picture key={src + i} src={src} alt={`${project.title} detail`} className="mb-14 aspect-[16/10] md:mb-20" />
+        {pictures.slice(sections.length).map((p, i) => (
+          <Picture key={p.src + i} src={p.src} alt={`${project.title} detail`} className={`mb-14 md:mb-20 ${p.aspect || "aspect-[16/10]"}`} />
         ))}
       </div>
 
