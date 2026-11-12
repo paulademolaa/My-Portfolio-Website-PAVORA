@@ -3,7 +3,7 @@ import Icon from "../components/Icons.jsx";
 import Mockup from "../components/Mockups.jsx";
 import Reveal from "../components/Reveal.jsx";
 import { ProcessCards } from "../components/AboutCards.jsx";
-import { Symbol } from "../components/Logo.jsx";
+import { SymbolHairline } from "../components/Logo.jsx";
 import { phases, services, servicesGuide } from "../data/content.js";
 
 // The full-detail PDF lives in public/files/ — replace the file to update it
@@ -95,10 +95,9 @@ export default function Services() {
       {/* Download CTA */}
       <section className="container-page py-24 md:py-32">
         <Reveal className="relative flex flex-col items-start gap-6 overflow-hidden rounded-3xl bg-gradient-to-br from-blue-600 to-blue-800 p-8 md:flex-row md:items-center md:justify-between md:p-12">
-          <Symbol
-            color="#FFFFFF"
-            className="pointer-events-none absolute -right-10 -bottom-16 h-[280px] w-auto animate-float-slow opacity-10 md:h-[340px]"
-          />
+          <div className="pointer-events-none absolute right-4 bottom-4 h-[45%] md:top-1/2 md:right-[26%] md:bottom-auto md:h-[86%] md:-translate-y-1/2">
+            <SymbolHairline className="h-full w-auto animate-float-slow" />
+          </div>
           <div className="relative max-w-[560px]">
             <h2 className="font-display text-[28px] leading-[1.2] font-medium md:text-[36px]">Want the full picture?</h2>
             <p className="mt-3 leading-[1.6] text-blue-100">
