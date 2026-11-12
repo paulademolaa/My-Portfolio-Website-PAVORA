@@ -89,7 +89,7 @@ export default function Footer() {
             <h2 className="font-display text-[30px] leading-[1.15] font-medium tracking-[-0.02em] md:text-[36px]">
               Have something great in mind? Let’s make it happen.
             </h2>
-            <p className="leading-[1.6] text-slate-400">I’m always up for a new project and a good chat about design.</p>
+            <p className="leading-[1.6] text-slate-400">Logo, brand, Figma design, website or pitch deck. Tell me what you need and let’s build it.</p>
             {site.email && (
               <a
                 href={`mailto:${site.email}`}
