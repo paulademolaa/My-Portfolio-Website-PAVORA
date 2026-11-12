@@ -8,6 +8,9 @@
 //
 // category must match one of the filter names in src/pages/Work.jsx.
 // tags are the small chips shown on the Home page cards.
+// On the project page, the story reads: 01 Challenge (challenge),
+// 02 Approach (solution), 03 Outcome (outcome); each is followed by one
+// picture from gallery, then finalImage. Leave outcome out to hide it.
 // ---------------------------------------------------------------
 
 export const projects = [
@@ -27,6 +30,7 @@ export const projects = [
       "Describe the client’s problem in two or three sentences — only verified project details.",
     solution:
       "Explain the approach and the final design in plain words. Add results only if they are verified.",
+    outcome: "What happened after launch, in one or two sentences. Only verified results.",
     gallery: ["/images/projects/gallery-1.jpg", "/images/projects/gallery-2.jpg"],
     finalImage: "/images/projects/final-wide.jpg",
   },
@@ -46,6 +50,7 @@ export const projects = [
       "Describe the client’s problem in two or three sentences — only verified project details.",
     solution:
       "Explain the approach and the final design in plain words. Add results only if they are verified.",
+    outcome: "What happened after launch, in one or two sentences. Only verified results.",
     gallery: ["/images/projects/gallery-1.jpg", "/images/projects/gallery-2.jpg"],
     finalImage: "/images/projects/final-wide.jpg",
   },
@@ -65,6 +70,7 @@ export const projects = [
       "Describe the client’s problem in two or three sentences — only verified project details.",
     solution:
       "Explain the approach and the final design in plain words. Add results only if they are verified.",
+    outcome: "What happened after launch, in one or two sentences. Only verified results.",
     gallery: ["/images/projects/gallery-1.jpg", "/images/projects/gallery-2.jpg"],
     finalImage: "/images/projects/final-wide.jpg",
   },
@@ -84,6 +90,7 @@ export const projects = [
       "Describe the client’s problem in two or three sentences — only verified project details.",
     solution:
       "Explain the approach and the final design in plain words. Add results only if they are verified.",
+    outcome: "What happened after launch, in one or two sentences. Only verified results.",
     gallery: ["/images/projects/gallery-1.jpg", "/images/projects/gallery-2.jpg"],
     finalImage: "/images/projects/final-wide.jpg",
   },
@@ -103,6 +110,7 @@ export const projects = [
       "Describe the client’s problem in two or three sentences — only verified project details.",
     solution:
       "Explain the approach and the final design in plain words. Add results only if they are verified.",
+    outcome: "What happened after launch, in one or two sentences. Only verified results.",
     gallery: ["/images/projects/gallery-1.jpg", "/images/projects/gallery-2.jpg"],
     finalImage: "/images/projects/final-wide.jpg",
   },
@@ -122,6 +130,7 @@ export const projects = [
       "Describe the client’s problem in two or three sentences — only verified project details.",
     solution:
       "Explain the approach and the final design in plain words. Add results only if they are verified.",
+    outcome: "What happened after launch, in one or two sentences. Only verified results.",
     gallery: ["/images/projects/gallery-1.jpg", "/images/projects/gallery-2.jpg"],
     finalImage: "/images/projects/final-wide.jpg",
   },
