@@ -12,6 +12,8 @@
 //               { list: ["…", "…"] }     bullet list
 //               { card: "services" | "tools" | "process" | "projects" | "reviews" | "rating" }
 //               { actions: [...] }       buttons (see ACTIONS below)
+//               { actions: ["bookCall"], prefill: { name, email } }
+//                                        opens the Calendly booking pop-up
 //   ask       (optional) the question this topic answers — used to
 //             suggest related questions when the assistant isn't sure
 //   chips     follow-up suggestions shown under the answer
@@ -27,6 +29,8 @@ import { site } from "./site.js";
 // Buttons the assistant can show
 export const ACTIONS = {
   startProject: { label: "Start a project", action: "lead" },
+  bookCall: { label: "Book a call with Paul", book: true },
+  explainHere: { label: "Explain it here instead", action: "chatBrief" },
   upwork: { label: "Message me on Upwork", href: site.links.upwork },
   contact: { label: "Open the contact page", to: "/contact" },
   work: { label: "See all work", to: "/work" },
@@ -568,17 +572,36 @@ export const topics = [
     phrases: ["get in touch", "contact you", "reach you", "talk to paul", "speak to paul"],
     answer: [
       {
-        text: "The fastest way is to **start a project right here** — I'll collect a few details and send them straight to Paul. You can also email him at [paulademolaa@gmail.com](mailto:paulademolaa@gmail.com), message him on Upwork or use the contact page.",
+        text: "The fastest way is to **start a project right here**: tell me about it in the chat, or **book a call with Paul** if you'd rather talk it through. You can also email him at [paulademolaa@gmail.com](mailto:paulademolaa@gmail.com) or message him on Upwork.",
       },
-      { actions: ["startProject", "upwork", "contact"] },
+      { actions: ["startProject", "bookCall", "upwork"] },
     ],
-    chips: ["Start a project"],
+    chips: ["Start a project", "Book a call"],
+  },
+  {
+    id: "call",
+    ask: "Can I book a call with Paul?",
+    keywords: { call: 4, consultation: 4, meeting: 4, schedule: 3, calendly: 5, book: 2 },
+    phrases: ["book a call", "schedule a call", "a consultation", "talk to paul", "speak with paul", "video call", "meet with paul", "rather explain on a call"],
+    answer: [
+      {
+        text: "Of course. **Book a 30-minute call with Paul** on Google Meet. He'll walk through your project with you: what it is, your goals, who it's for and any inspiration you have.",
+      },
+      { actions: ["bookCall", "explainHere"] },
+    ],
+    chips: ["How do you work?", "What services do you offer?"],
+    faq: {
+      group: "Working together",
+      question: "Can I book a call instead of writing a brief?",
+      answer:
+        "Yes. If it's easier to talk it through, book a 30-minute Google Meet call with Paul from the assistant or the contact page. He'll go through your project, goals, audience and inspiration with you.",
+    },
   },
   {
     id: "lead",
     ask: "Start a project",
     keywords: { hire: 4 },
-    phrases: ["start a project", "i want to hire", "work with you", "work together", "i have a project", "need a designer", "i need a website", "i need a logo", "get started"],
+    phrases: ["start a project", "explain it here", "i want to hire", "work with you", "work together", "i have a project", "need a designer", "i need a website", "i need a logo", "get started"],
     answer: [], // starts the project brief flow (see src/assistant/engine.js)
     chips: [],
   },
@@ -762,20 +785,20 @@ export const welcome = {
   answer: [
     { text: "Hi 👋 I'm the **PAVORA assistant**." },
     {
-      text: "Ask me anything about Paul's services, process, tools or past work — or start a project and I'll pass your brief straight to him.",
+      text: "Ask me anything about Paul's services, process, tools or past work. When you're ready, tell me about your project here, or book a call with Paul if you'd rather talk it through.",
     },
   ],
-  chips: ["What services do you offer?", "Show me your work", "Client reviews", "Start a project"],
+  chips: ["What services do you offer?", "Show me your work", "Start a project", "Book a call"],
 };
 
 // Options used in the "Start a project" flow
 export const leadOptions = {
   services: [
-    "Product Design (UI/UX)",
-    "Brand Identity",
-    "Graphic Design",
+    "Logo & Brand Identity",
+    "Flyers & Ads",
+    "Website / App Design (Figma)",
+    "Website Development",
     "Presentation Design",
-    "Web Development",
     "Not sure yet",
   ],
   timelines: ["As soon as possible", "Within a month", "1–3 months", "Flexible"],
