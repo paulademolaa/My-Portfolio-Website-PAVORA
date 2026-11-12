@@ -44,21 +44,21 @@ export default function Services() {
           PAVORA helps startup founders and growing businesses build a brand people remember and a website people use.
           Here's a quick look. The guide has every step in detail.
         </Reveal>
-        <Reveal delay={240} className="mt-9 flex flex-wrap gap-3">
-          <DownloadButton />
-          <Button to="/contact" variant="secondary">
+        <Reveal delay={240} className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <DownloadButton className="w-full py-3.5 sm:w-auto sm:py-3" />
+          <Button to="/contact" variant="secondary" className="w-full py-3.5 sm:w-auto sm:py-3">
             Start a project
           </Button>
         </Reveal>
       </section>
 
       {/* Service cards */}
-      <section className="container-page pt-20 md:pt-28">
-        <div className="grid auto-rows-fr gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <section className="container-page pt-14 md:pt-28">
+        <div className="grid grid-cols-1 gap-5 sm:auto-rows-fr sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
           {services.map((s, i) => (
-            <Reveal key={s.title} delay={(i % 3) * 100} className="h-full">
-              <article className="group flex h-full flex-col gap-5 overflow-hidden rounded-3xl border border-ink-800 bg-ink-900 p-6 transition-all duration-500 ease-(--ease-premium) hover:-translate-y-1.5 hover:border-blue-500/60 hover:shadow-[0_24px_60px_-24px_rgba(37,99,235,0.55)] md:p-7">
-                <div className="overflow-hidden rounded-2xl">
+            <Reveal key={s.title} delay={(i % 3) * 100} className="h-full min-w-0">
+              <article className="group flex h-full min-w-0 flex-col gap-5 overflow-hidden rounded-3xl border border-ink-800 bg-ink-900 p-6 transition-all duration-500 ease-(--ease-premium) hover:-translate-y-1.5 hover:border-blue-500/60 hover:shadow-[0_24px_60px_-24px_rgba(37,99,235,0.55)] md:p-7">
+                <div className="min-w-0 overflow-hidden rounded-2xl">
                   <Mockup
                     kind={s.art}
                     className="aspect-[420/240] w-full transition-transform duration-700 ease-(--ease-premium) group-hover:scale-[1.04] group-hover:-rotate-1"
@@ -105,7 +105,7 @@ export default function Services() {
               development, presentations, and the tools we use.
             </p>
           </div>
-          <DownloadButton variant="light" className="relative shrink-0" />
+          <DownloadButton variant="light" className="relative mt-2 w-full shrink-0 py-3.5 sm:w-auto md:mt-0 md:py-3" />
         </Reveal>
       </section>
     </>
