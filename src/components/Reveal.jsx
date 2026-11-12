@@ -26,13 +26,13 @@ export function useInView(options = { threshold: 0.15, rootMargin: "0px 0px -60p
 // Wrap anything in <Reveal> to fade + slide it in on scroll.
 //   delay: milliseconds to wait (use it to stagger items)
 //   as:    which HTML tag to render (default "div")
-export default function Reveal({ children, delay = 0, as: Tag = "div", className = "", ...props }) {
+export default function Reveal({ children, delay = 0, as: Tag = "div", className = "", style, ...props }) {
   const [ref, visible] = useInView();
 
   return (
     <Tag
       ref={ref}
-      style={{ "--delay": `${delay}ms` }}
+      style={{ "--delay": `${delay}ms`, ...style }}
       className={`reveal ${visible ? "is-visible" : ""} ${className}`}
       {...props}
     >

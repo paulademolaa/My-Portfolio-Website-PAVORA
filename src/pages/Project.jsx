@@ -12,9 +12,13 @@ import { projects } from "../data/projects.js";
 const label = "text-[12px] leading-[1.4] font-medium tracking-[0.12em] uppercase";
 
 // A picture that fades up and settles from a slight zoom as it appears
-function Picture({ src, alt, className = "" }) {
+// ratio (e.g. 1.346) shows the whole picture uncropped at its own shape
+function Picture({ src, alt, ratio, className = "" }) {
   return (
-    <Reveal className={`group overflow-hidden rounded-2xl border border-ink-800 bg-ink-900 ${className}`}>
+    <Reveal
+      className={`group overflow-hidden rounded-2xl border border-ink-800 bg-ink-900 ${ratio ? "" : "aspect-[16/10]"} ${className}`}
+      style={ratio ? { aspectRatio: ratio } : undefined}
+    >
       <img
         src={src}
         alt={alt}
@@ -83,10 +87,13 @@ export default function Project() {
   ].filter(([, v]) => v);
 
   // The story: each section is followed by one picture
-  // (a picture can be "path" or { src: "path", aspect: "aspect-square" } for tall mockups)
+  // Each gallery entry is shown after one story section. An entry can be
+  // "path", { src, ratio } (ratio = width ÷ height, shows it uncropped),
+  // or a list of those to show several pictures after that section.
+  const toPic = (p) => (typeof p === "string" ? { src: p } : p);
   const pictures = [...(project.gallery || []), project.finalImage]
     .filter(Boolean)
-    .map((p) => (typeof p === "string" ? { src: p } : p));
+    .map((p) => (Array.isArray(p) ? p.map(toPic) : [toPic(p)]));
   const sections = [
     ["Challenge", project.challenge],
     ["Approach", project.approach || project.solution],
@@ -146,25 +153,27 @@ export default function Project() {
       </header>
 
       {/* Cover */}
-      <Picture src={project.cover} alt={project.title} className="mt-14 aspect-[16/10] md:mt-20" />
+      <Picture src={project.cover} ratio={project.coverRatio} alt={project.title} className="mt-14 md:mt-20" />
 
       {/* Story */}
       <div className="mt-20 md:mt-28">
         {sections.map(([title, text], i) => (
           <div key={title}>
             <StorySection number={String(i + 1).padStart(2, "0")} title={title} text={text} />
-            {pictures[i] && (
+            {(pictures[i] || []).map((p, k) => (
               <Picture
-                src={pictures[i].src}
-                alt={`${project.title}: ${title.toLowerCase()}`}
-                className={`mb-14 md:mb-20 ${pictures[i].aspect || "aspect-[16/10]"}`}
+                key={p.src}
+                src={p.src}
+                ratio={p.ratio}
+                alt={`${project.title}: ${title.toLowerCase()}${k ? ` ${k + 1}` : ""}`}
+                className={`mb-14 md:mb-20 ${p.aspect || ""}`}
               />
-            )}
+            ))}
           </div>
         ))}
         {/* any pictures left over */}
-        {pictures.slice(sections.length).map((p, i) => (
-          <Picture key={p.src + i} src={p.src} alt={`${project.title} detail`} className={`mb-14 md:mb-20 ${p.aspect || "aspect-[16/10]"}`} />
+        {pictures.slice(sections.length).flat().map((p, i) => (
+          <Picture key={p.src + i} src={p.src} ratio={p.ratio} alt={`${project.title} detail`} className={`mb-14 md:mb-20 ${p.aspect || ""}`} />
         ))}
       </div>
 

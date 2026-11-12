@@ -34,8 +34,17 @@ export const projects = [
       "As team lead, I co-designed FreshFind end to end in Figma for desktop and mobile with Omisakin Olawole, from the moodboard and a fresh green design system to every card state. The answer came down to three tools: a Market Directory you can filter by neighbourhood, day or produce; a Produce Guide that shows what's in season and which markets stock it; and Bookmarks with notes to share with family. We then built it with React and Tailwind CSS.",
     outcome:
       "FreshFind is live and works on desktop, tablet and mobile. Shoppers see what's open the moment they land, plan the whole trip from their desk, get one page per market with its schedule and directions, and can ask the FreshFind Assistant for help.",
-    gallery: ["/images/projects/gallery-1.jpg", "/images/projects/gallery-2.jpg"],
-    finalImage: "/images/projects/final-wide.jpg",
+    coverRatio: 1.346,
+    // After 01 Challenge / 02 Approach / 03 Outcome (shown uncropped)
+    gallery: [
+      { src: "/images/projects/freshfind-desktop.webp", ratio: 1.372 },
+      [
+        { src: "/images/projects/freshfind-colour.webp", ratio: 1.346 },
+        { src: "/images/projects/freshfind-typography.webp", ratio: 1.555 },
+        { src: "/images/projects/freshfind-mobile.webp", ratio: 0.787 },
+      ],
+    ],
+    finalImage: { src: "/images/projects/freshfind-market-page.webp", ratio: 1.346 },
   },
   {
     slug: "bizopconnect",
