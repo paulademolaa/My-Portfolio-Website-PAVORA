@@ -156,7 +156,7 @@ export default function Faq() {
       {/* CTA */}
       <section className="mx-auto max-w-[1280px] px-5 pb-24 md:px-10 md:pb-32">
         <Reveal className="relative flex flex-col items-start gap-6 overflow-hidden rounded-3xl bg-gradient-to-br from-blue-600 to-blue-800 p-8 md:flex-row md:items-center md:justify-between md:p-12">
-          <div className="pointer-events-none absolute right-4 bottom-4 h-[45%] md:top-1/2 md:right-[36%] md:bottom-auto md:h-[86%] md:-translate-y-1/2">
+          <div className="pointer-events-none absolute -right-6 -bottom-[22%] h-[75%] md:-right-10 md:-bottom-[30%] md:h-[125%]">
             <SymbolHairline className="h-full w-auto animate-float-slow" />
           </div>
           <h2 className="relative max-w-[560px] font-display text-[28px] leading-[1.2] font-medium md:text-[36px]">
