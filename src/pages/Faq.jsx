@@ -87,7 +87,8 @@ export default function Faq() {
           <ChatPanel storageKey="pavora-assistant-faq" className="h-full" />
         </Reveal>
 
-        <div className="flex flex-col gap-6">
+        {/* Phones: stacked · Tablet: side by side, same height · Desktop: column next to the chat */}
+        <div className="grid gap-6 md:grid-cols-2 lg:flex lg:flex-col">
           <Reveal delay={100} className="flex flex-col gap-4 rounded-3xl bg-upwork p-7">
             <span className="flex items-center gap-2 text-sm font-medium">
               <Icon name="upwork" className="size-5" /> Upwork client rating
@@ -104,7 +105,7 @@ export default function Faq() {
             </a>
           </Reveal>
 
-          <Reveal delay={180} className="flex flex-col gap-3 rounded-3xl border border-ink-800 bg-ink-900 p-7">
+          <Reveal delay={180} className="flex flex-col justify-center gap-3 rounded-3xl border border-ink-800 bg-ink-900 p-7 lg:justify-start">
             <p className="font-display text-xl font-medium">Prices & delivery times</p>
             <p className="leading-[1.6] text-slate-300">
               Every project is different, so Paul quotes each one personally. Send a short brief through the assistant and he’ll reply with a price and timeline.
