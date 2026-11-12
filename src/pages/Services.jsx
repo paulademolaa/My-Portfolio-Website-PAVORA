@@ -93,7 +93,7 @@ export default function Services() {
 
       {/* Download CTA */}
       <section className="container-page py-24 md:py-32">
-        <Reveal className="relative flex flex-col items-start gap-6 overflow-hidden rounded-3xl bg-gradient-to-br from-blue-600 to-blue-800 p-8 md:flex-row md:items-center md:justify-between md:p-12">
+        <Reveal className="relative flex flex-col items-start gap-6 overflow-hidden rounded-3xl bg-gradient-to-br from-blue-600 to-blue-800 p-8 md:items-center md:gap-8 md:p-12 md:text-center lg:flex-row lg:justify-between lg:gap-6 lg:text-left">
           <div className="pointer-events-none absolute -right-6 -bottom-[22%] h-[75%] md:-right-10 md:-bottom-[30%] md:h-[125%]">
             <SymbolHairline className="h-full w-auto animate-float-slow" />
           </div>
@@ -103,7 +103,7 @@ export default function Services() {
               Download the free guide to see every service step by step, the tools we use and what you get at each phase.
             </p>
           </div>
-          <DownloadButton variant="light" className="relative mt-2 w-full shrink-0 py-3.5 sm:w-auto md:mt-0 md:py-3" />
+          <DownloadButton variant="light" className="relative mt-2 w-full shrink-0 py-3.5 whitespace-nowrap sm:w-auto md:mt-0 md:py-3" />
         </Reveal>
       </section>
     </>
