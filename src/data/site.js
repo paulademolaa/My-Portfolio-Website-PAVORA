@@ -25,7 +25,7 @@ export const site = {
 // Upwork numbers shown on the Home, About and Contact pages.
 // Keep them in sync with your Upwork profile (last checked 31 Oct 2026).
 export const stats = [
-  { value: 4.9, decimals: 1, suffix: "", label: "Upwork rating" },
+  { value: 4.9, decimals: 1, suffix: "/5", label: "Upwork rating" },
   { value: 18, suffix: "", label: "Total jobs done" },
   { value: 81, suffix: "%", label: "Job Success Score" },
   { value: 7, suffix: "+", label: "Years of experience" },

@@ -173,8 +173,8 @@ function AboutTeaser() {
           Beyond the pixels
         </h2>
         <p className="relative max-w-[500px] leading-[1.6] text-slate-400">
-          I'm Paul — a multidisciplinary designer who believes great design should solve problems,
-          communicate value and create meaningful experiences.
+          I'm Paul, the founder of PAVORA. I've designed logos and brands for 7+ years and websites since
+          2024, so your brand, website and pitch deck all come from one person.
         </p>
         <Button to="/about" variant="light" className="relative">
           More About Me

@@ -36,15 +36,16 @@ export default function Stats({ className = "" }) {
   return (
     <div
       ref={ref}
-      className={`reveal ${visible ? "is-visible" : ""} rounded-2xl border border-ink-800 bg-ink-900 px-6 py-2 md:px-10 ${className}`}
+      className={`reveal ${visible ? "is-visible" : ""} md:rounded-2xl md:border md:border-ink-800 md:bg-ink-900 md:px-10 md:py-2 ${className}`}
     >
-      <div className="grid grid-cols-2 md:grid-cols-4">
+      {/* Phones: each stat in its own box. Tablet and up: one box with dividers. */}
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-0">
         {stats.map((stat, i) => (
           <div
             key={stat.label}
-            className={`flex flex-col items-center justify-center gap-1.5 px-4 py-7 text-center md:px-8 ${
+            className={`flex flex-col items-center justify-center gap-1.5 rounded-2xl border border-ink-800 bg-ink-900 px-3 py-6 text-center md:rounded-none md:border-0 md:bg-transparent md:px-8 md:py-7 ${
               i > 0 ? "md:border-l md:border-ink-800" : ""
-            } ${i % 2 === 1 ? "border-l border-ink-800" : ""} ${i > 1 ? "border-t border-ink-800 md:border-t-0" : ""}`}
+            }`}
           >
             <p className="font-display text-[40px] leading-[1.1] font-bold tracking-[-0.02em] md:text-[64px]">
               <CountUp {...stat} start={visible} />
