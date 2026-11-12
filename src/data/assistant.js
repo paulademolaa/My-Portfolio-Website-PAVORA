@@ -130,7 +130,7 @@ export const topics = [
     keywords: { service: 3, services: 3, offer: 2, help: 1, specialise: 2, specialize: 2, skills: 2 },
     phrases: ["what do you do", "what can you do", "what services", "can you help", "what do you offer"],
     answer: [
-      { text: "Paul offers five services — tap one to learn more:" },
+      { text: "PAVORA offers six services. Tap one to learn more, or see the [Services page](/services):" },
       { card: "services" },
     ],
     chips: ["Product design", "Brand identity", "Web development", "How do you work?"],

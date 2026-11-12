@@ -140,13 +140,18 @@ function Services() {
     <section id="services" className="container-page flex scroll-mt-24 flex-col gap-14 pt-28 lg:pt-40">
       <SectionTitle
         title="Services"
-        intro="From first idea to launch — five ways I help founders and teams bring their ideas to life."
+        intro="From first idea to launch: six ways PAVORA helps founders and growing businesses bring their ideas to life."
       />
       <div className="border-t border-ink-800">
         {services.map((service, i) => (
           <ServiceRow key={service.title} service={service} index={i} />
         ))}
       </div>
+      <Reveal className="flex justify-center">
+        <Button to="/services" variant="secondary">
+          Explore all services
+        </Button>
+      </Reveal>
     </section>
   );
 }

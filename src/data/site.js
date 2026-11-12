@@ -45,7 +45,7 @@ export const clientInsights = [
 // Main navigation (used in the navbar, mobile menu and footer)
 export const navLinks = [
   { label: "Work", to: "/work" },
-  { label: "Services", to: "/#services" },
+  { label: "Services", to: "/services" },
   { label: "About", to: "/about" },
   { label: "FAQ", to: "/faq" },
   { label: "Contact", to: "/contact" },

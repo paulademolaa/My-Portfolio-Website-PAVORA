@@ -40,11 +40,12 @@ function Stars({ value }) {
 }
 
 const serviceAsk = {
-  "Product Design": "What does product design include?",
-  "Brand Strategy & Identity": "What is included in brand identity?",
-  "Graphic Design": "Do you do graphic design?",
+  "Brand Strategy": "What is included in brand identity?",
+  "Logo & Brand Identity": "What is included in brand identity?",
+  "Flyers & Ads": "Do you do graphic design?",
+  "UI/UX Design in Figma": "What does product design include?",
+  "Website Development": "Can you build my website?",
   "Presentation Design": "Do you design pitch decks?",
-  "Web Development": "Can you build my website?",
 };
 
 // Cards the assistant can show inside a message

@@ -122,7 +122,7 @@ export default function Footer() {
           <Reveal delay={180}>
             <Column title="Services">
               {services.map((s) => (
-                <Link key={s.title} to="/#services" className={linkClass}>
+                <Link key={s.title} to="/services" className={linkClass}>
                   {s.title}
                 </Link>
               ))}

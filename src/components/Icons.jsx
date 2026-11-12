@@ -13,6 +13,7 @@ const paths = {
   "chevron-down": "M6 9L12 15L18 9",
   "chevron-left": "M15 6L9 12L15 18",
   "chevron-right": "M9 6L15 12L9 18",
+  download: "M12 4V15M7 10.5L12 15.5L17 10.5M5 19H19",
   mail: "M5 5H19C20.1 5 21 5.9 21 7V17C21 18.1 20.1 19 19 19H5C3.9 19 3 18.1 3 17V7C3 5.9 3.9 5 5 5ZM3 7L12 13L21 7",
   quote:
     "M10 7H6C4.9 7 4 7.9 4 9V13H9V18H4M20 7H16C14.9 7 14 7.9 14 9V13H19V18H14",
