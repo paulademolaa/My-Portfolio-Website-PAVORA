@@ -10,6 +10,8 @@
 // Nothing secret lives in the code, so the repo can stay public.
 
 const clean = (v, max = 2000) => String(v ?? "").replace(/[\u0000-\u001f\u007f]/g, " ").trim().slice(0, max);
+// make pasted inspiration links clickable in the email
+const linkify = (s) => s.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" style="color:#2563eb">$1</a>');
 const escape = (s) => s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 
 export default async function handler(req, res) {
@@ -42,7 +44,7 @@ export default async function handler(req, res) {
     service: clean(body.service, 120),
     timeline: clean(body.timeline, 120),
     budget: clean(body.budget, 120),
-    details: clean(body.details, 4000),
+    details: String(body.details ?? "").replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g, " ").trim().slice(0, 12000),
     page: clean(body.page, 200),
   };
 
@@ -50,12 +52,29 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: "Please include a name, a valid email and a few project details" });
   }
 
+  // Inspiration files attached in the chat (PDF, images or any file), max 5 / ~3 MB
+  const MAX_BYTES = 3.2 * 1024 * 1024;
+  let total = 0;
+  const attachments = (Array.isArray(body.attachments) ? body.attachments : [])
+    .slice(0, 5)
+    .map((a) => ({
+      filename: clean(a?.filename, 120).replace(/[\\/:*?"<>|]/g, "_") || "attachment",
+      content: typeof a?.content === "string" ? a.content.replace(/[^A-Za-z0-9+/=]/g, "") : "",
+    }))
+    .filter((a) => {
+      const bytes = Math.floor((a.content.length * 3) / 4);
+      if (!a.content || total + bytes > MAX_BYTES) return false;
+      total += bytes;
+      return true;
+    });
+
   const rows = [
     ["Name", lead.name],
     ["Email", lead.email],
     ["Service", lead.service || "—"],
     ["Timeline", lead.timeline || "—"],
     ["Budget", lead.budget || "—"],
+    ["Files", attachments.length ? attachments.map((a) => a.filename).join(", ") : "—"],
     ["Sent from", lead.page || "/"],
   ];
 
@@ -66,7 +85,8 @@ export default async function handler(req, res) {
         ${rows.map(([k, v]) => `<tr><td style="padding:6px 12px 6px 0;color:#64748b;width:110px">${k}</td><td style="padding:6px 0"><b>${escape(v)}</b></td></tr>`).join("")}
       </table>
       <h3 style="margin:24px 0 8px">Project details</h3>
-      <p style="white-space:pre-wrap;line-height:1.6;margin:0">${escape(lead.details)}</p>
+      <p style="white-space:pre-wrap;line-height:1.6;margin:0">${linkify(escape(lead.details))}</p>
+      ${attachments.length ? `<p style="color:#64748b;font-size:13px;margin-top:16px">📎 ${attachments.length} file(s) attached to this email.</p>` : ""}
       <p style="color:#64748b;font-size:13px;margin-top:24px">Reply to this email to answer ${escape(lead.name)} directly.</p>
     </div>`;
 
@@ -83,6 +103,7 @@ export default async function handler(req, res) {
         subject: `New brief: ${lead.service || "Project"} — ${lead.name}`,
         html,
         text,
+        ...(attachments.length ? { attachments } : {}),
       }),
     });
     if (!r.ok) {

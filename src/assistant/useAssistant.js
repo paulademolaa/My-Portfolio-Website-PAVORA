@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { initialState, reply, startChatBrief, startLead, welcomeMessage } from "./engine.js";
+import { attachFiles, initialState, removeFiles, reply, startChatBrief, startLead, welcomeMessage } from "./engine.js";
 import { onCalendlyBooked } from "./calendly.js";
 
 // Keeps the conversation going: messages, "typing…" state, sending the
@@ -41,9 +41,13 @@ export default function useAssistant(storageKey = "pavora-assistant") {
   );
   const [state, setState] = useState(() => {
     const s = saved?.state || initialState();
-    // details given in the other chat (widget ↔ FAQ page) are shared
-    return { ...s, memory: { ...(read(MEMORY_KEY)?.memory || {}), ...(s.memory || {}) } };
+    // details given in the other chat (widget ↔ FAQ page) are shared.
+    // Attached files only live in this page visit, so forget their names on load.
+    const memory = removeFiles({ ...(read(MEMORY_KEY)?.memory || {}), ...(s.memory || {}) });
+    return { ...s, memory, lead: s.lead ? { ...s.lead, data: removeFiles(s.lead.data) } : s.lead };
   });
+  // The attached files themselves (base64), kept in memory until the brief is sent
+  const filesRef = useRef([]);
   const [typing, setTyping] = useState(false);
   const timer = useRef();
 
@@ -76,7 +80,11 @@ export default function useAssistant(storageKey = "pavora-assistant") {
         const res = await fetch("/api/lead", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...brief, page: window.location.pathname }),
+          body: JSON.stringify({
+            ...brief,
+            page: window.location.pathname,
+            attachments: filesRef.current.map(({ filename, content, type }) => ({ filename, content, type })),
+          }),
         });
         ok = res.ok;
       } catch {
@@ -85,7 +93,9 @@ export default function useAssistant(storageKey = "pavora-assistant") {
       setTyping(false);
       // Brief sent: keep who they are, clear the project answers for next time
       const m = current.memory || {};
-      setState({ ...current, lead: null, memory: ok ? { name: m.name, email: m.email } : { ...m, ...brief } });
+      const { attachments: _a, details: _d, ...answers } = brief;
+      if (ok) filesRef.current = [];
+      setState({ ...current, lead: null, memory: ok ? { name: m.name, email: m.email } : { ...m, ...answers } });
       deliver([
         ok
           ? {
@@ -124,6 +134,7 @@ export default function useAssistant(storageKey = "pavora-assistant") {
         return;
       }
 
+      if (/^start over$/i.test(clean)) filesRef.current = [];
       if (/^start over$/i.test(clean) && !state.lead) {
         const r = startLead(state);
         setState(r.state);
@@ -148,6 +159,41 @@ export default function useAssistant(storageKey = "pavora-assistant") {
         setState(r.state);
         deliver(r.messages);
       }
+    },
+    [state, deliver],
+  );
+
+  // 📎 Attach inspiration files (PDF, images or any file) to the brief
+  const MAX_TOTAL = 3 * 1024 * 1024; // Vercel accepts ~4.5 MB per request; base64 adds a third
+  const MAX_FILES = 5;
+  const attach = useCallback(
+    async (fileList) => {
+      const picked = Array.from(fileList || []);
+      if (!picked.length || !state.lead) return;
+      let total = filesRef.current.reduce((n, f) => n + f.size, 0);
+      const ok = [];
+      const rejected = [];
+      for (const file of picked) {
+        if (filesRef.current.length + ok.length >= MAX_FILES || total + file.size > MAX_TOTAL) {
+          rejected.push(file.name);
+          continue;
+        }
+        total += file.size;
+        ok.push(file);
+      }
+      const read = (file) =>
+        new Promise((resolve) => {
+          const r = new FileReader();
+          r.onload = () => resolve({ filename: file.name, type: file.type, size: file.size, content: String(r.result).split(",")[1] || "" });
+          r.onerror = () => resolve(null);
+          r.readAsDataURL(file);
+        });
+      const loaded = (await Promise.all(ok.map(read))).filter(Boolean);
+      filesRef.current = [...filesRef.current, ...loaded];
+      setMessages((m) => [...m, { id: id(), from: "user", text: `📎 ${loaded.map((f) => f.filename).concat(rejected).join(", ")}` }]);
+      const r = attachFiles(state, loaded.map((f) => ({ name: f.filename, size: f.size })), rejected);
+      setState(r.state);
+      deliver(r.messages);
     },
     [state, deliver],
   );
@@ -180,10 +226,21 @@ export default function useAssistant(storageKey = "pavora-assistant") {
   const reset = useCallback(() => {
     clearTimeout(timer.current);
     setTyping(false);
+    filesRef.current = [];
     // New chat, but keep the visitor's name and email
     setState((s) => initialState({ name: s.memory?.name, email: s.memory?.email }));
     setMessages([{ id: id(), from: "bot", ...welcomeMessage() }]);
   }, []);
 
-  return { messages, typing, send, action, reset, inLead: !!state.lead };
+  return {
+    messages,
+    typing,
+    send,
+    action,
+    reset,
+    attach,
+    inLead: !!state.lead,
+    // the 📎 button shows while the client is describing the project
+    canAttach: ["about", "goals", "audience", "inspiration"].includes(state.lead?.step),
+  };
 }
