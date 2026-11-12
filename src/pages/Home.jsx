@@ -140,7 +140,7 @@ function Services() {
     <section id="services" className="container-page flex scroll-mt-24 flex-col gap-14 pt-28 lg:pt-40">
       <SectionTitle
         title="Services"
-        intro="From first idea to launch: six ways PAVORA helps founders and growing businesses bring their ideas to life."
+        intro="Six ways we take you from idea to launch."
       />
       <div className="border-t border-ink-800">
         {services.map((service, i) => (

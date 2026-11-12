@@ -7,42 +7,42 @@
 export const services = [
   {
     title: "Brand Strategy",
-    description: "We dig into your idea, audience and goals so your brand says exactly what you stand for.",
+    description: "A clear brand that stands out.",
     art: "brand",
   },
   {
     title: "Logo & Brand Identity",
-    description: "Logo, colours, typography and brand guidelines. Every PAVORA project starts here.",
+    description: "A logo and look people remember.",
     art: "brand",
   },
   {
     title: "Flyers & Ads",
-    description: "Flyers, social ads and campaign visuals that introduce your brand, even before you have a website.",
+    description: "Visuals that bring in customers.",
     art: "mobile",
   },
   {
     title: "UI/UX Design in Figma",
-    description: "Websites and apps designed in Figma, with a clickable prototype before anything is built.",
+    description: "Websites and apps people love to use.",
     art: "web",
   },
   {
     title: "Website Development",
-    description: "Your Figma design built into a fast, responsive website with React and Tailwind CSS.",
+    description: "A fast website that works on every screen.",
     art: "web",
   },
   {
     title: "Presentation Design",
-    description: "Pitch decks in your brand style, ready for investors, partners or customers.",
+    description: "Pitch decks that win the room.",
     art: "deck",
   },
 ];
 
 // The PAVORA process, shown on the Services page
 export const phases = [
-  { title: "Logo & branding", text: "Always first. Flyers and ads can follow right away.", tag: "Phase 1" },
-  { title: "Design in Figma", text: "Your website or app, designed and clickable.", tag: "Phase 2" },
-  { title: "Development", text: "Built, tested and launched, if you go live.", tag: "Phase 3" },
-  { title: "Presentation", text: "A pitch deck when you're ready to present.", tag: "Phase 4" },
+  { title: "Logo & branding", text: "Always first.", tag: "Phase 1" },
+  { title: "Design in Figma", text: "See it before it's built.", tag: "Phase 2" },
+  { title: "Development", text: "Live on every screen.", tag: "Phase 3" },
+  { title: "Presentation", text: "Ready to pitch.", tag: "Phase 4" },
 ];
 
 // The downloadable guide on the Services page (file lives in public/files/)
