@@ -7,42 +7,42 @@
 export const services = [
   {
     title: "Brand Strategy",
-    description: "A clear brand that stands out.",
+    description: "We dig into your idea, audience and goals so your brand says exactly what you stand for.",
     art: "brand",
   },
   {
     title: "Logo & Brand Identity",
-    description: "A logo and look people remember.",
+    description: "Logo, colours, typography and brand guidelines. Every PAVORA project starts here.",
     art: "brand",
   },
   {
     title: "Flyers & Ads",
-    description: "Visuals that bring in customers.",
+    description: "Flyers, social ads and campaign visuals that introduce your brand, even before you have a website.",
     art: "mobile",
   },
   {
     title: "UI/UX Design in Figma",
-    description: "Websites and apps people love to use.",
+    description: "Websites and apps designed in Figma, with a clickable prototype before anything is built.",
     art: "web",
   },
   {
     title: "Website Development",
-    description: "A fast website that works on every screen.",
+    description: "Your Figma design built into a fast, responsive website with React and Tailwind CSS.",
     art: "web",
   },
   {
     title: "Presentation Design",
-    description: "Pitch decks that win the room.",
+    description: "Pitch decks in your brand style, ready for investors, partners or customers.",
     art: "deck",
   },
 ];
 
 // The PAVORA process, shown on the Services page
 export const phases = [
-  { title: "Logo & branding", text: "Always first.", tag: "Phase 1" },
-  { title: "Design in Figma", text: "See it before it's built.", tag: "Phase 2" },
-  { title: "Development", text: "Live on every screen.", tag: "Phase 3" },
-  { title: "Presentation", text: "Ready to pitch.", tag: "Phase 4" },
+  { title: "Logo & branding", text: "Logo, colours, fonts and guidelines. Always first, and flyers or ads can follow right away.", tag: "Phase 1" },
+  { title: "Design in Figma", text: "Your website or app designed and clickable, so you see it before it's built.", tag: "Phase 2" },
+  { title: "Development", text: "Your design built, tested and launched as a fast website on every screen.", tag: "Phase 3" },
+  { title: "Presentation", text: "A pitch deck in your brand style, ready for investors, partners or customers.", tag: "Phase 4" },
 ];
 
 // The downloadable guide on the Services page (file lives in public/files/)

@@ -87,8 +87,8 @@ function Hero() {
         </Reveal>
         <Reveal delay={550}>
           <p className="mx-auto mt-8 max-w-[480px] leading-[1.6] text-slate-400">
-            Designing and building digital experiences that look exceptional and work with purpose,
-            for ambitious businesses worldwide.
+            I create your logo and brand, design your website or app in Figma, and build it into a fast
+            website, for startup founders and growing businesses worldwide.
           </p>
         </Reveal>
         <Reveal delay={650} className="mt-8 flex flex-wrap justify-center gap-2.5">
@@ -121,7 +121,7 @@ function SelectedWorks() {
       <SectionTitle
         title="Selected Works"
         count={String(projects.length).padStart(2, "0")}
-        intro="A selection of recent projects across product, brand, presentation and web development."
+        intro="Recent brand identities, website and app designs, developed websites and pitch decks."
       />
       {/* Stacking cards — see src/components/WorkStack.jsx */}
       <WorkStack projects={projects.slice(0, 6)} />
@@ -140,7 +140,7 @@ function Services() {
     <section id="services" className="container-page flex scroll-mt-24 flex-col gap-14 pt-28 lg:pt-40">
       <SectionTitle
         title="Services"
-        intro="Six ways we take you from idea to launch."
+        intro="Logo and brand identity, flyers and ads, Figma design, website development and pitch decks. Everything your brand needs to launch."
       />
       <div className="border-t border-ink-800">
         {services.map((service, i) => (

@@ -160,11 +160,11 @@ export default function Faq() {
             <SymbolHairline className="h-full w-auto animate-float-slow" />
           </div>
           <h2 className="relative max-w-[560px] font-display text-[28px] leading-[1.2] font-medium md:text-[36px]">
-            Still have a question? Paul is happy to help.
+            Still have a question? Book a free call or send Paul a message.
           </h2>
           <div className="relative flex flex-wrap gap-3">
-            <Button variant="light" to="/contact">Get in touch</Button>
-            <Button variant="secondary" href={site.links.upwork} icon="arrow-up-right">Hire on Upwork</Button>
+            <Button variant="light" href={site.links.calendly} icon="arrow-up-right">Book a call</Button>
+            <Button variant="secondary" to="/contact">Get in touch</Button>
           </div>
         </Reveal>
       </section>

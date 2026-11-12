@@ -38,10 +38,10 @@ export default function Services() {
           delay={80}
           className="mt-4 max-w-[860px] font-display text-[40px] leading-[1.1] font-medium tracking-[-0.02em] md:text-[64px]"
         >
-          From logo to launch.
+          Everything your brand needs, from logo to launch.
         </Reveal>
         <Reveal as="p" delay={160} className="mt-5 max-w-[580px] text-lg leading-[1.6] text-slate-300">
-          Brand, design and website. Done for you.
+          PAVORA creates your logo and brand, designs your website or app in Figma, builds it, and makes the pitch deck to present it. For startup founders and growing businesses.
         </Reveal>
         <Reveal delay={240} className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
           <DownloadButton className="w-full py-3.5 sm:w-auto sm:py-3" />
@@ -84,7 +84,7 @@ export default function Services() {
             <div className="flex flex-col gap-3 text-center">
               <h2 className="font-display text-[32px] leading-[1.2] font-medium md:text-[40px]">How it works</h2>
               <p className="mx-auto max-w-[520px] leading-[1.6] text-slate-400">
-                Logo first. Stop anytime.
+                Every project starts with the logo. You can stop after any phase.
               </p>
             </div>
           }
@@ -98,9 +98,9 @@ export default function Services() {
             <SymbolHairline className="h-full w-auto animate-float-slow" />
           </div>
           <div className="relative max-w-[560px]">
-            <h2 className="font-display text-[28px] leading-[1.2] font-medium md:text-[36px]">See exactly what you get</h2>
+            <h2 className="font-display text-[28px] leading-[1.2] font-medium md:text-[36px]">Want the full picture?</h2>
             <p className="mt-3 leading-[1.6] text-blue-100">
-              Every service, step by step. Free PDF.
+              Download the free guide to see every service step by step, the tools we use and what you get at each phase.
             </p>
           </div>
           <DownloadButton variant="light" className="relative mt-2 w-full shrink-0 py-3.5 sm:w-auto md:mt-0 md:py-3" />

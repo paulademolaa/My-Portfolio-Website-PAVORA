@@ -17,6 +17,8 @@ export const site = {
     linkedin: "https://www.linkedin.com/in/paul-ademola-68697226b",
     instagram: "https://www.instagram.com/designerpaul1",
     x: "https://x.com/", // add your X (Twitter) username at the end
+    // Your Calendly booking page (used by the chatbot's "Book a call" button)
+    calendly: "https://calendly.com/pauladebaria/30min",
   },
 };
 

@@ -4,6 +4,7 @@ import { ACTIONS, upworkRating, upworkReviews } from "../data/assistant.js";
 import { services, tools, process } from "../data/content.js";
 import { projects } from "../data/projects.js";
 import { clientInsights, site } from "../data/site.js";
+import { openBooking } from "./calendly.js";
 
 // Turns **bold** and [text](link) into real formatting
 export function RichText({ text, onNavigate }) {
@@ -196,7 +197,7 @@ function Card({ type, filter, limit, onAsk, onNavigate }) {
 }
 
 // Buttons under a message
-function Actions({ items, onAction, onNavigate }) {
+function Actions({ items, prefill, onAction, onNavigate }) {
   return (
     <div className="flex flex-wrap gap-2">
       {items.map((key, i) => {
@@ -205,6 +206,14 @@ function Actions({ items, onAction, onNavigate }) {
         const cls = `inline-flex cursor-pointer items-center gap-1.5 rounded-full px-3.5 py-2 text-[13px] font-medium transition-all duration-300 active:scale-95 ${
           i === 0 ? "bg-blue-600 text-white hover:bg-blue-700" : "border border-ink-700 text-white hover:bg-ink-800"
         }`;
+        if (a.book) {
+          return (
+            <button key={key} type="button" onClick={() => openBooking(prefill)} className={cls}>
+              <Icon name="calendar" className="size-3.5" />
+              {a.label}
+            </button>
+          );
+        }
         if (a.action) {
           return (
             <button key={key} type="button" onClick={() => onAction(a.action)} className={cls}>
@@ -257,7 +266,7 @@ export default function Blocks({ blocks, onAsk, onAction, onNavigate }) {
             </ul>
           );
         if (b.card) return <Card key={i} type={b.card} filter={b.filter} limit={b.limit} onAsk={onAsk} onNavigate={onNavigate} />;
-        if (b.actions) return <Actions key={i} items={b.actions} onAction={onAction} onNavigate={onNavigate} />;
+        if (b.actions) return <Actions key={i} items={b.actions} prefill={b.prefill} onAction={onAction} onNavigate={onNavigate} />;
         return null;
       })}
     </div>

@@ -7,7 +7,7 @@ import { services } from "../data/content.js";
 import { navLinks, site, socialLinks } from "../data/site.js";
 
 // Words that slide across the top of the footer — edit freely
-const MARQUEE = ["Designed with vision", "Built for impact", "Product design", "Brand identity", "Web development"];
+const MARQUEE = ["Designed with vision", "Built for impact", "Brand identity", "UI/UX design", "Website development"];
 
 // Round social icon button
 export function SocialButton({ href, icon, label }) {
