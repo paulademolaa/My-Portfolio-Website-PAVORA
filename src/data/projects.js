@@ -118,9 +118,9 @@ export const projects = [
   {
     slug: "hypsy-brand-guidelines",
     title: "Hypsy Brand Guidelines",
-    type: "Brand Guidelines Deck",
-    tags: ["Presentation Design", "Brand Guidelines", "Logo", "Typography"],
-    category: "Presentations",
+    type: "Brand Identity & Guidelines",
+    tags: ["Branding", "Logo Design", "Brand Guidelines", "Typography"],
+    category: "Brand Identity",
     cover: "/images/projects/hypsy.webp",
     summary: "Brand guidelines for Hypsy, an Instagram engagement brand: logo and clear space, colour, typography and the brand in use, in one 13-page deck.",
     client: "Hypsy",
