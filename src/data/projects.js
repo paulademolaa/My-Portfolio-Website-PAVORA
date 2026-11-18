@@ -7,6 +7,8 @@
 // just replace the file (keep the same name) or change the path here.
 //
 // category must match one of the filter names in src/pages/Work.jsx.
+// Use a list, e.g. ["Brand Identity", "Product Design"], to show a
+// project under more than one filter.
 // tags are the small chips shown on the Home page cards.
 // On the project page, the story reads: 01 Challenge (challenge),
 // 02 Approach (solution), 03 Outcome (outcome); each is followed by one
@@ -80,6 +82,36 @@ export const projects = [
     finalImage: { src: "/images/projects/bizopconnect-customers.webp", ratio: 1.063 },
   },
   {
+    slug: "mosakhub",
+    title: "MosakHub Brand Identity",
+    type: "Brand Identity · Product Design",
+    tags: ["Branding", "Logo Design", "UI/UX Design", "Design System"],
+    category: ["Brand Identity", "Product Design"],
+    cover: "/images/projects/mosakhub.webp",
+    coverRatio: 1.680,
+    summary: "The friendly guardian of every deal. A brand identity for a Nigerian marketplace where people buy, sell, hire and earn, with escrow protecting every payment.",
+    client: "MosakHub",
+    role: "Brand Designer (Identity by PAVORA), Product Designer (UI/UX)",
+    services: "Brand Identity · Guidelines · Website UI",
+    year: "2025",
+    tools: "Figma",
+    challenge:
+      "MosakHub brings shopping, selling, freelance hiring and community into one platform, with escrow holding funds until the buyer confirms delivery. People want the variety of an open marketplace without the fear of paying for something that never arrives. The brand had to hold many services under one roof, win trust in paying online, and carry a new, shorter name: Mosalak Hub became MosakHub.",
+    solution:
+      "I built the identity around a watchful guardian. The custom rounded wordmark sets Mosak in white for strength and Hub in blue for the connected platform, with an eye hidden in the \u201co\u201d that keeps watch over every deal. Every letter is drawn from one family of circles and softened corners, so it feels friendly at any size. A guardian mascot works alone as the app icon, avatar and favicon. One confident MosakHub Blue leads, with Deep Navy for depth, Signal Amber for deals and Trust Green to confirm money is safe, all set in Inter. The voice is escrow-first: clear, warm and reassuring, like \u201cYour money waits with us.\u201d As the product designer on the team, I also built the MosakHub design system in Figma for the product UI: typography, colour, icons, buttons, inputs, navigation, tables, badges, notifications and overlays.",
+    outcome:
+      "The result is a complete identity system and brand guidelines: wordmark, construction, mascot, logo system, colour, typography, pattern and icons, and voice, applied across social media, the app, stationery and out-of-home. It feels as friendly as a neighbourhood market and as safe as a bank.",
+    // After 01 Challenge / 02 Approach / 03 Outcome (shown uncropped)
+    gallery: [
+      { src: "/images/projects/mosakhub-introduction.webp", ratio: 1.68 },
+      [
+        { src: "/images/projects/mosakhub-logo.webp", ratio: 1.68 },
+        { src: "/images/projects/mosakhub-typography.webp", ratio: 1.68 },
+      ],
+    ],
+    finalImage: { src: "/images/projects/mosakhub-guidelines.webp", ratio: 1.68 },
+  },
+  {
     slug: "mobile-app",
     title: "[Project name]",
     type: "Mobile App Design",
@@ -111,26 +143,6 @@ export const projects = [
     services: "UI/UX Design · Web Development",
     year: "Year",
     tools: "Figma · React · Tailwind CSS",
-    challenge:
-      "Describe the client’s problem in two or three sentences — only verified project details.",
-    solution:
-      "Explain the approach and the final design in plain words. Add results only if they are verified.",
-    outcome: "What happened after launch, in one or two sentences. Only verified results.",
-    gallery: ["/images/projects/gallery-1.jpg", "/images/projects/gallery-2.jpg"],
-    finalImage: "/images/projects/final-wide.jpg",
-  },
-  {
-    slug: "brand-identity",
-    title: "[Project name]",
-    type: "Brand Identity",
-    tags: ["Branding", "Logo Design", "Brand Strategy", "Visual Identity"],
-    category: "Brand Identity",
-    cover: "/images/projects/brand-identity.jpg",
-    summary: "One line on what was designed and for whom.",
-    client: "Client name",
-    services: "Brand Strategy · Identity",
-    year: "Year",
-    tools: "Figma · Adobe Illustrator",
     challenge:
       "Describe the client’s problem in two or three sentences — only verified project details.",
     solution:

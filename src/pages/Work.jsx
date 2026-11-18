@@ -16,7 +16,7 @@ const filters = [
 
 export default function Work() {
   const [active, setActive] = useState("All");
-  const shown = active === "All" ? projects : projects.filter((p) => p.category === active);
+  const shown = active === "All" ? projects : projects.filter((p) => [].concat(p.category).includes(active));
 
   return (
     <div className="container-page pt-[150px] pb-28 md:pt-[190px] lg:pb-40">
