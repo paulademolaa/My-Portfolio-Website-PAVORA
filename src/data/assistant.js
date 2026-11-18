@@ -103,7 +103,7 @@ export const topics = [
     phrases: ["good morning", "good afternoon", "good evening", "how are you"],
     answer: [
       {
-        text: "Hi! 👋 I'm the **PAVORA assistant**. I can tell you about Paul's services, how he works, the tools he uses, his past projects and what clients say — or help you start a project.",
+        text: "Hi! 👋 I'm the **PAVORA assistant**. I can tell you about Paul's services, how he works, the tools he uses, his past projects and what clients say, or help you start a project.",
       },
     ],
     chips: ["What services do you offer?", "Show me your work", "Client reviews", "Start a project"],
@@ -115,7 +115,7 @@ export const topics = [
     phrases: ["who are you", "who is paul", "tell me about", "about you", "your background", "how many years"],
     answer: [
       {
-        text: "**Paul Ademola** is a product designer, brand strategist and web developer based in Nigeria, working with clients worldwide. He designs in Figma and builds with React and Tailwind CSS — so what you approve is what ships.",
+        text: "**Paul Ademola** is a product designer, brand strategist and web developer based in Nigeria, working with clients worldwide. He designs in Figma and builds with React and Tailwind CSS, so what you approve is what ships.",
       },
       { card: "rating" },
       { actions: ["about", "work"] },
@@ -125,7 +125,7 @@ export const topics = [
       group: "Working together",
       question: "Who is behind PAVORA?",
       answer:
-        "PAVORA is the studio of Paul Ademola — a product designer, brand strategist and web developer based in Nigeria who works with clients worldwide. He designs in Figma and builds with React and Tailwind CSS.",
+        "PAVORA is the studio of Paul Ademola, a product designer, brand strategist and web developer based in Nigeria who works with clients worldwide. He designs in Figma and builds with React and Tailwind CSS.",
     },
   },
   {
@@ -153,7 +153,7 @@ export const topics = [
     phrases: ["ui ux", "ui/ux", "user experience", "user interface", "mobile app", "web app"],
     answer: [
       {
-        text: "**UI/UX Design in Figma** — websites and apps designed in Figma, with a clickable prototype before anything is built. Depending on the project, this can include:",
+        text: "**UI/UX Design in Figma**: websites and apps designed in Figma, with a clickable prototype before anything is built. Depending on the project, this can include:",
       },
       {
         list: [
@@ -161,7 +161,7 @@ export const topics = [
           "High-fidelity UI design in Figma",
           "Clickable prototypes to test ideas early",
           "Reusable components and a simple design system",
-          "Developer-ready handoff — or Paul builds it himself",
+          "Developer-ready handoff, or Paul builds it himself",
         ],
       },
       { card: "projects", filter: "Product Design" },
@@ -173,7 +173,7 @@ export const topics = [
       group: "Services",
       question: "What does UI/UX design in Figma include?",
       answer:
-        "It can include user flows, wireframes, high-fidelity UI in Figma, clickable prototypes, reusable components and a developer-ready handoff — or Paul can build the design himself in React and Tailwind CSS.",
+        "It can include user flows, wireframes, high-fidelity UI in Figma, clickable prototypes, reusable components and a developer-ready handoff, or Paul can build the design himself in React and Tailwind CSS.",
     },
   },
   {
@@ -184,7 +184,7 @@ export const topics = [
     phrases: ["brand identity", "logo design", "brand strategy", "visual identity"],
     answer: [
       {
-        text: "**Brand Strategy and Logo & Brand Identity** — every PAVORA project starts here. We dig into your idea, audience and goals, then design a logo and look people remember. This can include:",
+        text: "**Brand Strategy and Logo & Brand Identity**: every PAVORA project starts here. We dig into your idea, audience and goals, then design a logo and look people remember. This can include:",
       },
       {
         list: [
@@ -192,7 +192,7 @@ export const topics = [
           "Logo design and variations",
           "Colour palette and typography",
           "Brand guidelines so everything stays consistent",
-          "Applications — social, stationery, merchandise",
+          "Applications like social, stationery and merchandise",
         ],
       },
       { card: "projects", filter: "Brand Identity" },
@@ -214,7 +214,7 @@ export const topics = [
     keywords: { graphic: 3, design: 1, visuals: 2, campaign: 2, campaigns: 2, flyer: 3, flyers: 3, ad: 2, ads: 3 },
     answer: [
       {
-        text: "**Flyers & Ads** — part of branding. Flyers, social ads and campaign visuals that introduce your brand, even before you have a website. Great if you want to spread the word before moving on to Figma design.",
+        text: "**Flyers & Ads**: part of branding. Flyers, social ads and campaign visuals that introduce your brand, even before you have a website. Great if you want to spread the word before moving on to Figma design.",
       },
       { actions: ["startProject", "work"] },
     ],
@@ -228,7 +228,7 @@ export const topics = [
     phrases: ["pitch deck", "slide deck"],
     answer: [
       {
-        text: "**Presentation Design** — pitch and business decks that turn complex ideas into clear visual stories. Great for investor pitches, sales decks and company profiles.",
+        text: "**Presentation Design**: pitch and business decks that turn complex ideas into clear visual stories. Great for investor pitches, sales decks and company profiles.",
       },
       { card: "projects", filter: "Presentations" },
       { card: "reviews", filter: "Presentation Design", limit: 1 },
@@ -239,7 +239,7 @@ export const topics = [
       group: "Services",
       question: "Do you design pitch decks?",
       answer:
-        "Yes — pitch decks, sales decks and company presentations that turn complex ideas into clear visual stories.",
+        "Yes, pitch decks, sales decks and company presentations that turn complex ideas into clear visual stories.",
     },
   },
   {
@@ -250,7 +250,7 @@ export const topics = [
     phrases: ["build a website", "build my website", "landing page", "design and build", "can you build", "build it too", "figma to code"],
     answer: [
       {
-        text: "**Website Development** — your Figma design built into a fast, responsive website with **React** and **Tailwind CSS**, designed and developed by one person. That means no hand-off gaps between designer and developer.",
+        text: "**Website Development**: your Figma design built into a fast, responsive website with **React** and **Tailwind CSS**, designed and developed by one person. That means no hand-off gaps between designer and developer.",
       },
       {
         list: [
@@ -270,7 +270,7 @@ export const topics = [
       group: "Tools & tech",
       question: "Can you design and build my website?",
       answer:
-        "Yes. Paul designs in Figma and builds with React and Tailwind CSS, so one person takes your site from first idea to launch — responsive, animated and deployed to modern hosting like Vercel or Netlify.",
+        "Yes. Paul designs in Figma and builds with React and Tailwind CSS, so one person takes your site from first idea to launch. It's responsive, animated and deployed to modern hosting like Vercel or Netlify.",
     },
   },
   {
@@ -315,7 +315,7 @@ export const topics = [
     phrases: ["how much", "what do you charge", "your rate", "hourly rate", "fixed price"],
     answer: [
       {
-        text: "Every project is different, so Paul quotes each one personally — there are no fixed price lists. **Send him a short message about your goals** and he'll reply with a tailored quote.",
+        text: "Every project is different, so Paul quotes each one personally. There are no fixed price lists. **Send him a short message about your goals** and he'll reply with a tailored quote.",
       },
       { actions: ["startProject", "upwork"] },
     ],
@@ -334,7 +334,7 @@ export const topics = [
     phrases: ["how long", "when can you", "how soon", "by when", "how many days", "how many weeks"],
     answer: [
       {
-        text: "Timelines depend on the scope of the project, so Paul confirms delivery dates personally. **Message him with what you need and when** — he'll let you know what's realistic.",
+        text: "Timelines depend on the scope of the project, so Paul confirms delivery dates personally. **Message him with what you need and when**, and he'll let you know what's realistic.",
       },
       { actions: ["startProject", "upwork"] },
     ],
@@ -409,7 +409,7 @@ export const topics = [
     phrases: ["are you available", "taking new clients", "taking on projects", "can you start"],
     answer: [
       {
-        text: "Paul takes on a limited number of projects at a time to keep quality high. The quickest way to check current availability is to **send a short message** — he'll get back to you personally.",
+        text: "Paul takes on a limited number of projects at a time to keep quality high. The quickest way to check current availability is to **send a short message**, and he'll get back to you personally.",
       },
       { actions: ["startProject", "upwork"] },
     ],
@@ -440,7 +440,7 @@ export const topics = [
     phrases: ["how do we communicate", "keep me updated", "stay in touch"],
     answer: [
       {
-        text: "You'll get regular progress updates and can give feedback at every stage. How you'd like to stay in touch — Upwork messages, email or calls — is agreed at the start.",
+        text: "You'll get regular progress updates and can give feedback at every stage. How you'd like to stay in touch (Upwork messages, email or calls) is agreed at the start.",
       },
     ],
     chips: ["How do you work?", "Start a project"],
@@ -452,7 +452,7 @@ export const topics = [
     phrases: ["what if i don't like", "how many revisions", "can i request changes"],
     answer: [
       {
-        text: "Feedback and revisions are built into the process — you review the work at each stage before it's finalised. The number of revision rounds is agreed in your proposal.",
+        text: "Feedback and revisions are built into the process. You review the work at each stage before it's finalised. The number of revision rounds is agreed in your proposal.",
       },
     ],
     chips: ["How do you work?", "Start a project"],
@@ -470,7 +470,7 @@ export const topics = [
     phrases: ["do i get the files", "source files", "who owns", "figma file"],
     answer: [
       {
-        text: "At the end of the project you receive the final files — typically the **Figma files** for design work and the **code** for web builds. Exact deliverables are confirmed in your proposal.",
+        text: "At the end of the project you receive the final files, typically the **Figma files** for design work and the **code** for web builds. Exact deliverables are confirmed in your proposal.",
       },
     ],
     chips: ["Which tools do you use?", "Start a project"],
@@ -478,7 +478,7 @@ export const topics = [
       group: "Working together",
       question: "Will I receive the source files?",
       answer:
-        "Final files are handed over at the end of the project — typically the Figma files for design work and the code for web builds. Exact deliverables are confirmed in your proposal.",
+        "Final files are handed over at the end of the project, typically the Figma files for design work and the code for web builds. Exact deliverables are confirmed in your proposal.",
     },
   },
   {
@@ -488,7 +488,7 @@ export const topics = [
     phrases: ["redesign my", "improve my website", "update my brand"],
     answer: [
       {
-        text: "Yes — Paul can redesign an existing website, app or brand: keeping what works, fixing what doesn't and giving it a sharper, more modern look. Share a link to what you have now and what you'd like to improve.",
+        text: "Yes, Paul can redesign an existing website, app or brand: keeping what works, fixing what doesn't and giving it a sharper, more modern look. Share a link to what you have now and what you'd like to improve.",
       },
       { actions: ["startProject"] },
     ],
@@ -497,7 +497,7 @@ export const topics = [
       group: "Services",
       question: "Can you redesign an existing website or brand?",
       answer:
-        "Yes. Share a link to what you have and what you'd like to improve — Paul keeps what works, fixes what doesn't and modernises the rest.",
+        "Yes. Share a link to what you have and what you'd like to improve. Paul keeps what works, fixes what doesn't and modernises the rest.",
     },
   },
   {
@@ -519,7 +519,7 @@ export const topics = [
     keywords: { hosting: 5 },
     answer: [
       {
-        text: "Websites are deployed to modern hosting like **Vercel** or **Netlify** — fast, secure and reliable. Paul can help you connect your own domain.",
+        text: "Websites are deployed to modern hosting like **Vercel** or **Netlify**: fast, secure and reliable. Paul can help you connect your own domain.",
       },
     ],
     chips: ["Do you offer maintenance?", "Website development"],
@@ -530,7 +530,7 @@ export const topics = [
     keywords: { seo: 4 },
     answer: [
       {
-        text: "Sites are built to be fast, responsive and well-structured — good foundations for search engines. If SEO is a priority for you, mention it so it's planned into the project.",
+        text: "Sites are built to be fast, responsive and well-structured, which gives search engines a good foundation. If SEO is a priority for you, mention it so it's planned into the project.",
       },
     ],
     chips: ["Website development", "Start a project"],
@@ -553,7 +553,7 @@ export const topics = [
     phrases: ["book a call", "book a consultation", "video call", "hop on a call", "quick call"],
     answer: [
       {
-        text: "Yes — you can **book a 30-minute video consultation** with Paul on Upwork to talk through your project before committing. Or start a project here and he'll reply to your brief personally.",
+        text: "Yes, you can **book a 30-minute video consultation** with Paul on Upwork to talk through your project before committing. Or start a project here and he'll reply to your brief personally.",
       },
       { actions: ["upwork", "startProject"] },
     ],
@@ -611,7 +611,7 @@ export const topics = [
     phrases: ["are you a bot", "are you real", "am i talking to"],
     answer: [
       {
-        text: "I'm PAVORA's automated assistant 🤖 — I answer common questions instantly. Paul personally reads and replies to every project brief.",
+        text: "I'm PAVORA's automated assistant 🤖. I answer common questions instantly. Paul personally reads and replies to every project brief.",
       },
     ],
     chips: ["Start a project", "What services do you offer?"],
@@ -696,7 +696,7 @@ export const upworkReviews = [
     tags: ["Committed to Quality", "Clear Communicator", "Accountable for Outcomes"],
   },
   {
-    project: "UI/UX & Figma Designer – Modern Designs",
+    project: "UI/UX & Figma Designer: Modern Designs",
     client: "Zaniab",
     service: "Product Design",
     rating: 5.0,
@@ -749,7 +749,7 @@ export const upworkTestimonials = [
       "I had the pleasure of working with Paul as a UI Designer on the SaaS Web Dashboard - Figma UI/UX Project. Paul was key in designing a user-friendly and beautiful interface, creating an intuitive design that met the needs of our target users. Throughout the project, Paul demonstrated professionalism and expertise in Figma. He collaborated smoothly with the team, providing valuable insights and high-quality design assets. His attention to detail and ability to turn complex requirements into clear UI designs were impressive. I highly recommend Paul for any Figma UI/UX design project.",
     name: "Moses A.",
     role: "Web Developer",
-    project: "SaaS Web Dashboard – Figma UI/UX",
+    project: "SaaS Web Dashboard: Figma UI/UX",
     date: "Apr 2025",
   },
   {
@@ -802,6 +802,6 @@ export const leadOptions = {
     "Presentation Design",
     "Not sure yet",
   ],
-  timelines: ["As soon as possible", "Within a month", "1–3 months", "Flexible"],
-  budgets: ["Under $500", "$500 – $1,500", "$1,500 – $5,000", "$5,000+", "Not sure yet"],
+  timelines: ["As soon as possible", "Within a month", "1 to 3 months", "Flexible"],
+  budgets: ["Under $500", "$500 to $1,500", "$1,500 to $5,000", "$5,000+", "Not sure yet"],
 };

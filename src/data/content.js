@@ -46,7 +46,7 @@ export const phases = [
 ];
 
 // The downloadable guide on the Services page (file lives in public/files/)
-export const servicesGuide = { href: "/files/PAVORA-What-We-Do.pdf", label: "PAVORA — What We Do (PDF)" };
+export const servicesGuide = { href: "/files/PAVORA-What-We-Do.pdf", label: "What We Do at PAVORA (PDF)" };
 
 // Client reviews and testimonials live in src/data/assistant.js
 
@@ -77,13 +77,13 @@ export const tools = [
 export const process = [
   { title: "Discover", text: "Understand your business, users and goals before a single pixel moves." },
   { title: "Define", text: "Turn research into a clear plan, structure and success measures." },
-  { title: "Design", text: "Shape the brand and interface — tested early, refined with you." },
+  { title: "Design", text: "Shape the brand and interface, then test it early and refine it with you." },
   { title: "Deliver", text: "Hand off polished files or ship the live build in React and Tailwind." },
 ];
 
 export const experience = [
-  { role: "Independent Designer", place: "Upwork · Clients worldwide", years: "20XX — Now" },
-  { role: "[Role]", place: "[Company]", years: "20XX — 20XX" },
+  { role: "Independent Designer", place: "Upwork, clients worldwide", years: "20XX to now" },
+  { role: "[Role]", place: "[Company]", years: "20XX to 20XX" },
 ];
 
 // Options in the contact form's "Service" dropdown

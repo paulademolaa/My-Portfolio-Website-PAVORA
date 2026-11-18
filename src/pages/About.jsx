@@ -78,7 +78,7 @@ export default function About() {
             Tools I work with
           </Reveal>
           <Reveal delay={100} as="p" className="mx-auto max-w-[520px] leading-[1.6] text-slate-400">
-            The software behind every project — from the first wireframe to the shipped build.
+            The software behind every project, from the first wireframe to the shipped build.
           </Reveal>
         </div>
         <ToolGrid tools={tools} />

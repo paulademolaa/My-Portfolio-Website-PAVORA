@@ -81,7 +81,7 @@ export default function Contact() {
       window.open(site.links.upwork, "_blank", "noreferrer");
       return;
     }
-    const subject = encodeURIComponent(`New project inquiry — ${form.service || "General"}`);
+    const subject = encodeURIComponent(`New project inquiry: ${form.service || "General"}`);
     const body = encodeURIComponent(
       `Name: ${form.name}\nEmail: ${form.email}\nService: ${form.service}\n\n${form.details}`,
     );
@@ -125,7 +125,7 @@ export default function Contact() {
           ) : (
             <p className="flex items-center gap-2.5 font-medium text-slate-400">
               <Icon name="mail" />
-              Email coming soon — reach me on Upwork for now.
+              Email coming soon. Reach me on Upwork for now.
             </p>
           )}
         </Reveal>

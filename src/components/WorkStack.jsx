@@ -26,7 +26,7 @@ function StackCard({ project, index }) {
             {project.title}
           </h3>
           <p className="max-w-[440px] leading-[1.6] text-slate-400">
-            {project.type} — {project.summary}
+            {project.type}. {project.summary}
           </p>
         </div>
 
@@ -58,7 +58,7 @@ function StackCard({ project, index }) {
       >
         <img
           src={project.cover}
-          alt={`${project.title} — ${project.type}`}
+          alt={`${project.title}, ${project.type}`}
           loading="lazy"
           className="absolute inset-0 size-full object-cover transition-transform duration-[1400ms] ease-(--ease-premium) group-hover:scale-[1.05]"
         />

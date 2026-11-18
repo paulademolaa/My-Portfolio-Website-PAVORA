@@ -41,7 +41,7 @@ export default function Logo({ className = "" }) {
   return (
     <Link
       to="/"
-      aria-label="PAVORA — home"
+      aria-label="PAVORA home"
       className={`group inline-flex items-center gap-2.5 ${className}`}
     >
       <Symbol className="h-7 w-auto transition-transform duration-500 ease-(--ease-premium) group-hover:-rotate-6 group-hover:scale-110" />

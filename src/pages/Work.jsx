@@ -52,7 +52,7 @@ export default function Work() {
 
       {shown.length === 0 && (
         <p className="py-20 text-center text-slate-400">
-          No projects in this category yet — check back soon.
+          No projects in this category yet. Check back soon.
         </p>
       )}
     </div>

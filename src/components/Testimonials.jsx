@@ -23,7 +23,7 @@ const reviews = [
   ...upworkTestimonials.map((t) => ({
     quote: t.quote,
     name: t.name,
-    role: `${t.role} · ${t.project}`,
+    role: `${t.role}, ${t.project}`,
     rating: 5,
     source: "direct",
   })),

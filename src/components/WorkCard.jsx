@@ -14,7 +14,7 @@ export default function WorkCard({ project, delay = 0 }) {
         <div className="relative aspect-[570/400] overflow-hidden rounded-xl bg-ink-800">
           <img
             src={project.cover}
-            alt={`${project.title} — ${project.type}`}
+            alt={`${project.title}, ${project.type}`}
             loading="lazy"
             className="size-full object-cover transition-transform duration-[1200ms] ease-(--ease-premium) group-hover:scale-[1.06]"
           />
