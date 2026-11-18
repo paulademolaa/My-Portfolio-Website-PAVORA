@@ -3,7 +3,8 @@ import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 import Icon from "./Icons.jsx";
 
-// Full-screen slide viewer for presentation projects (project.deck).
+// Full-screen slide viewer: presentation decks (project.deck) and
+// brand guidelines (project.guidelines, at /work/<slug>/guidelines).
 // The original PDF is never put on the site: each page is shown as an
 // image (1280px for phones, 2560px for large screens), with no download
 // or print button, and right-click / drag-to-save switched off.
@@ -11,18 +12,37 @@ import Icon from "./Icons.jsx";
 const pad = (n) => String(n).padStart(2, "0");
 const noSave = (e) => e.preventDefault();
 
-export default function DeckViewer({ project }) {
-  const { path, pages, ratio = 16 / 9 } = project.deck;
+export default function DeckViewer({ title, type, deck, closeTo = "/work" }) {
+  const { path, pages, ratio = 16 / 9 } = deck;
   const [i, setI] = useState(0);
   const navigate = useNavigate();
   const thumbs = useRef(null);
   const touch = useRef(null);
+  const stage = useRef(null);
+  const [box, setBox] = useState(null);
+
+  // Fit the slide exactly into the space available (any slide shape)
+  useEffect(() => {
+    const el = stage.current;
+    if (!el) return;
+    const fit = () => {
+      const cs = getComputedStyle(el);
+      const w = el.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+      const h = el.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+      const width = Math.min(w, h * ratio, 2560);
+      setBox({ width: Math.floor(width), height: Math.floor(width / ratio) });
+    };
+    fit();
+    const ro = new ResizeObserver(fit);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [ratio]);
 
   const go = useCallback((n) => setI(Math.max(0, Math.min(pages - 1, n))), [pages]);
   const close = useCallback(() => {
     if (window.history.state && window.history.state.idx > 0) navigate(-1);
-    else navigate("/work");
-  }, [navigate]);
+    else navigate(closeTo);
+  }, [navigate, closeTo]);
 
   // Keyboard: arrows to move, Esc to close. Lock page scroll while open.
   useEffect(() => {
@@ -71,15 +91,15 @@ export default function DeckViewer({ project }) {
     <div
       role="dialog"
       aria-modal="true"
-      aria-label={`${project.title}, slide ${i + 1} of ${pages}`}
+      aria-label={`${title}, slide ${i + 1} of ${pages}`}
       onContextMenu={noSave}
       className="fixed inset-0 z-[100] flex flex-col bg-ink-950 select-none [-webkit-touch-callout:none]"
     >
       {/* Top bar */}
       <div className="flex items-center justify-between gap-4 border-b border-ink-800 px-4 py-3 md:px-8 md:py-4">
         <div className="min-w-0">
-          <p className="truncate font-display text-[17px] font-medium md:text-xl">{project.title}</p>
-          <p className="text-[13px] text-slate-500">{project.type}</p>
+          <p className="truncate font-display text-[17px] font-medium md:text-xl">{title}</p>
+          <p className="text-[13px] text-slate-500">{type}</p>
         </div>
         <div className="flex shrink-0 items-center gap-3 md:gap-5">
           <span className="text-[14px] font-medium tabular-nums text-slate-400">
@@ -98,6 +118,7 @@ export default function DeckViewer({ project }) {
 
       {/* Slide */}
       <div
+        ref={stage}
         className="relative flex min-h-0 flex-1 items-center justify-center px-3 py-4 md:px-6 lg:px-24 lg:py-8"
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
@@ -107,15 +128,15 @@ export default function DeckViewer({ project }) {
         </button>
 
         <div
-          className="relative max-h-full w-full max-w-[min(100%,2560px)] overflow-hidden rounded-xl bg-ink-900 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.8)]"
-          style={{ aspectRatio: ratio, width: `min(100%, calc((100dvh - 230px) * ${ratio}))` }}
+          className="relative shrink-0 overflow-hidden rounded-xl bg-ink-900 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.8)]"
+          style={box ? { width: box.width, height: box.height } : { width: "100%", aspectRatio: ratio }}
         >
           <img
             key={i}
             src={`${path}/${pad(i + 1)}.webp`}
             srcSet={`${path}/${pad(i + 1)}-1280.webp 1280w, ${path}/${pad(i + 1)}.webp 2560w`}
             sizes="(max-width: 768px) 100vw, 90vw"
-            alt={`${project.title}, slide ${i + 1}`}
+            alt={`${title}, slide ${i + 1}`}
             draggable="false"
             onDragStart={noSave}
             className="pointer-events-none size-full animate-fade-in object-contain"
