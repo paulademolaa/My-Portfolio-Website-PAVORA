@@ -110,6 +110,7 @@ export const projects = [
       [
         { src: "/images/projects/mosakhub-logo.webp", ratio: 1.68 },
         { src: "/images/projects/mosakhub-typography.webp", ratio: 1.68 },
+        { src: "/images/projects/mosakhub-colour.webp", ratio: 1.680 },
       ],
     ],
     finalImage: { src: "/images/projects/mosakhub-guidelines.webp", ratio: 1.68 },
