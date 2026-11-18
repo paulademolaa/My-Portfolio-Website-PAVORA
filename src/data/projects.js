@@ -116,6 +116,21 @@ export const projects = [
     finalImage: { src: "/images/projects/mosakhub-guidelines.webp", ratio: 1.68 },
   },
   {
+    slug: "hypsy-brand-guidelines",
+    title: "Hypsy Brand Guidelines",
+    type: "Brand Guidelines Deck",
+    tags: ["Presentation Design", "Brand Guidelines", "Logo", "Typography"],
+    category: "Presentations",
+    cover: "/images/projects/hypsy.webp",
+    summary: "Brand guidelines for Hypsy, an Instagram engagement brand: logo and clear space, colour, typography and the brand in use, in one 13-page deck.",
+    client: "Hypsy",
+    year: "2025",
+    tools: "CorelDRAW",
+    // Opens in the slide viewer (no PDF on the site). Pages live in
+    // public/decks/hypsy as 01.webp (2560px) and 01-1280.webp (phones).
+    deck: { path: "/decks/hypsy", pages: 13, ratio: 2560 / 1436 },
+  },
+  {
     slug: "mobile-app",
     title: "[Project name]",
     type: "Mobile App Design",
@@ -147,26 +162,6 @@ export const projects = [
     services: "UI/UX Design & Web Development",
     year: "Year",
     tools: "Figma, React, Tailwind CSS",
-    challenge:
-      "Describe the client’s problem in two or three sentences. Only verified project details.",
-    solution:
-      "Explain the approach and the final design in plain words. Add results only if they are verified.",
-    outcome: "What happened after launch, in one or two sentences. Only verified results.",
-    gallery: ["/images/projects/gallery-1.jpg", "/images/projects/gallery-2.jpg"],
-    finalImage: "/images/projects/final-wide.jpg",
-  },
-  {
-    slug: "pitch-deck",
-    title: "[Project name]",
-    type: "Pitch Deck Design",
-    tags: ["Pitch Deck", "Presentation Design", "Storytelling"],
-    category: "Presentations",
-    cover: "/images/projects/pitch-deck.jpg",
-    summary: "One line on what was designed and for whom.",
-    client: "Client name",
-    services: "Presentation Design",
-    year: "Year",
-    tools: "Figma, PowerPoint",
     challenge:
       "Describe the client’s problem in two or three sentences. Only verified project details.",
     solution:

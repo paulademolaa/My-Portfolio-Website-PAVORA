@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import Icon from "../components/Icons.jsx";
 import Reveal from "../components/Reveal.jsx";
 import NotFound from "./NotFound.jsx";
+import DeckViewer from "../components/DeckViewer.jsx";
 import { projects } from "../data/projects.js";
 
 // Individual project page — editorial case-study layout:
@@ -77,6 +78,8 @@ export default function Project() {
   if (index === -1) return <NotFound />;
 
   const project = projects[index];
+  // Presentation decks open in the slide viewer instead of a case study
+  if (project.deck) return <DeckViewer project={project} />;
   const nextProjects = [1, 2].map((n) => projects[(index + n) % projects.length]).filter((p) => p.slug !== project.slug);
 
   const meta = [
