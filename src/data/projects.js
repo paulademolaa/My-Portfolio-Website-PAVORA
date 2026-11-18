@@ -101,6 +101,9 @@ export const projects = [
       "I built the identity around a watchful guardian. The custom rounded wordmark sets Mosak in white for strength and Hub in blue for the connected platform, with an eye hidden in the \u201co\u201d that keeps watch over every deal. Every letter is drawn from one family of circles and softened corners, so it feels friendly at any size. A guardian mascot works alone as the app icon, avatar and favicon. One confident MosakHub Blue leads, with Deep Navy for depth, Signal Amber for deals and Trust Green to confirm money is safe, all set in Inter. The voice is escrow-first: clear, warm and reassuring, like \u201cYour money waits with us.\u201d As the product designer on the team, I also built the MosakHub design system in Figma for the product UI: typography, colour, icons, buttons, inputs, navigation, tables, badges, notifications and overlays.",
     outcome:
       "The result is a complete identity system and brand guidelines: wordmark, construction, mascot, logo system, colour, typography, pattern and icons, and voice, applied across social media, the app, stationery and out-of-home. It feels as friendly as a neighbourhood market and as safe as a bank.",
+    // Not live yet: shows a disabled "Live website coming soon" button.
+    // When it launches, add link: "https://..." and the button turns on.
+    linkSoon: true,
     // After 01 Challenge / 02 Approach / 03 Outcome (shown uncropped)
     gallery: [
       { src: "/images/projects/mosakhub-introduction.webp", ratio: 1.68 },
