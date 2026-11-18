@@ -128,6 +128,19 @@ export default function Project() {
           {project.summary}
         </Reveal>
 
+        {!project.link && project.linkSoon && (
+          <Reveal delay={260} className="mt-8">
+            <span
+              aria-disabled="true"
+              title="The website isn't live yet"
+              className="inline-flex cursor-not-allowed items-center gap-2 rounded-full border border-ink-700 bg-ink-900 py-3 pr-5 pl-6 text-[15px] font-medium text-slate-500 select-none"
+            >
+              Live website coming soon
+              <Icon name="arrow-up-right" className="size-4 opacity-50" />
+            </span>
+          </Reveal>
+        )}
+
         {project.link && (
           <Reveal delay={260} className="mt-8">
             <a
