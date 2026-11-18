@@ -117,18 +117,100 @@ export const projects = [
   },
   {
     slug: "hypsy-brand-guidelines",
-    title: "Hypsy Brand Guidelines",
+    title: "Hypsy Brand Identity",
     type: "Brand Identity & Guidelines",
     tags: ["Branding", "Logo Design", "Brand Guidelines", "Typography"],
     category: "Brand Identity",
     cover: "/images/projects/hypsy.webp",
-    summary: "Brand guidelines for Hypsy, an Instagram engagement brand: logo and clear space, colour, typography and the brand in use, in one 13-page deck.",
+    coverRatio: 1.783,
+    summary: "A bold, friendly identity for Hypsy, a brand that makes Instagram engagement simple.",
     client: "Hypsy",
+    role: "Brand Designer",
+    services: "Brand Identity & Guidelines",
     year: "2025",
     tools: "CorelDRAW",
-    // Opens in the slide viewer (no PDF on the site). Pages live in
-    // public/decks/hypsy as 01.webp (2560px) and 01-1280.webp (phones).
-    deck: { path: "/decks/hypsy", pages: 13, ratio: 2560 / 1436 },
+    challenge:
+      "Hypsy helps people grow their engagement on Instagram. It needed an identity that feels as quick and social as the app it lives on, and that works everywhere it shows up: posters, merch, the website and the app icon on a phone.",
+    solution:
+      "I built the logo around a flowing, brush-style \u201ch\u201d paired with a clean \u201cypsy\u201d wordmark, with a clear-space rule that keeps it easy to spot. The palette runs from deep plum to bright violet, with colour versions for light and dark backgrounds, and the type is Poppins in Bold and Regular.",
+    outcome:
+      "The result is a complete brand guideline covering the logo, clear space, colour, typography and supergraphic, shown in use on street posters, a T-shirt, the website and an app icon.",
+    // After 01 Challenge / 02 Approach / 03 Outcome (shown uncropped)
+    gallery: [
+      { src: "/images/projects/hypsy-clear-space.webp", ratio: 1.783 },
+      [
+        { src: "/images/projects/hypsy-colour.webp", ratio: 1.783 },
+        { src: "/images/projects/hypsy-typography.webp", ratio: 1.783 },
+      ],
+      { src: "/images/projects/hypsy-posters.webp", ratio: 1.783 },
+    ],
+    finalImage: { src: "/images/projects/hypsy-app.webp", ratio: 1.783 },
+    // Full guidelines in the protected viewer (no PDF on the site)
+    guidelines: { path: "/decks/hypsy", pages: 13, ratio: 2560 / 1436 },
+  },
+  {
+    slug: "usecase-labs",
+    title: "UseCase Labs Brand Identity",
+    type: "Brand Identity & Guidelines",
+    tags: ["Branding", "Logo Design", "Brand Guidelines", "Consultancy"],
+    category: "Brand Identity",
+    cover: "/images/projects/usecase-labs.webp",
+    coverRatio: 1.601,
+    summary: "An identity for UseCase Labs, a consultancy that helps businesses get more value from what they've already built. One idea can do more.",
+    client: "UseCase Labs",
+    role: "Brand Designer",
+    services: "Brand Identity & Guidelines",
+    year: "2025",
+    tools: "CorelDRAW",
+    challenge:
+      "UseCase Labs works with fintech, blockchain, healthcare and other innovation-driven companies to find hidden use cases for products they already have, and take them into new markets. The brand had to explain a big idea simply: one solution can solve many problems.",
+    solution:
+      "The logomark joins the \u201ca\u201d and \u201cs\u201d of \u201cCase\u201d into an infinity loop, so the name itself says limitless possibilities while staying easy to read. Imperial Purple leads, with Black Shadow and Light Chrome for contrast, and Helvetica Neue keeps the type clean and confident. The loop becomes a repeating pattern across every touchpoint, carried by the line \u201cOne idea can do more!\u201d",
+    outcome:
+      "The guidelines cover the brand story, logo concept, primary logo, colour versions, typography and colour theory, applied to stationery, an app icon, merch, a billboard, street banners and posters.",
+    // After 01 Challenge / 02 Approach / 03 Outcome (shown uncropped)
+    gallery: [
+      { src: "/images/projects/usecase-labs-logo-concept.webp", ratio: 1.601 },
+      [
+        { src: "/images/projects/usecase-labs-logo-colour.webp", ratio: 1.601 },
+        { src: "/images/projects/usecase-labs-colour.webp", ratio: 1.601 },
+      ],
+      { src: "/images/projects/usecase-labs-stationery.webp", ratio: 1.601 },
+    ],
+    finalImage: { src: "/images/projects/usecase-labs-billboard.webp", ratio: 1.601 },
+    guidelines: { path: "/decks/usecase-labs", pages: 12, ratio: 838.872 / 524.016 },
+  },
+  {
+    slug: "klickbyte",
+    title: "KlickByte Brand Identity",
+    type: "Brand Identity & Guidelines",
+    tags: ["Branding", "Logo Design", "Brand Guidelines", "Pattern"],
+    category: "Brand Identity",
+    cover: "/images/projects/klickbyte.webp",
+    coverRatio: 1,
+    summary: "A sharp, modern identity for KlickByte, built on a geometric K mark in bold orange and deep charcoal.",
+    client: "KlickByte",
+    role: "Brand Designer",
+    services: "Brand Identity & Guidelines",
+    year: "2025",
+    tools: "CorelDRAW",
+    challenge:
+      "KlickByte needed an identity that feels confident and creative, with a mark simple enough to work as an app icon and strong enough to carry the whole brand. The message behind it: encourage flexibility and creativity, and earn people's trust.",
+    solution:
+      "I constructed the K mark from one sharp angle and a single curve, with exact construction points, and paired it with a clean wordmark drawn on a grid. The palette is Orange, Shark, White and Pale Gray, with Orange to White and Shark to Pale Gray gradients. One type family runs from Thin to Extra Bold, and the mark's angle and curve repeat as a bold pattern.",
+    outcome:
+      "The guidelines cover logo construction, colour, gradients, logo versions, the app icon, typography and pattern, shown on T-shirts, business cards, an exhibition banner and mobile screens.",
+    // After 01 Challenge / 02 Approach / 03 Outcome (shown uncropped)
+    gallery: [
+      { src: "/images/projects/klickbyte-construction.webp", ratio: 1 },
+      [
+        { src: "/images/projects/klickbyte-colour.webp", ratio: 1 },
+        { src: "/images/projects/klickbyte-typography.webp", ratio: 1 },
+      ],
+      { src: "/images/projects/klickbyte-apparel.webp", ratio: 1 },
+    ],
+    finalImage: { src: "/images/projects/klickbyte-mobile.webp", ratio: 1 },
+    guidelines: { path: "/decks/klickbyte", pages: 16, ratio: 1 },
   },
   {
     slug: "mobile-app",

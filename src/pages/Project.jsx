@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import Icon from "../components/Icons.jsx";
 import Reveal from "../components/Reveal.jsx";
 import NotFound from "./NotFound.jsx";
@@ -47,6 +47,19 @@ function StorySection({ number, title, text }) {
   );
 }
 
+// Opens the brand guidelines in the protected slide viewer
+function GuidelinesButton({ slug }) {
+  return (
+    <Link
+      to={`/work/${slug}/guidelines`}
+      className="group inline-flex shrink-0 items-center gap-2 rounded-full bg-blue-600 py-3 pr-5 pl-6 text-[15px] font-medium whitespace-nowrap text-white shadow-[0_8px_30px_-8px_rgba(37,99,235,0.6)] transition-all duration-300 hover:bg-blue-700 active:scale-[0.97]"
+    >
+      View brand guidelines
+      <Icon name="arrow-up-right" className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+    </Link>
+  );
+}
+
 // Card used in "Next project"
 function NextCard({ project }) {
   return (
@@ -74,12 +87,14 @@ function NextCard({ project }) {
 
 export default function Project() {
   const { slug } = useParams();
+  const { pathname } = useLocation();
   const index = projects.findIndex((p) => p.slug === slug);
   if (index === -1) return <NotFound />;
 
   const project = projects[index];
   // Presentation decks open in the slide viewer instead of a case study
-  if (project.deck) return <DeckViewer project={project} />;
+  if (project.deck) return <DeckViewer title={project.title} type={project.type} deck={project.deck} />;
+  const showGuidelines = project.guidelines && pathname.endsWith("/guidelines");
   const nextProjects = [1, 2].map((n) => projects[(index + n) % projects.length]).filter((p) => p.slug !== project.slug);
 
   const meta = [
@@ -144,6 +159,12 @@ export default function Project() {
           </Reveal>
         )}
 
+        {project.guidelines && (
+          <Reveal delay={260} className="mt-8">
+            <GuidelinesButton slug={project.slug} />
+          </Reveal>
+        )}
+
         {project.link && (
           <Reveal delay={260} className="mt-8">
             <a
@@ -191,6 +212,15 @@ export default function Project() {
         {pictures.slice(sections.length).flat().map((p, i) => (
           <Picture key={p.src + i} src={p.src} ratio={p.ratio} alt={`${project.title} detail`} className={`mb-14 md:mb-20 ${p.aspect || ""}`} />
         ))}
+        {project.guidelines && (
+          <Reveal className="mb-14 flex flex-col items-start gap-5 rounded-2xl border border-ink-800 bg-ink-900 p-6 md:mb-20 md:flex-row md:items-center md:justify-between md:p-8">
+            <div>
+              <p className="font-display text-2xl leading-[1.2] font-medium">See the full brand guidelines</p>
+              <p className="mt-1.5 text-slate-400">All {project.guidelines.pages} pages, from the logo to the brand in use.</p>
+            </div>
+            <GuidelinesButton slug={project.slug} />
+          </Reveal>
+        )}
       </div>
 
       {/* Next project */}
@@ -218,6 +248,14 @@ export default function Project() {
             ))}
           </div>
         </section>
+      )}
+      {showGuidelines && (
+        <DeckViewer
+          title={`${project.title.replace(/ Brand (Identity|Guidelines)$/, "")} Brand Guidelines`}
+          type={`${project.guidelines.pages} pages`}
+          deck={project.guidelines}
+          closeTo={`/work/${project.slug}`}
+        />
       )}
     </article>
   );
