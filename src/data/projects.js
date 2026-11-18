@@ -88,11 +88,12 @@ export const projects = [
     tags: ["Branding", "Logo Design", "UI/UX Design", "Design System"],
     category: ["Brand Identity", "Product Design"],
     cover: "/images/projects/mosakhub.webp",
+    coverRatio: 1.680,
     summary: "The friendly guardian of every deal. A brand identity for a Nigerian marketplace where people buy, sell, hire and earn, with escrow protecting every payment.",
     client: "MosakHub",
     role: "Brand Designer (Identity by PAVORA), Product Designer (UI/UX)",
-    services: "Brand Identity · UI/UX Design",
-    year: "2026",
+    services: "Brand Identity · Guidelines · Website UI",
+    year: "2025",
     tools: "Figma",
     challenge:
       "MosakHub brings shopping, selling, freelance hiring and community into one platform, with escrow holding funds until the buyer confirms delivery. People want the variety of an open marketplace without the fear of paying for something that never arrives. The brand had to hold many services under one roof, win trust in paying online, and carry a new, shorter name: Mosalak Hub became MosakHub.",
@@ -100,6 +101,15 @@ export const projects = [
       "I built the identity around a watchful guardian. The custom rounded wordmark sets Mosak in white for strength and Hub in blue for the connected platform, with an eye hidden in the \u201co\u201d that keeps watch over every deal. Every letter is drawn from one family of circles and softened corners, so it feels friendly at any size. A guardian mascot works alone as the app icon, avatar and favicon. One confident MosakHub Blue leads, with Deep Navy for depth, Signal Amber for deals and Trust Green to confirm money is safe, all set in Inter. The voice is escrow-first: clear, warm and reassuring, like \u201cYour money waits with us.\u201d As the product designer on the team, I also built the MosakHub design system in Figma for the product UI: typography, colour, icons, buttons, inputs, navigation, tables, badges, notifications and overlays.",
     outcome:
       "The result is a complete identity system and brand guidelines: wordmark, construction, mascot, logo system, colour, typography, pattern and icons, and voice, applied across social media, the app, stationery and out-of-home. It feels as friendly as a neighbourhood market and as safe as a bank.",
+    // After 01 Challenge / 02 Approach / 03 Outcome (shown uncropped)
+    gallery: [
+      { src: "/images/projects/mosakhub-introduction.webp", ratio: 1.68 },
+      [
+        { src: "/images/projects/mosakhub-logo.webp", ratio: 1.68 },
+        { src: "/images/projects/mosakhub-typography.webp", ratio: 1.68 },
+      ],
+    ],
+    finalImage: { src: "/images/projects/mosakhub-guidelines.webp", ratio: 1.68 },
   },
   {
     slug: "mobile-app",
