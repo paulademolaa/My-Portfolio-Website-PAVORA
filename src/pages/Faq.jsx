@@ -79,7 +79,7 @@ export default function Faq() {
           Everything you need to know before we work together.
         </Reveal>
         <Reveal as="p" delay={160} className="mt-6 max-w-[560px] text-lg leading-[1.6] text-slate-300">
-          Ask the assistant anything about services, tools, process or timelines — or browse the common questions below.
+          Ask the assistant anything about services, tools, process or timelines, or browse the common questions below.
         </Reveal>
       </section>
 

@@ -229,8 +229,8 @@ export function projectDetails(d) {
     `Project details: ${d.about}`,
     `Goals: ${d.goals}`,
     `Who it's for: ${d.audience}`,
-    `Inspiration links/notes: ${d.inspiration || "—"}`,
-    `Attached files: ${fileList(d) || "—"}`,
+    `Inspiration links/notes: ${d.inspiration || "None"}`,
+    `Attached files: ${fileList(d) || "None"}`,
   ].join("\n\n");
 }
 
@@ -250,8 +250,8 @@ function leadSummary(d) {
           `**Project:** ${d.about}`,
           `**Goals:** ${d.goals}`,
           `**Who it's for:** ${d.audience}`,
-          `**Inspiration:** ${d.inspiration || "—"}`,
-          `**Files:** ${fileList(d) || "—"}`,
+          `**Inspiration:** ${d.inspiration || "None"}`,
+          `**Files:** ${fileList(d) || "None"}`,
         ],
       },
     ],
@@ -537,7 +537,7 @@ export function reply(message, state) {
         messages: [
           {
             answer: [
-              { text: "I don't have an exact answer for that yet, but these might help — or ask Paul directly:" },
+              { text: "I don't have an exact answer for that yet, but these might help. You can also ask Paul directly:" },
               { actions: ["startProject"] },
             ],
             chips: related,

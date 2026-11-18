@@ -171,7 +171,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="mt-10 flex flex-col gap-4 border-t border-ink-800 py-6 md:flex-row md:items-center md:justify-between">
           <p className="text-sm text-slate-500">
-            © {new Date().getFullYear()} {site.brand} — {site.name}
+            © {new Date().getFullYear()} {site.brand} by {site.name}
           </p>
           <p className="text-sm text-slate-400">{site.tagline}</p>
           <button

@@ -66,7 +66,7 @@ export default function ChatPanel({ onClose, onNavigate, storageKey, className =
         </span>
         <div className="min-w-0 flex-1">
           <p className="font-display text-[15px] font-medium text-white">PAVORA Assistant</p>
-          <p className="truncate text-xs text-slate-400">Online · Instant answers</p>
+          <p className="truncate text-xs text-slate-400">Online, instant answers</p>
         </div>
         <button
           type="button"

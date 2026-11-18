@@ -71,10 +71,10 @@ export default async function handler(req, res) {
   const rows = [
     ["Name", lead.name],
     ["Email", lead.email],
-    ["Service", lead.service || "—"],
-    ["Timeline", lead.timeline || "—"],
-    ["Budget", lead.budget || "—"],
-    ["Files", attachments.length ? attachments.map((a) => a.filename).join(", ") : "—"],
+    ["Service", lead.service || "Not given"],
+    ["Timeline", lead.timeline || "Not given"],
+    ["Budget", lead.budget || "Not given"],
+    ["Files", attachments.length ? attachments.map((a) => a.filename).join(", ") : "None"],
     ["Sent from", lead.page || "/"],
   ];
 
@@ -100,7 +100,7 @@ export default async function handler(req, res) {
         from: LEAD_FROM_EMAIL || "PAVORA Assistant <onboarding@resend.dev>",
         to: [LEAD_TO_EMAIL],
         reply_to: lead.email,
-        subject: `New brief: ${lead.service || "Project"} — ${lead.name}`,
+        subject: `New brief: ${lead.service || "Project"} from ${lead.name}`,
         html,
         text,
         ...(attachments.length ? { attachments } : {}),
