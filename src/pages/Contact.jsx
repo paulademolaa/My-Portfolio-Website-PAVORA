@@ -19,6 +19,54 @@ function Field({ label, id, children }) {
   );
 }
 
+// Google "G" (the email address is a Gmail account)
+function GoogleMark() {
+  return (
+    <svg viewBox="0 0 48 48" className="size-7" aria-hidden="true">
+      <path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 8 3l5.7-5.7C34 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.6-.4-3.9z" />
+      <path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 8 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z" />
+      <path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2A11.9 11.9 0 0 1 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z" />
+      <path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3a12 12 0 0 1-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z" />
+    </svg>
+  );
+}
+
+// Little calendar page: blue header with rings, "30" for the 30-min call
+function CalendarMark() {
+  return (
+    <svg viewBox="0 0 48 48" className="size-8" aria-hidden="true">
+      <rect x="5" y="9" width="38" height="34" rx="7" fill="#fff" stroke="#DBEAFE" strokeWidth="1.5" />
+      <path d="M5 16a7 7 0 0 1 7-7h24a7 7 0 0 1 7 7v3H5z" fill="#2563EB" />
+      <rect x="14" y="5" width="4" height="9" rx="2" fill="#0D1631" />
+      <rect x="30" y="5" width="4" height="9" rx="2" fill="#0D1631" />
+      <text x="24" y="37" textAnchor="middle" fontFamily="Inter, sans-serif" fontWeight="700" fontSize="15" fill="#0D1631">30</text>
+    </svg>
+  );
+}
+
+// Card for the call / email options
+function ContactCard({ icon, title, text, href, onClick }) {
+  const inner = (
+    <>
+      <span className="grid size-14 shrink-0 place-items-center rounded-[16px] bg-white shadow-[0_8px_24px_-10px_rgba(37,99,235,0.6)] transition-transform duration-500 ease-(--ease-premium) group-hover:-rotate-6 group-hover:scale-105">
+        {icon}
+      </span>
+      <span className="flex min-w-0 flex-1 flex-col gap-1 text-left">
+        <span className="font-display text-lg leading-[1.3] font-medium text-white">{title}</span>
+        <span className="truncate text-[14px] text-slate-400 max-[359px]:text-[12.5px]">{text}</span>
+      </span>
+      {(href || onClick) && (
+        <Icon name="arrow-up-right" className="size-5 shrink-0 text-slate-500 max-[359px]:hidden transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-blue-400" />
+      )}
+    </>
+  );
+  const cls =
+    "group flex w-full min-w-0 items-center gap-4 rounded-[20px] border border-ink-800 bg-ink-900 p-4 max-[359px]:gap-3 transition-all duration-500 ease-(--ease-premium) hover:-translate-y-1 hover:border-blue-600/60 hover:shadow-[0_16px_40px_-20px_rgba(37,99,235,0.7)]";
+  if (href) return <a href={href} className={cls}>{inner}</a>;
+  if (onClick) return <button type="button" onClick={onClick} className={`${cls} cursor-pointer`}>{inner}</button>;
+  return <div className={cls}>{inner}</div>;
+}
+
 // Green "Hire me on Upwork" card
 function UpworkCard() {
   const show = stats.filter((s) => s.label !== "Years of experience");
@@ -106,28 +154,19 @@ export default function Contact() {
         </Reveal>
         <Reveal delay={400} className="flex flex-col gap-5 pt-4">
           <UpworkCard />
-          <button
-            type="button"
-            onClick={() => openBooking()}
-            className="flex w-fit cursor-pointer items-center gap-2.5 font-medium transition-colors hover:text-blue-500"
-          >
-            <Icon name="calendar" />
-            Book a free 30-min call
-          </button>
-          {site.email ? (
-            <a
-              href={`mailto:${site.email}`}
-              className="flex w-fit items-center gap-2.5 font-medium transition-colors hover:text-blue-500"
-            >
-              <Icon name="mail" />
-              {site.email}
-            </a>
-          ) : (
-            <p className="flex items-center gap-2.5 font-medium text-slate-400">
-              <Icon name="mail" />
-              Email coming soon. Reach me on Upwork for now.
-            </p>
-          )}
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+            <ContactCard
+              onClick={() => openBooking()}
+              icon={<CalendarMark />}
+              title="Book a free call"
+              text="30 minutes, on video"
+            />
+            {site.email ? (
+              <ContactCard href={`mailto:${site.email}`} icon={<GoogleMark />} title="Email me" text={site.email} />
+            ) : (
+              <ContactCard icon={<GoogleMark />} title="Email coming soon" text="Reach me on Upwork for now" />
+            )}
+          </div>
         </Reveal>
       </div>
 
