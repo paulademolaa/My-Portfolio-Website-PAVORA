@@ -114,7 +114,7 @@ function Card({ type, filter, limit, onAsk, onNavigate }) {
   }
 
   if (type === "projects") {
-    const list = (filter ? projects.filter((p) => p.category === filter) : projects).slice(0, 4);
+    const list = (filter ? projects.filter((p) => [].concat(p.category).includes(filter)) : projects).slice(0, 4);
     if (!list.length) return null;
     return (
       <div className="-mx-1 flex snap-x gap-2.5 overflow-x-auto px-1 pb-1">
