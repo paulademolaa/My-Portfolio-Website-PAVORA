@@ -28,8 +28,10 @@ export default function Services() {
   return (
     <>
       {/* Header */}
-      <section className="container-page relative overflow-x-clip pt-[150px] md:pt-[190px]">
-        <div className="pointer-events-none absolute top-24 -left-40 -z-10 h-[360px] w-[520px] animate-glow rounded-full bg-blue-600/40 blur-[140px]" />
+      {/* Full-width wrapper so the glow isn't cut off at the content edge on wide screens */}
+      <div className="relative overflow-x-clip">
+      <div className="pointer-events-none absolute top-24 left-[max(-160px,calc(50%-880px))] -z-10 h-[360px] w-[520px] animate-glow rounded-full bg-blue-600/40 blur-[140px]" />
+      <section className="container-page relative pt-[150px] md:pt-[190px]">
         <Reveal as="p" className="text-[13px] font-medium tracking-[0.1em] text-blue-400 uppercase">
           Services
         </Reveal>
@@ -50,6 +52,7 @@ export default function Services() {
           </Button>
         </Reveal>
       </section>
+      </div>
 
       {/* Service cards */}
       <section className="container-page pt-14 md:pt-28">
