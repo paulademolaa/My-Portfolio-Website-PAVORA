@@ -107,10 +107,10 @@ export default function About() {
         <div>
           {experience.map((job, i) => (
             <Reveal key={i} delay={i * 100}>
-              <div className="grid gap-1 border-b border-ink-800 py-5 transition-colors duration-300 hover:bg-ink-900/60 md:grid-cols-[1fr_1fr_auto] md:items-center md:gap-6 md:px-2">
+              <div className="grid gap-1 border-b border-ink-800 py-5 transition-colors duration-300 hover:bg-ink-900/60 md:grid-cols-[1fr_1fr_8.5rem] md:items-center md:gap-6 md:px-2">
                 <span className="font-display text-lg leading-[1.3] font-medium">{job.role}</span>
                 <span className="leading-[1.6] text-slate-400">{job.place}</span>
-                <span className="leading-[1.6] text-slate-500">{job.years}</span>
+                <span className="leading-[1.6] text-slate-500 md:text-right">{job.years}</span>
               </div>
             </Reveal>
           ))}
