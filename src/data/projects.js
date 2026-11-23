@@ -303,4 +303,20 @@ export const projects = [
     // Opens in the slide viewer (no PDF on the site)
     deck: { path: "/decks/ecotransit", pages: 9, ratio: 16 / 9 },
   },
+  {
+    slug: "marketing-business-plan-pitch-deck",
+    title: "Marketing Business Plan Pitch Deck",
+    type: "Pitch Deck",
+    tags: ["Presentation Design", "Pitch Deck", "Data Visualisation", "Figma"],
+    category: "Presentations",
+    cover: "/images/projects/marketing-plan-deck.webp",
+    coverRatio: 16 / 9,
+    summary: "A 20-slide pitch deck for a marketing business plan: the vision, the market gap, the value proposition, the growth plan and the numbers, in a dark, high-contrast style.",
+    client: "Concept project",
+    year: "2026",
+    tools: "Figma",
+    // Opens in the slide viewer (no PDF on the site). Pages live in
+    // public/decks/marketing-plan as 01.webp (2560px) and 01-1280.webp (phones).
+    deck: { path: "/decks/marketing-plan", pages: 20, ratio: 16 / 9 },
+  },
 ];
