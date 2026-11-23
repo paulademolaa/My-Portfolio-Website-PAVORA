@@ -82,8 +82,10 @@ export const process = [
 ];
 
 export const experience = [
-  { role: "Independent Designer", place: "Upwork, clients worldwide", years: "20XX to now" },
-  { role: "[Role]", place: "[Company]", years: "20XX to 20XX" },
+  { role: "Founder", place: "PAVORA, creative technology studio", years: "2026 to now" },
+  { role: "Brand & Product Designer", place: "Upwork, clients worldwide", years: "2024 to now" },
+  { role: "Brand & Web Designer", place: "Hypzy Agenzy (Hypsy)", years: "2025" },
+  { role: "Graphic Designer", place: "Faitheroics Ltd", years: "2024" },
 ];
 
 // Options in the contact form's "Service" dropdown
