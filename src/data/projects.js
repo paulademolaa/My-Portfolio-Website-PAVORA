@@ -117,20 +117,20 @@ export const projects = [
   },
   {
     slug: "hypsy-brand-guidelines",
-    title: "Hypsy Brand Identity",
+    title: "Hypsy Agency Brand Identity",
     type: "Brand Identity & Guidelines",
     tags: ["Branding", "Logo Design", "Brand Guidelines", "Typography"],
     category: "Brand Identity",
     cover: "/images/projects/hypsy.webp",
     coverRatio: 1.783,
-    summary: "A bold, friendly identity for Hypsy, a brand that makes Instagram engagement simple.",
-    client: "Hypsy",
+    summary: "A bold, friendly identity for Hypsy Agency, a brand that makes Instagram engagement simple.",
+    client: "Hypsy Agency",
     role: "Brand Designer",
     services: "Brand Identity & Guidelines",
     year: "2025",
     tools: "CorelDRAW",
     challenge:
-      "Hypsy helps people grow their engagement on Instagram. It needed an identity that feels as quick and social as the app it lives on, and that works everywhere it shows up: posters, merch, the website and the app icon on a phone.",
+      "Hypsy Agency helps people grow their engagement on Instagram. It needed an identity that feels as quick and social as the app it lives on, and that works everywhere it shows up: posters, merch, the website and the app icon on a phone.",
     solution:
       "I built the logo around a flowing, brush-style \u201ch\u201d paired with a clean \u201cypsy\u201d wordmark, with a clear-space rule that keeps it easy to spot. The palette runs from deep plum to bright violet, with colour versions for light and dark backgrounds, and the type is Poppins in Bold and Regular.",
     outcome:
