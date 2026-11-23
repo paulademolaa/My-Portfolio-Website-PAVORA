@@ -84,7 +84,7 @@ export const process = [
 export const experience = [
   { role: "Founder", place: "PAVORA, creative technology studio", years: "2026 to now" },
   { role: "Brand & Product Designer", place: "Upwork, clients worldwide", years: "2024 to now" },
-  { role: "Brand & Web Designer", place: "Hypsy", years: "2025" },
+  { role: "Brand & Web Designer", place: "Hypsy Agency", years: "2025" },
   { role: "Graphic Designer", place: "Faitheroics Ltd", years: "2024" },
 ];
 
